@@ -1,1 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+@use "@carbon/styles/scss/config" with (
+  $font-path: "@ibm/plex"
+);
+@use "@carbon/styles";
+
+$feature-flags: (
+  grid-columns-16: true,
+);
+
+@import "@carbon/type/scss/styles";
+
+@import "carbon-components/scss/globals/scss/styles";
