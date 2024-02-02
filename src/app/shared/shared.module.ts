@@ -10,6 +10,13 @@ import {
   ButtonModule,
   TabsModule,
   ThemeModule,
+  TableModule,
+  DialogModule,
+  CheckboxModule,
+  PaginationModule,
+  ModalModule,
+  InputModule,
+  DropdownModule,
 } from 'carbon-components-angular';
 
 export const CarbonModules = [
@@ -30,7 +37,28 @@ export const CarbonModules = [
     ReactiveFormsModule,
     RouterModule,
     ...CarbonModules,
+    TableModule,
+    DialogModule,
+    CheckboxModule,
+    ButtonModule,
+    PaginationModule,
+    ModalModule,
+    InputModule,
+    DropdownModule,
   ],
-  exports: [FormsModule, ReactiveFormsModule, RouterModule, ...CarbonModules],
+  exports: [
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule,
+    ...CarbonModules,
+    TableModule,
+    DialogModule,
+    CheckboxModule,
+    ButtonModule,
+    PaginationModule,
+    ModalModule,
+    InputModule,
+    DropdownModule,
+  ],
 })
 export class SharedModule {}

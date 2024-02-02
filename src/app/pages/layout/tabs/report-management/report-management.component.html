@@ -1,1 +1,18 @@
-<p>report-management works!</p>
+<h1>REPORT MANAGEMENT</h1>
+
+<cds-tab-header-group
+  type="line"
+  [followFocus]="followFocus"
+  [cacheActive]="cacheActive"
+  [isNavigation]="isNavigation"
+>
+  <button cdsTabHeader [paneReference]="content1">User</button>
+  <button cdsTabHeader [paneReference]="content2">Post</button>
+</cds-tab-header-group>
+
+<cds-tab class="tab" #content1>
+  <app-user></app-user>
+</cds-tab>
+<cds-tab #content2>
+  <app-post></app-post>
+</cds-tab>
