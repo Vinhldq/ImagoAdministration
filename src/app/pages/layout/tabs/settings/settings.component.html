@@ -1,1 +1,199 @@
-<p>settings works!</p>
+<div class="container">
+  <div class='top'>
+    <h2>Setting</h2>
+    <cds-button-set>
+      <button #trigger  cdsButton="secondary" [size]="'sm'" [isExpressive]="true"
+                (click)="open = true"   class="btn-signout"
+      >Sign Out</button>
+    </cds-button-set>
+  </div>
+  <div class="content">
+    <div class="left">
+      <h3>Account</h3>
+      <div class="account">
+        <img src="../../../../../assets/avatar.png">
+        <div class="info">
+          <h4> Tiến Thịnh</h4>
+          <h4>thinhbui1907gmail.com</h4>
+        </div>
+      </div>
+      <div class="chat-box-total">
+        <div class="chat-box">
+          <div class="widchat">
+            <h4>Chat Configuration</h4>
+            <p>Change your chat preferences base your favourite if you want,make sure you read it clearly </p>
+          </div>
+          <cds-toggle
+            [skeleton]=""
+            [label]=""
+            [hideLabel]=""
+            [onText]="'On'"
+            [offText]="'Off'"
+            [disabled]=""
+            [checked]=""
+            (checkedChange)="($event)"
+            [size]="'md'"
+          ></cds-toggle>
+        </div>
+        <div class="chat-box">
+          <div class="widchat">
+            <h4>Accept Chat From Customer</h4>
+            <p>Turn on to allow Customer to start a chat with you via Dashboard</p>
+          </div>
+          <cds-toggle
+            [skeleton]=""
+            [label]=""
+            [hideLabel]=""
+            [onText]="'On'"
+            [offText]="'Off'"
+            [disabled]=""
+            [checked]=""
+            (checkedChange)="($event)"
+            [size]="'md'"
+          ></cds-toggle>
+        </div>
+        <div class="chat-box">
+          <div class="widchat">
+            <h4>Send Auto-Reply in Chat</h4>
+            <p>Enable to send self-defined reply message to Customers when they chat with you</p>
+          </div>
+          <cds-toggle
+            [skeleton]=""
+            [label]=""
+            [hideLabel]=""
+            [onText]="'On'"
+            [offText]="'Off'"
+            [disabled]=""
+            [checked]=""
+            (checkedChange)="($event)"
+            [size]="'md'"
+          ></cds-toggle>
+
+        </div>
+        <cds-dropdown
+          [label]=""
+          [skeleton]=""
+          [helperText]=""
+          [size]="'lg'"
+          [dropUp]="false"
+          [invalid]=""
+          [invalidText]=""
+          [warn]=""
+          [warnText]=""
+          [theme]=""
+          placeholder="Languages"
+          [disabled]=""
+          (selected)="($event)"
+          (onClose)="($event)"
+        >
+          <cds-dropdown-list [items]="items"></cds-dropdown-list>
+        </cds-dropdown>
+        <cds-dropdown
+          [label]=""
+          [skeleton]=""
+          [helperText]=""
+          [size]="'lg'"
+          [dropUp]="false"
+          [invalid]=""
+          [invalidText]=""
+          [warn]=""
+          [warnText]=""
+          [theme]=""
+          placeholder="Themes"
+          [disabled]=""
+          (selected)="($event)"
+          (onClose)="($event)"
+        >
+          <cds-dropdown-list [items]="themes"></cds-dropdown-list>
+        </cds-dropdown>
+        <cds-button-set class="btn-save">
+          <button cdsButton="secondary" [size]="'sm'" [isExpressive]="true"
+          >Save</button>
+        </cds-button-set>
+      </div>
+    </div>
+    <div class="right">
+      <h3>
+        Activity History
+      </h3>
+      <div class="myDiv">
+        <img class="img-mini-avatar"
+           src="../../../../../assets/avatar.png" alt="Italian Trulli">
+        <p>Bạn đã phê duyệt bài post của X vào 13:00 ngày 08/1/2024.</p>
+      </div>
+      <div class="myDiv">
+        <img class="img-mini-avatar"
+          src="../../../../../assets/avatar.png" alt="Italian Trulli">
+        <p>Bạn đã phê duyệt bài post của A vào 13:15 ngày 08/1/2024.</p>
+      </div>
+      <div class="myDiv">
+        <img class="img-mini-avatar"
+          src="../../../../../assets/avatar.png" alt="Italian Trulli">
+        <p>Bạn đã phê duyệt bài post của C vào 14:00 ngày 08/1/2024.</p>
+      </div>
+      <div class="myDiv">
+        <img
+          class="img-mini-avatar"
+          src="../../../../../assets/avatar.png" alt="Italian Trulli">
+        <p>Bạn đã phê duyệt bài post của D vào 15:00 ngày 08/1/2024.</p>
+      </div>
+      <div class="myDiv">
+        <img class="img-mini-avatar"
+          src="../../../../../assets/avatar.png" alt="Italian Trulli">
+        <p>Bạn đã phê duyệt bài post của Z vào 15:10 ngày 08/1/2024.</p>
+      </div>
+      <div class="myDiv">
+        <img
+          class="img-mini-avatar"src="../../../../../assets/avatar.png" alt="Italian Trulli">
+        <p>Bạn đã phê duyệt bài post của N vào 13:00 ngày 09/1/2024.</p>
+      </div>
+      <div class="myDiv">
+        <img class="img-mini-avatar"
+          src="../../../../../assets/avatar.png" alt="Italian Trulli">
+        <p>Bạn đã khóa bài post của X vào 13:00 ngày 09/1/2024.</p>
+      </div>
+      <cds-pagination-nav
+        class="pagi"
+        [model]="model"
+        [disabled]="disabled"
+        [numOfItemsToShow]="7"
+        (selectPage)="selectPage($event)">
+      </cds-pagination-nav>
+    </div>
+    </div>
+  </div>
+
+
+<!--<button #trigger cdsButton="primary">Open</button>-->
+<cds-modal [open]="open" [trigger]="trigger" (overlaySelected)="open = false">
+  <cds-modal-header
+    (closeSelect)="open = false"
+    [showCloseButton]="true"
+  >
+
+  </cds-modal-header>
+  <div class="cds--modal-content">
+    <h3>Are you sure to log out</h3>
+  </div>
+  <cds-modal-footer>
+    <ng-container  >
+      <button class="btnCancel"
+        cdsButton="secondary"
+        (click)="open = false"
+        [attr.modal-primary-focus]="true"
+
+      >
+        Cancel
+      </button>
+      <button
+        cdsButton="primary"
+        (click)="open = false"
+        [attr.modal-primary-focus]="true"
+        routerLink="/login" routerLinkActive="active"
+      >
+        Ok
+      </button>
+
+    </ng-container>
+  </cds-modal-footer>
+</cds-modal>
