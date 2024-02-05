@@ -1,0 +1,152 @@
+.content {
+  width: 100%;
+  display: flex;
+}
+
+.left {
+  width: 60%;
+}
+
+.right {
+  margin-left: 20px;
+  width: 40%;
+  border-left: #dadada 2px solid;
+  padding-left: 15px;
+}
+
+.right .info {
+  display: flex;
+  align-items: center;
+}
+
+.right .image {
+  width: 140px;
+  height: 150px;
+}
+
+.right .image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.right .text {
+  margin-left: 40px;
+}
+
+.right .text .name {
+  font-size: 26px;
+  font-weight: 800;
+  color: #262626;
+}
+
+.right .text .email {
+  margin-top: 8px;
+  font-size: 22px;
+  font-weight: 500;
+  color: #262626;
+}
+
+.right .text .phone_number {
+  margin-top: 8px;
+  font-size: 20px;
+  font-weight: 500;
+  color: #262626;
+}
+
+.right .reason {
+  margin-top: 30px;
+  background-color: #f4f4f4;
+  padding: 15px;
+}
+
+.right .reason h2 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #262626;
+}
+
+.right .reason p {
+  margin-top: 20px;
+  font-size: 14px;
+  font-weight: 400;
+  color: #262626;
+}
+
+.right .desc {
+  margin-top: 30px;
+  background-color: #f4f4f4;
+  padding: 15px;
+}
+
+.right .desc h2 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #262626;
+}
+
+.right .desc p {
+  margin-top: 20px;
+  font-size: 14px;
+  font-weight: 400;
+  color: #262626;
+}
+
+.right .action {
+  margin-top: 30px;
+  margin-left: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.right .row {
+  width: 100%;
+  display: flex;
+  //align-items: center;
+  justify-content: space-between;
+}
+
+.right .row h2 {
+  font-size: 16px;
+  font-weight: 800;
+  color: #262626;
+}
+
+.right .line {
+  width: 100%;
+  height: 1px;
+  background-color: #dadada;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.left-content {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+cds-table {
+  width: 100%;
+}
+
+.cds--form-item {
+  align-items: unset;
+}
+
+.cds--modal-content {
+  height: 260px;
+}
+
+.cds--modal-header__heading {
+  font-weight: 700;
+}
+
+::ng-deep .cds--label {
+  margin-top: 30px;
+  font-weight: 700;
+  font-size: 14px;
+}
