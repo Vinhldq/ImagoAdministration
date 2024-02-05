@@ -8,8 +8,12 @@ import {
   GridModule,
   BreadcrumbModule,
   ButtonModule,
+  ToggleModule,
+  InputModule,
   TabsModule,
   ThemeModule,
+  DropdownModule,
+  PaginationModule,
 } from 'carbon-components-angular';
 
 export const CarbonModules = [
@@ -17,9 +21,13 @@ export const CarbonModules = [
   IconModule,
   GridModule,
   BreadcrumbModule,
-  ButtonModule,
+  InputModule,
   TabsModule,
   ThemeModule,
+  ToggleModule,
+  ButtonModule,
+  DropdownModule,
+  PaginationModule,
 ];
 
 @NgModule({
