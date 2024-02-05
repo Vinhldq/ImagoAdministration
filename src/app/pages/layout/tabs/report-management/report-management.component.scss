@@ -1,0 +1,18 @@
+::ng-deep .cds--tab-content {
+  padding: 15px 0 0 0;
+}
+
+::ng-deep .cds--tabs .cds--tabs__nav-item--selected {
+  border-block-end: 2px solid #161616;
+}
+
+::ng-deep .cds--tabs .cds--tabs__nav-link:focus,
+.cds--tabs .cds--tabs__nav-link:active {
+  outline: 2px solid #161616;
+}
+
+h1 {
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
