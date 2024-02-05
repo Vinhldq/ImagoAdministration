@@ -3,7 +3,7 @@
     <h2>Setting</h2>
     <cds-button-set>
       <button #trigger  cdsButton="secondary" [size]="'sm'" [isExpressive]="true"
-                (click)="open = true"
+                (click)="open = true"   class="btn-signout"
       >Sign Out</button>
     </cds-button-set>
   </div>
@@ -32,7 +32,7 @@
             [disabled]=""
             [checked]=""
             (checkedChange)="($event)"
-            [size]="'sm'"
+            [size]="'md'"
           ></cds-toggle>
         </div>
         <div class="chat-box">
@@ -49,7 +49,7 @@
             [disabled]=""
             [checked]=""
             (checkedChange)="($event)"
-            [size]="'sm'"
+            [size]="'md'"
           ></cds-toggle>
         </div>
         <div class="chat-box">
@@ -66,7 +66,7 @@
             [disabled]=""
             [checked]=""
             (checkedChange)="($event)"
-            [size]="'sm'"
+            [size]="'md'"
           ></cds-toggle>
 
         </div>
@@ -74,7 +74,7 @@
           [label]=""
           [skeleton]=""
           [helperText]=""
-          [size]="'sm'"
+          [size]="'lg'"
           [dropUp]="false"
           [invalid]=""
           [invalidText]=""
@@ -92,7 +92,7 @@
           [label]=""
           [skeleton]=""
           [helperText]=""
-          [size]="'sm'"
+          [size]="'lg'"
           [dropUp]="false"
           [invalid]=""
           [invalidText]=""
@@ -107,7 +107,8 @@
           <cds-dropdown-list [items]="themes"></cds-dropdown-list>
         </cds-dropdown>
         <cds-button-set class="btn-save">
-          <button cdsButton="secondary" [size]="'sm'" [isExpressive]="true">Save</button>
+          <button cdsButton="secondary" [size]="'sm'" [isExpressive]="true"
+          >Save</button>
         </cds-button-set>
       </div>
     </div>
@@ -152,9 +153,10 @@
         <p>Bạn đã khóa bài post của X vào 13:00 ngày 09/1/2024.</p>
       </div>
       <cds-pagination-nav
+        class="pagi"
         [model]="model"
         [disabled]="disabled"
-        [numOfItemsToShow]="9"
+        [numOfItemsToShow]="7"
         (selectPage)="selectPage($event)">
       </cds-pagination-nav>
     </div>

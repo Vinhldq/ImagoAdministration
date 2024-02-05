@@ -31,7 +31,7 @@ export class SettingsComponent implements OnInit{
   }
   ngOnInit() {
     this.model.currentPage = 1;
-    this.model.totalDataLength = 105;
+    this.model.totalDataLength = 20;
   }
   protected open = false;
 
