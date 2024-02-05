@@ -1,13 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { SharedModule } from '../../../../shared/shared.module';
-import { AdsComponent } from './components/ads/ads.component';
 import { PostComponent } from './components/post/post.component';
 import { UserComponent } from './components/user/user.component';
 
 @Component({
   selector: 'app-report-management',
   standalone: true,
-  imports: [SharedModule, AdsComponent, PostComponent, UserComponent],
+  imports: [SharedModule, PostComponent, UserComponent],
   templateUrl: './report-management.component.html',
   styleUrl: './report-management.component.scss',
 })

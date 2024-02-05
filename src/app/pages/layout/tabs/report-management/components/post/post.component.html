@@ -1,1 +1,206 @@
-<p>post works!</p>
+<div class="content">
+  <div class="left">
+    <cds-table-container>
+      <cds-table-toolbar>
+        <cds-table-toolbar-content>
+          <cds-table-toolbar-search
+            [expandable]="true"
+            (valueChange)="filterUserNames($event)"
+            (clear)="searchValue = ''"
+          >
+          </cds-table-toolbar-search>
+          <button
+            cdsButton="ghost"
+            class="toolbar-action"
+            [cdsOverflowMenu]="templateRef"
+            placement="bottom"
+            [flip]="true"
+            [offset]="{ x: 3, y: 0 }"
+          >
+            <svg
+              cdsIcon="filter"
+              size="16"
+              class="cds--toolbar-action__icon"
+            ></svg>
+          </button>
+          <!--          <button cdsButton="secondary" size="sm">-->
+          <!--            Primary button-->
+          <!--            <svg cdsIcon="add" size="20" class="cds--btn__icon"></svg>-->
+          <!--          </button>-->
+        </cds-table-toolbar-content>
+      </cds-table-toolbar>
+
+      <div class="left-content">
+        <cds-table
+          [model]="model"
+          [sortable]="false"
+          (rowClick)="onRowClick($event)"
+          size="md"
+          [skeleton]="skeleton"
+          [showSelectionColumn]="showSelectionColumn"
+          [enableSingleSelect]="enableSingleSelect"
+          [stickyHeader]="stickyHeader"
+          [striped]="striped"
+          [isDataGrid]="isDataGrid"
+        >
+          <ng-content></ng-content>
+        </cds-table>
+        <cds-pagination-nav
+          [model]="modelPagination"
+          [disabled]="disabled"
+          (selectPage)="selectPage($event)"
+          [numOfItemsToShow]="dataLengthPerPage"
+        >
+        </cds-pagination-nav>
+      </div>
+    </cds-table-container>
+
+    <ng-template #templateRef>
+      <div style="padding: 0 1rem" (click)="overflowOnClick($event)">
+        <div style="padding-top: 0.5rem; color: grey">Title shown</div>
+        <cds-checkbox
+          [checked]="displayedTitle.includes('Fake Account')"
+          (checkedChange)="filterTitle('Fake Account', $event)"
+        >
+          Fake Account
+        </cds-checkbox>
+        <cds-checkbox
+          [checked]="displayedTitle.includes('Pretending')"
+          (checkedChange)="filterTitle('Pretending', $event)"
+        >
+          Pretending
+        </cds-checkbox>
+        <cds-checkbox
+          [checked]="displayedTitle.includes('Suspicious Activity')"
+          (checkedChange)="filterTitle('Suspicious Activity', $event)"
+        >
+          Suspicious Activity
+        </cds-checkbox>
+        <cds-checkbox
+          [checked]="displayedTitle.includes('Harassment')"
+          (checkedChange)="filterTitle('Harassment', $event)"
+        >
+          Harassment
+        </cds-checkbox>
+        <cds-checkbox
+          [checked]="displayedTitle.includes('Inappropriate Content')"
+          (checkedChange)="filterTitle('Inappropriate Content', $event)"
+        >
+          Inappropriate Content
+        </cds-checkbox>
+        <cds-checkbox
+          [checked]="displayedTitle.includes('Spamming')"
+          (checkedChange)="filterTitle('Spamming', $event)"
+        >
+          Spamming
+        </cds-checkbox>
+        <cds-checkbox
+          [checked]="displayedTitle.includes('Hate Speech')"
+          (checkedChange)="filterTitle('Hate Speech', $event)"
+        >
+          Hate Speech
+        </cds-checkbox>
+        <cds-checkbox
+          [checked]="displayedTitle.includes('Inappropriate Behavior')"
+          (checkedChange)="filterTitle('Inappropriate Behavior', $event)"
+        >
+          Inappropriate Behavior
+        </cds-checkbox>
+      </div>
+    </ng-template>
+  </div>
+  <div class="right">
+    <!--    <div class="row">-->
+    <!--      <h2>USER</h2>-->
+    <!--      <div class="icon">-->
+    <!--        <img src="./assets/img/more.png" alt="" />-->
+    <!--      </div>-->
+    <!--    </div>-->
+
+    <!--    <div class="line"></div>-->
+
+    <div class="row">
+      <div class="info">
+        <div class="image">
+          <img
+            src="./assets/img/confident-asian-woman-face-portrait-smiling_53876-144815.webp"
+            alt=""
+          />
+        </div>
+
+        <div class="text">
+          <p class="name">Jane Cooper</p>
+          <p class="email">janecooper&#64;gmail.com</p>
+          <p class="phone_number">+994987654321</p>
+        </div>
+      </div>
+      <div class="icon">
+        <img src="./assets/img/overflow-menu--vertical.svg" alt="" />
+      </div>
+    </div>
+
+    <div class="reason">
+      <h2>Report</h2>
+      <p>Pretending to be someone</p>
+    </div>
+
+    <div class="desc">
+      <h2>Describe Report</h2>
+      <p>
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nesciunt id
+        placeat nemo, totam doloribus dolorem excepturi autem aliquam
+        voluptates, eveniet nostrum vitae velit incidunt distinctio voluptas
+        libero accusantium? Ad, quis!
+      </p>
+    </div>
+
+    <div class="action">
+      <cds-button-set>
+        <button cdsButton="secondary" size="md">Skip</button>
+      </cds-button-set>
+      <button #trigger cdsButton="secondary" (click)="open = true">Open</button>
+      <cds-modal
+        [open]="open"
+        [trigger]="trigger"
+        (overlaySelected)="open = false"
+      >
+        <cds-modal-header (closeSelect)="open = false" [showCloseButton]="true">
+          <p class="cds--modal-header__heading cds--type-beta">CONFIRM</p>
+        </cds-modal-header>
+        <div class="cds--modal-content">
+          <cds-text-label> Cause</cds-text-label>
+          <input
+            cdsText
+            size="md"
+            theme="dark"
+            placeholder="Cause"
+            autocomplete="off"
+          />
+          <cds-dropdown
+            label="Action"
+            [skeleton]="skeleton"
+            size="md"
+            [dropUp]="false"
+            theme="dark"
+            placeholder="Select"
+            [disabled]="disabled"
+            (selected)="selected($event)"
+          >
+            <cds-dropdown-list [items]="items"></cds-dropdown-list>
+          </cds-dropdown>
+        </div>
+        <cds-modal-footer>
+          <ng-container>
+            <button
+              cdsButton="secondary"
+              (click)="open = false"
+              [attr.modal-primary-focus]="true"
+            >
+              Save & Notify user
+            </button>
+          </ng-container>
+        </cds-modal-footer>
+      </cds-modal>
+    </div>
+  </div>
+</div>

@@ -1,18 +1,18 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
-import { BaseChartDirective } from 'ng2-charts';
+import { BaseChartDirective, NgChartsModule } from 'ng2-charts';
 import { SharedModule } from '../../../../../../shared/shared.module';
-import { valueOrDefault } from 'chart.js/helpers';
+import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import colorLib from '@kurkle/color';
+import { valueOrDefault } from 'chart.js/helpers';
 
 @Component({
-  selector: 'app-user-chart',
+  selector: 'app-post-chart',
   standalone: true,
-  imports: [SharedModule],
-  templateUrl: './user-chart.component.html',
-  styleUrl: './user-chart.component.scss',
+  imports: [SharedModule, NgChartsModule],
+  templateUrl: './post-chart.component.html',
+  styleUrl: './post-chart.component.scss',
 })
-export class UserChartComponent implements OnInit {
+export class PostChartComponent implements OnInit {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
   public MONTHS = ['Week 1', 'Week 2', 'Week 3', 'Week 4'];
   public CHART_COLORS = {
@@ -39,15 +39,15 @@ export class UserChartComponent implements OnInit {
       },
     },
   };
-  public barChartType: ChartType = 'line';
+  public barChartType: ChartType = 'bar';
 
-  public barChartData: ChartData<'line'> = {
+  public barChartData: ChartData<'bar'> = {
     labels: this.MONTHS,
     datasets: [
       {
         data: this.numbers(this.NUMBER_CFG),
         borderColor: this.CHART_COLORS.red,
-        backgroundColor: this.transparentize(this.CHART_COLORS.red, 0.5),
+        backgroundColor: this.CHART_COLORS.blue,
       },
     ],
   };

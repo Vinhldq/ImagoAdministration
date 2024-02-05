@@ -1,20 +1,28 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
-import { BaseChartDirective } from 'ng2-charts';
+import { BaseChartDirective, NgChartsModule } from 'ng2-charts';
 import { SharedModule } from '../../../../../../shared/shared.module';
-import { valueOrDefault } from 'chart.js/helpers';
+import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import colorLib from '@kurkle/color';
+import { valueOrDefault } from 'chart.js/helpers';
 
 @Component({
-  selector: 'app-user-chart',
+  selector: 'app-category-chart',
   standalone: true,
-  imports: [SharedModule],
-  templateUrl: './user-chart.component.html',
-  styleUrl: './user-chart.component.scss',
+  imports: [SharedModule, NgChartsModule],
+  templateUrl: './category-chart.component.html',
+  styleUrl: './category-chart.component.scss',
 })
-export class UserChartComponent implements OnInit {
+export class CategoryChartComponent implements OnInit {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
-  public MONTHS = ['Week 1', 'Week 2', 'Week 3', 'Week 4'];
+  public CATEGORIES = [
+    'Giáo dục',
+    'Ẩm thực',
+    'Người nổi tiếng',
+    'Thời trang',
+    'Cà phê',
+    'Xe hơi',
+    'Kiến trúc',
+  ];
   public CHART_COLORS = {
     red: 'rgb(255, 99, 132)',
     orange: 'rgb(255, 159, 64)',
@@ -24,14 +32,15 @@ export class UserChartComponent implements OnInit {
     purple: 'rgb(153, 102, 255)',
     grey: 'rgb(201, 203, 207)',
   };
-  public DATA_COUNT = 7;
-  public NUMBER_CFG = { count: this.DATA_COUNT, min: 0, max: 100 };
+  public DATA_COUNT = this.CATEGORIES.length;
+  public NUMBER_CFG = { count: this.DATA_COUNT, min: -100, max: 100 };
 
   ngOnInit(): void {
     this.randomize();
   }
 
   public barChartOptions: ChartConfiguration['options'] = {
+    indexAxis: 'y',
     responsive: true,
     plugins: {
       legend: {
@@ -39,15 +48,16 @@ export class UserChartComponent implements OnInit {
       },
     },
   };
-  public barChartType: ChartType = 'line';
+  public barChartType: ChartType = 'bar';
 
-  public barChartData: ChartData<'line'> = {
-    labels: this.MONTHS,
+  public barChartData: ChartData<'bar'> = {
+    labels: this.CATEGORIES,
     datasets: [
       {
+        label: '16 đến 24 tuổi',
         data: this.numbers(this.NUMBER_CFG),
         borderColor: this.CHART_COLORS.red,
-        backgroundColor: this.transparentize(this.CHART_COLORS.red, 0.5),
+        backgroundColor: this.CHART_COLORS.green,
       },
     ],
   };
@@ -111,13 +121,16 @@ export class UserChartComponent implements OnInit {
   }
 
   public randomize(): void {
-    // Only Change 3 values
     this.barChartData.datasets[0].data = [
       Math.round(Math.random() * 100),
       Math.round(Math.random() * 100),
       Math.round(Math.random() * 100),
       Math.round(Math.random() * 100),
+      Math.round(Math.random() * 100),
+      Math.round(Math.random() * 100),
+      Math.round(Math.random() * 100),
     ];
+
     this.chart?.update();
   }
 }

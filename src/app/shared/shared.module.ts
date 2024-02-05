@@ -18,6 +18,7 @@ import {
   InputModule,
   DropdownModule,
 } from 'carbon-components-angular';
+import { NgChartsModule } from 'ng2-charts';
 
 export const CarbonModules = [
   UIShellModule,
@@ -45,6 +46,7 @@ export const CarbonModules = [
     ModalModule,
     InputModule,
     DropdownModule,
+    NgChartsModule,
   ],
   exports: [
     FormsModule,
@@ -59,6 +61,7 @@ export const CarbonModules = [
     ModalModule,
     InputModule,
     DropdownModule,
+    NgChartsModule,
   ],
 })
 export class SharedModule {}

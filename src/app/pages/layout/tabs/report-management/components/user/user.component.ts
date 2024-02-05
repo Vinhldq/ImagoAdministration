@@ -42,6 +42,7 @@ export class UserComponent implements OnInit {
     'Spamming',
     'Hate Speech',
     'Inappropriate Behavior',
+    '',
   ];
   searchValue = '';
 
@@ -370,10 +371,31 @@ export class UserComponent implements OnInit {
       new TableItem({ data: 'Fake Account' }),
       new TableItem({ data: 'pending' }),
     ],
+    [
+      new TableItem({ data: '47' }),
+      new TableItem({ data: 'Thi Lan' }),
+      new TableItem({ data: '27/05/2024' }),
+      new TableItem({ data: 'Fake Account' }),
+      new TableItem({ data: 'pending' }),
+    ],
+    [
+      new TableItem({ data: '48' }),
+      new TableItem({ data: 'Thi Lan' }),
+      new TableItem({ data: '27/05/2024' }),
+      new TableItem({ data: 'Fake Account' }),
+      new TableItem({ data: 'pending' }),
+    ],
+    [
+      new TableItem({ data: '48' }),
+      new TableItem({ data: 'Thi Lan' }),
+      new TableItem({ data: '27/05/2024' }),
+      new TableItem({ data: 'Fake Account' }),
+      new TableItem({ data: 'pending' }),
+    ],
   ];
   dataChoose: TableItem[][] = [];
   dataLength = this.dataset.length;
-  dataLengthPerPage = 10;
+  dataLengthPerPage = 9;
   dataResidual = this.dataLength % this.dataLengthPerPage;
 
   constructor(protected iconService: IconService) {
@@ -405,9 +427,10 @@ export class UserComponent implements OnInit {
       );
     }
     if (this.dataResidual !== 0) {
+      console.log('Residual:', this.dataResidual);
       this.modelPagination.totalDataLength =
         Math.floor(this.dataLength / this.dataLengthPerPage) + 1;
-      for (let i = 0; i < this.dataResidual; i++) {
+      for (let i = 0; i <= this.dataResidual; i++) {
         this.dataset = [
           ...this.dataset,
           [
@@ -418,6 +441,7 @@ export class UserComponent implements OnInit {
             new TableItem({ data: '' }),
           ],
         ];
+        console.log(this.dataLength);
       }
     }
 
@@ -438,7 +462,6 @@ export class UserComponent implements OnInit {
         data: 'State',
       }),
     ];
-    console.log(this.dataset[0]);
     for (let i = 0; i < this.dataLengthPerPage; i++) {
       this.dataChoose = [...this.dataChoose, this.dataset[i]];
     }

@@ -1,18 +1,18 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { BaseChartDirective, NgChartsModule } from 'ng2-charts';
 import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
-import { BaseChartDirective } from 'ng2-charts';
-import { SharedModule } from '../../../../../../shared/shared.module';
-import { valueOrDefault } from 'chart.js/helpers';
 import colorLib from '@kurkle/color';
+import { valueOrDefault } from 'chart.js/helpers';
+import { SharedModule } from '../../../../../../shared/shared.module';
 
 @Component({
-  selector: 'app-user-chart',
+  selector: 'app-reported-post-chart',
   standalone: true,
-  imports: [SharedModule],
-  templateUrl: './user-chart.component.html',
-  styleUrl: './user-chart.component.scss',
+  imports: [SharedModule, NgChartsModule],
+  templateUrl: './reported-post-chart.component.html',
+  styleUrl: './reported-post-chart.component.scss',
 })
-export class UserChartComponent implements OnInit {
+export class ReportedPostChartComponent implements OnInit {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
   public MONTHS = ['Week 1', 'Week 2', 'Week 3', 'Week 4'];
   public CHART_COLORS = {
@@ -32,22 +32,43 @@ export class UserChartComponent implements OnInit {
   }
 
   public barChartOptions: ChartConfiguration['options'] = {
+    scales: {
+      x: {
+        stacked: true,
+      },
+      y: {
+        stacked: true,
+      },
+    },
     responsive: true,
     plugins: {
       legend: {
-        display: false,
+        position: 'bottom',
       },
     },
   };
-  public barChartType: ChartType = 'line';
+  public barChartType: ChartType = 'bar';
 
-  public barChartData: ChartData<'line'> = {
+  public barChartData: ChartData<'bar'> = {
     labels: this.MONTHS,
     datasets: [
       {
+        label: 'Fake Account',
         data: this.numbers(this.NUMBER_CFG),
         borderColor: this.CHART_COLORS.red,
-        backgroundColor: this.transparentize(this.CHART_COLORS.red, 0.5),
+        backgroundColor: this.CHART_COLORS.blue,
+      },
+      {
+        label: 'Pretending',
+        data: this.numbers(this.NUMBER_CFG),
+        borderColor: this.CHART_COLORS.red,
+        backgroundColor: this.CHART_COLORS.red,
+      },
+      {
+        label: 'Suspicious Activity',
+        data: this.numbers(this.NUMBER_CFG),
+        borderColor: this.CHART_COLORS.red,
+        backgroundColor: this.CHART_COLORS.orange,
       },
     ],
   };
@@ -118,6 +139,19 @@ export class UserChartComponent implements OnInit {
       Math.round(Math.random() * 100),
       Math.round(Math.random() * 100),
     ];
+    this.barChartData.datasets[1].data = [
+      Math.round(Math.random() * 100),
+      Math.round(Math.random() * 100),
+      Math.round(Math.random() * 100),
+      Math.round(Math.random() * 100),
+    ];
+    this.barChartData.datasets[2].data = [
+      Math.round(Math.random() * 100),
+      Math.round(Math.random() * 100),
+      Math.round(Math.random() * 100),
+      Math.round(Math.random() * 100),
+    ];
+
     this.chart?.update();
   }
 }
