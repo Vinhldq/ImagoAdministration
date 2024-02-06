@@ -8,8 +8,11 @@ import {
   GridModule,
   BreadcrumbModule,
   ButtonModule,
+  ToggleModule,
+  
   TabsModule,
   ThemeModule,
+ 
   TableModule,
   DialogModule,
   CheckboxModule,
@@ -25,9 +28,13 @@ export const CarbonModules = [
   IconModule,
   GridModule,
   BreadcrumbModule,
-  ButtonModule,
+  InputModule,
   TabsModule,
   ThemeModule,
+  ToggleModule,
+  ButtonModule,
+  DropdownModule,
+  PaginationModule,
 ];
 
 @NgModule({
