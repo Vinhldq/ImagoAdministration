@@ -3,6 +3,8 @@ import { BaseChartDirective, NgChartsModule } from 'ng2-charts';
 import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import colorLib from '@kurkle/color';
 import { valueOrDefault } from 'chart.js/helpers';
+import { Store } from '@ngrx/store';
+import { DashboardState } from '../../../../../../ngrx/dashboard/dashboard.state';
 
 @Component({
   selector: 'app-unique-visitor-chart',
@@ -12,44 +14,68 @@ import { valueOrDefault } from 'chart.js/helpers';
   styleUrl: './unique-visitor-chart.component.scss',
 })
 export class UniqueVisitorChartComponent implements OnInit {
+  constructor(private store: Store<{ dashboard: DashboardState }>) {}
+
+  dashboardDetail$ = this.store.select((state) => state.dashboard);
+
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
-  public MONTHS = ['Week 1', 'Week 2', 'Week 3', 'Week 4'];
-  public CHART_COLORS = {
-    red: 'rgb(255, 99, 132)',
-    orange: 'rgb(255, 159, 64)',
-    yellow: 'rgb(255, 205, 86)',
-    green: 'rgb(75, 192, 192)',
-    blue: 'rgb(54, 162, 235)',
-    purple: 'rgb(153, 102, 255)',
-    grey: 'rgb(201, 203, 207)',
-  };
-  public DATA_COUNT = 7;
-  public NUMBER_CFG = { count: this.DATA_COUNT, min: 0, max: 100 };
+
+  public MONTHS = [];
+  public CHART_COLORS: string[] = [
+    'rgb(255, 99, 132)',
+    'rgb(255, 159, 64)',
+    'rgb(255, 205, 86)',
+    'rgb(75, 192, 192)',
+    'rgb(54, 162, 235)',
+    'rgb(153, 102, 255)',
+    'rgb(201, 203, 207)',
+  ];
+  public DATA_COUNT: number;
+  public NUMBER_CFG: any = {};
 
   ngOnInit(): void {
+    this.dashboardDetail$.subscribe((data) => {
+      if (data.chart == '') {
+        this.MONTHS = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY'];
+      } else {
+        this.MONTHS = [
+          'MONDAY',
+          'TUESDAY',
+          'WEDNESDAY',
+          'THURSDAY',
+          'FRIDAY',
+          'SATURDAY',
+          'SUNDAY',
+        ];
+      }
+    });
+    this.DATA_COUNT = this.MONTHS.length;
+    this.NUMBER_CFG = { count: this.DATA_COUNT, min: 0, max: 100 };
+    this.barChartOptions = {
+      responsive: true,
+      plugins: {
+        legend: {
+          display: false,
+        },
+      },
+    };
+    this.barChartType = 'line';
+    this.barChartData = {
+      labels: this.MONTHS,
+      datasets: [
+        {
+          data: this.numbers(this.NUMBER_CFG),
+          borderColor: this.CHART_COLORS[0],
+          backgroundColor: this.transparentize(this.CHART_COLORS[0], 0.5),
+        },
+      ],
+    };
     this.randomize();
   }
 
-  public barChartOptions: ChartConfiguration['options'] = {
-    responsive: true,
-    plugins: {
-      legend: {
-        display: false,
-      },
-    },
-  };
-  public barChartType: ChartType = 'line';
-
-  public barChartData: ChartData<'line'> = {
-    labels: this.MONTHS,
-    datasets: [
-      {
-        data: this.numbers(this.NUMBER_CFG),
-        borderColor: this.CHART_COLORS.red,
-        backgroundColor: this.transparentize(this.CHART_COLORS.red, 0.5),
-      },
-    ],
-  };
+  public barChartOptions: ChartConfiguration['options'] = {};
+  public barChartType: ChartType;
+  public barChartData: ChartData<'line'>;
 
   transparentize(value, opacity) {
     var alpha = opacity === undefined ? 0.5 : 1 - opacity;
@@ -110,13 +136,9 @@ export class UniqueVisitorChartComponent implements OnInit {
   }
 
   public randomize(): void {
-    // Only Change 3 values
-    this.barChartData.datasets[0].data = [
-      Math.round(Math.random() * 100),
-      Math.round(Math.random() * 100),
-      Math.round(Math.random() * 100),
-      Math.round(Math.random() * 100),
-    ];
+    for (let i = 0; i < this.DATA_COUNT; i++) {
+      this.barChartData.datasets[0].data[i] = Math.round(Math.random() * 100);
+    }
     this.chart?.update();
   }
 }

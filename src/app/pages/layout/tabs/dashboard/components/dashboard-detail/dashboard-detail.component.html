@@ -1,0 +1,44 @@
+<cds-tab-header-group
+  type="line"
+  [followFocus]="followFocus"
+  [cacheActive]="cacheActive"
+  [isNavigation]="isNavigation"
+>
+  <button cdsTabHeader (click)="setActiveChart('post')">Posts</button>
+  <button cdsTabHeader (click)="setActiveChart('reportedPost')">
+    Reported Posts
+  </button>
+  <button cdsTabHeader (click)="setActiveChart('user')">Users</button>
+  <button cdsTabHeader (click)="setActiveChart('uniqueVisitor')">
+    Unique Visitors
+  </button>
+  <button cdsTabHeader (click)="setActiveChart('category')">Categories</button>
+</cds-tab-header-group>
+
+<div class="container">
+  <div class="table">
+    <cds-table
+      [model]="model"
+      size="xl"
+      [skeleton]="skeleton"
+      [showSelectionColumn]="false"
+      [enableSingleSelect]="false"
+      [sortable]="false"
+      [stickyHeader]="false"
+      [striped]="false"
+    >
+      <ng-content></ng-content>
+    </cds-table>
+  </div>
+  <div class="chart">
+    <app-post-chart *ngIf="activeChart === 'post'"></app-post-chart>
+    <app-reported-post-chart
+      *ngIf="activeChart === 'reportedPost'"
+    ></app-reported-post-chart>
+    <app-user-chart *ngIf="activeChart === 'user'"></app-user-chart>
+    <app-unique-visitor-chart
+      *ngIf="activeChart === 'uniqueVisitor'"
+    ></app-unique-visitor-chart>
+    <app-category-chart *ngIf="activeChart === 'category'"></app-category-chart>
+  </div>
+</div>
