@@ -1,0 +1,42 @@
+::ng-deep .cds--tab-content {
+  padding: 15px 0 0 0;
+}
+
+::ng-deep .cds--tabs .cds--tabs__nav-item--selected {
+  border-block-end: 2px solid #161616;
+}
+
+::ng-deep .cds--tabs .cds--tabs__nav-link:focus,
+.cds--tabs .cds--tabs__nav-link:active {
+  outline: 2px solid #161616;
+}
+
+::ng-deep canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.container {
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 25px;
+
+  .table {
+    width: 25%;
+  }
+
+  .chart {
+    width: 70%;
+  }
+}
+
+.chart-item {
+  display: none;
+}
+
+.chart-item.active {
+  display: block;
+}
