@@ -43,10 +43,12 @@ export class DashboardDetailComponent implements OnInit, OnDestroy {
   @Input() model = new TableModel();
   @Input() noData = false;
 
+  tabIndex: number = 0;
+
   ngOnInit(): void {
     const chartName = this.activatedRoute.snapshot.params['name'];
     this.store.dispatch(DashboardActions.getChart({ chart: chartName }));
-    this.setActiveChart(chartName);
+    // this.setActiveChart(chartName, this.tabIndex);
 
     this.model.header = [
       new TableHeaderItem({
@@ -61,7 +63,7 @@ export class DashboardDetailComponent implements OnInit, OnDestroy {
 
     this.model.rowsSelectedChange.subscribe((event) => console.log(event));
     this.model.selectAllChange.subscribe((event) =>
-      console.log(event ? 'All rows selected!' : 'All rows deselected!'),
+      console.log(event ? 'All rows selected!' : 'All rows deselected!')
     );
 
     if (!this.noData && !this.skeleton) {
@@ -82,8 +84,35 @@ export class DashboardDetailComponent implements OnInit, OnDestroy {
 
   constructor(
     private store: Store<{ dashboard: DashboardState }>,
-    private activatedRoute: ActivatedRoute,
-  ) {}
+    private activatedRoute: ActivatedRoute
+  ) {
+    activatedRoute.params.subscribe((id) => {
+      console.log(id);
+    });
+  }
+
+  tabList = [
+    {
+      name: 'Posts',
+      activeTab: 'post',
+    },
+    {
+      name: 'Reported Posts',
+      activeTab: 'reportedPost',
+    },
+    {
+      name: 'Users',
+      activeTab: 'user',
+    },
+    {
+      name: 'Unique Visitors',
+      activeTab: 'uniqueVisitor',
+    },
+    {
+      name: 'Categories',
+      activeTab: 'category',
+    },
+  ];
 
   @Input() skeleton = false;
   @Input() followFocus = true;
@@ -93,8 +122,10 @@ export class DashboardDetailComponent implements OnInit, OnDestroy {
 
   activeChart: string = '';
 
-  setActiveChart(chart: string) {
+  setActiveChart(chart: string, index: number) {
     this.activeChart = chart;
+    this.tabIndex = index;
+    console.log(this.tabIndex);
   }
 
   ngOnDestroy(): void {
