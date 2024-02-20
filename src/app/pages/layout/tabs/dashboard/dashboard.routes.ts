@@ -13,8 +13,11 @@ export const DASHBOARD_ROUTES: Route[] = [
         component: DashboardOverviewComponent,
       },
       {
-        path: ':name',
-        component: DashboardDetailComponent,
+        path: 'detail',
+        loadChildren: () =>
+          import('./components/dashboard-detail/dashboard-detail.routes').then(
+            (mod) => mod.DASHBOARD_DETAIL_ROUTES,
+          ),
       },
     ],
   },
