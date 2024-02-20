@@ -1,19 +1,20 @@
-<cds-tab-header-group
+<cds-tabs
   type="line"
   [followFocus]="followFocus"
   [cacheActive]="cacheActive"
   [isNavigation]="isNavigation"
 >
-  <button cdsTabHeader (click)="setActiveChart('post')">Posts</button>
-  <button cdsTabHeader (click)="setActiveChart('reportedPost')">
-    Reported Posts
-  </button>
-  <button cdsTabHeader (click)="setActiveChart('user')">Users</button>
-  <button cdsTabHeader (click)="setActiveChart('uniqueVisitor')">
-    Unique Visitors
-  </button>
-  <button cdsTabHeader (click)="setActiveChart('category')">Categories</button>
-</cds-tab-header-group>
+  @for (chart of chartItems; track chart.name; let i = $index) {
+    <cds-tab
+      (selected)="setActiveChart(chart.url, i)"
+      [heading]="chart.name"
+      [tabIndex]="selectedIndex == i ? 0 : -1"
+      aria-selected="true"
+    >
+      <!--      {{ chart.name }}-->
+    </cds-tab>
+  }
+</cds-tabs>
 
 <div class="container">
   <div class="table">
@@ -31,14 +32,6 @@
     </cds-table>
   </div>
   <div class="chart">
-    <app-post-chart *ngIf="activeChart === 'post'"></app-post-chart>
-    <app-reported-post-chart
-      *ngIf="activeChart === 'reportedPost'"
-    ></app-reported-post-chart>
-    <app-user-chart *ngIf="activeChart === 'user'"></app-user-chart>
-    <app-unique-visitor-chart
-      *ngIf="activeChart === 'uniqueVisitor'"
-    ></app-unique-visitor-chart>
-    <app-category-chart *ngIf="activeChart === 'category'"></app-category-chart>
+    <router-outlet></router-outlet>
   </div>
 </div>
