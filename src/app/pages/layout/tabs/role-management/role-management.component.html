@@ -6,6 +6,8 @@
         <cds-table-toolbar-content>
           <cds-table-toolbar-search
             [expandable]="true"
+            (valueChange)="filterNodeNames($event)"
+            (clear)="filterNodeNames('')"
           >
           </cds-table-toolbar-search>
           <button cdsButton="secondary" size="md">
@@ -26,6 +28,15 @@
           [isDataGrid]="isDataGrid"
           [striped]="striped">
         </cds-table>
+        <ng-template #overflowMenuItemTemplate let-data="data">
+          <svg class="cds--btn__icon" cdsIcon="add" size="20" (click)="openCUD(1)"></svg>
+        </ng-template>
+        <ng-template #overflowMenuItemTemplateRemove let-data="data">
+          <svg class="cds--btn__icon" cdsIcon="trash-can" size="20" (click)="deleteData()"></svg>
+        </ng-template>
+        <ng-template #overflowMenuItemTemplateEdit let-data="data">
+          <svg class="cds--btn__icon" cdsIcon="edit" size="20" (click)="openCUD(2)"></svg>
+        </ng-template>
         <cds-pagination-nav
           [model]="model"
           [disabled]="disabled"
@@ -36,32 +47,28 @@
     </cds-table-container>
   </div>
 
-
   @if (isActiveOpenCUD == true) {
     @if (currentOpenRole == 1) {
       <div class="editrole">
         <cds-button-set>
           <button cdsButton="secondary" [size]="'md'" [isExpressive]="true" (click)="closeCUD()">
             Add Role
-            <svg class="cds--btn__icon" cdsIcon="close" size="16"></svg>
+            <svg class="cds--btn__icon" cdsIcon="close" size="20"></svg>
           </button>
         </cds-button-set>
 
         <h3>Name Role</h3>
-        <cds-dropdown
-          [skeleton]="skeleton"
-          [size]="'md'"
-          [dropUp]="dropUp"
-          [invalid]="invalid"
-          [invalidText]="invalidText"
-          [warn]="warn"
-          [warnText]="warnText"
-          placeholder="Select"
-          [disabled]="disabled"
-          (selected)="($event)"
-        >
-          <cds-dropdown-list [items]="listItems"></cds-dropdown-list>
-        </cds-dropdown>
+        <div>
+          <input
+            cdsText
+            [size]="'md'"
+            [invalid]="invalid"
+            [warn]="warn"
+            [disabled]="disabled"
+            [placeholder]="placeholder"
+          />
+        </div>
+
         <div class="drbrole">
           <h3>Describle Role</h3>
           <h4>0/100</h4>
@@ -76,7 +83,7 @@
         <cds-button-set>
           <button cdsButton="secondary" [size]="'md'" [isExpressive]="true">
             Add and Save
-            <svg class="cds--btn__icon" cdsIcon="add" size="16"></svg>
+            <svg class="cds--btn__icon" cdsIcon="add" size="20"></svg>
           </button>
         </cds-button-set>
       </div>
@@ -85,7 +92,7 @@
         <cds-button-set>
           <button cdsButton="secondary" [size]="'md'" [isExpressive]="true" (click)="closeCUD()">
             Edit Role
-            <svg class="cds--btn__icon" cdsIcon="close" size="16"></svg>
+            <svg class="cds--btn__icon" cdsIcon="close" size="20"></svg>
           </button>
         </cds-button-set>
 
@@ -119,20 +126,11 @@
         <cds-button-set>
           <button cdsButton="secondary" [size]="'md'" [isExpressive]="true">
             Edit and Save
-            <svg class="cds--btn__icon" cdsIcon="add" size="16"></svg>
+            <svg class="cds--btn__icon" cdsIcon="edit" size="20"></svg>
           </button>
         </cds-button-set>
       </div>
     }
   }
 </div>
-<ng-template #overflowMenuItemTemplate let-data="data">
-  <svg class="cds--btn__icon" cdsIcon="add" size="16" (click)="openCUD(1)"></svg>
-</ng-template>
-<ng-template #overflowMenuItemTemplateRemove let-data="data">
-  <svg class="cds--btn__icon" cdsIcon="trash-can" size="16" (click)="deleteData()"></svg>
-</ng-template>
-<ng-template #overflowMenuItemTemplateEdit let-data="data">
-  <svg class="cds--btn__icon" cdsIcon="add" size="16" (click)="openCUD(2)"></svg>
-</ng-template>
 

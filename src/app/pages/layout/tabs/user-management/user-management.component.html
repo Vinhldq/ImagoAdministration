@@ -5,53 +5,60 @@
       <cds-table-toolbar-content>
         <cds-table-toolbar-search
           [expandable]="true"
+          (valueChange)="filterNodeNames($event)"
+          (clear)="filterNodeNames('')"
         >
         </cds-table-toolbar-search>
         <button cdsButton="secondary" size="md">
           Filter
-          <svg cdsIcon="filter" size="20" class="cds--btn__icon"></svg>
+          <svg cdsIcon="filter" class="cds--btn__icon" size="20"></svg>
         </button>
       </cds-table-toolbar-content>
     </cds-table-toolbar>
     <div class="table">
+      <ng-template #overflowMenuItemTemplateImg let-data="data">
+        <img id="img"
+             src="https://i.pinimg.com/564x/1a/74/04/1a7404e4d590f8dd0a32563b9217697a.jpg">
+      </ng-template>
       <cds-table
-        [model]="model"
-        [size]="'md'"
-        [sortable]="sortable"
-        [showSelectionColumn]="showSelectionColumn"
-        [stickyHeader]="stickyHeader"
-        [skeleton]="skeleton"
         [isDataGrid]="isDataGrid"
+        [model]="model"
+        [showSelectionColumn]="showSelectionColumn"
+        [enableSingleSelect]="enableSingleSelect"
+        [size]="'md'"
+        [skeleton]="skeleton"
+        [sortable]="sortable"
+        [stickyHeader]="stickyHeader"
         [striped]="striped">
       </cds-table>
+      <ng-template #overflowMenuItemTemplateBlock let-data="data">
+        <span class="material-symbols-outlined">
+          block
+        </span>
+      </ng-template>
+
+      <ng-template #overflowMenuItemTemplateUnBlock let-data="data">
+        <span class="material-symbols-outlined">
+          restart_alt
+        </span>
+      </ng-template>
+      <ng-template #overflowMenuItemTemplateChoose let-data="data">
+        <cds-overflow-menu>
+          <cds-overflow-menu-option>
+            User
+          </cds-overflow-menu-option>
+          <cds-overflow-menu-option>
+            Admin
+          </cds-overflow-menu-option>
+        </cds-overflow-menu>
+      </ng-template>
+
       <cds-pagination-nav
-        [model]="model"
+        (selectPage)="selectPage($event)"
         [disabled]="disabled"
-        [numOfItemsToShow]="8"
-        (selectPage)="selectPage($event)">
+        [model]="model"
+        [numOfItemsToShow]="8">
       </cds-pagination-nav>
     </div>
   </cds-table-container>
 </div>
-
-<ng-template #overflowMenuItemTemplateImg let-data="data">
-  <img id = "img"
-       src="https://i.pinimg.com/564x/1a/74/04/1a7404e4d590f8dd0a32563b9217697a.jpg">
-</ng-template>
-
-
-<ng-template #overflowMenuItemTemplate let-data="data">
- <span class="material-symbols-outlined">
-block
-</span>
-</ng-template>
-
-<ng-template #overflowMenuItemTemplateEdit let-data="data">
-
-   <span class="material-symbols-outlined">
-restart_alt
-</span>
-</ng-template>
-
-
-
