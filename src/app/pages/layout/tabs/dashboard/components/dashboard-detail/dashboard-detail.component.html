@@ -1,0 +1,37 @@
+<cds-tabs
+  type="line"
+  [followFocus]="followFocus"
+  [cacheActive]="cacheActive"
+  [isNavigation]="isNavigation"
+>
+  @for (chart of chartItems; track chart.name; let i = $index) {
+    <cds-tab
+      (selected)="setActiveChart(chart.url, i)"
+      [heading]="chart.name"
+      [tabIndex]="selectedIndex == i ? 0 : -1"
+      aria-selected="true"
+    >
+      <!--      {{ chart.name }}-->
+    </cds-tab>
+  }
+</cds-tabs>
+
+<div class="container">
+  <div class="table">
+    <cds-table
+      [model]="model"
+      size="xl"
+      [skeleton]="skeleton"
+      [showSelectionColumn]="false"
+      [enableSingleSelect]="false"
+      [sortable]="false"
+      [stickyHeader]="false"
+      [striped]="false"
+    >
+      <ng-content></ng-content>
+    </cds-table>
+  </div>
+  <div class="chart">
+    <router-outlet></router-outlet>
+  </div>
+</div>

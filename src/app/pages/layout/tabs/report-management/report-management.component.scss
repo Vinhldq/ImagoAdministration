@@ -11,6 +11,13 @@
   outline: 2px solid #161616;
 }
 
+::ng-deep .cds--btn--secondary:focus {
+  border-color: var(--cds-button-focus-color, var(--cds-focus, #161616));
+  box-shadow:
+    inset 0 0 0 1px var(--cds-button-focus-color, var(--cds-focus, #161616)),
+    inset 0 0 0 2px var(--cds-background, #ffffff);
+}
+
 h1 {
   font-size: 18px;
   font-weight: 800;

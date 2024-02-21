@@ -4,6 +4,8 @@ import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import colorLib from '@kurkle/color';
 import { valueOrDefault } from 'chart.js/helpers';
 import { SharedModule } from '../../../../../../shared/shared.module';
+import { Store } from '@ngrx/store';
+import { DashboardState } from '../../../../../../ngrx/dashboard/dashboard.state';
 
 @Component({
   selector: 'app-reported-post-chart',
@@ -13,70 +15,82 @@ import { SharedModule } from '../../../../../../shared/shared.module';
   styleUrl: './reported-post-chart.component.scss',
 })
 export class ReportedPostChartComponent implements OnInit {
+  constructor(private store: Store<{ dashboard: DashboardState }>) {}
+
+  dashboardDetail$ = this.store.select((state) => state.dashboard);
+
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
-  public MONTHS = ['Week 1', 'Week 2', 'Week 3', 'Week 4'];
-  public CHART_COLORS = {
-    red: 'rgb(255, 99, 132)',
-    orange: 'rgb(255, 159, 64)',
-    yellow: 'rgb(255, 205, 86)',
-    green: 'rgb(75, 192, 192)',
-    blue: 'rgb(54, 162, 235)',
-    purple: 'rgb(153, 102, 255)',
-    grey: 'rgb(201, 203, 207)',
-  };
-  public DATA_COUNT = 7;
-  public NUMBER_CFG = { count: this.DATA_COUNT, min: 0, max: 100 };
+  public labels: string[] = [
+    'Fake Account',
+    'Pretending',
+    'Suspicious Activity',
+  ];
+  public MONTHS = [];
+  public CHART_COLORS: string[] = [
+    'rgb(255, 99, 132)',
+    'rgb(54, 162, 235)',
+    'rgb(255, 159, 64)',
+    'rgb(201, 203, 207)',
+    'rgb(255, 205, 86)',
+    'rgb(75, 192, 192)',
+    'rgb(153, 102, 255)',
+  ];
+  public DATA_COUNT: number;
+  public NUMBER_CFG: any = {};
 
   ngOnInit(): void {
+    this.dashboardDetail$.subscribe((data) => {
+      if (data.chart == '') {
+        this.MONTHS = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY'];
+      } else {
+        this.MONTHS = [
+          'MONDAY',
+          'TUESDAY',
+          'WEDNESDAY',
+          'THURSDAY',
+          'FRIDAY',
+          'SATURDAY',
+          'SUNDAY',
+        ];
+      }
+    });
+    this.DATA_COUNT = this.MONTHS.length;
+    this.NUMBER_CFG = { count: this.DATA_COUNT, min: 0, max: 100 };
+    this.barChartOptions = {
+      scales: {
+        x: {
+          stacked: true,
+        },
+        y: {
+          stacked: true,
+        },
+      },
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'bottom',
+        },
+      },
+    };
+    this.barChartType = 'bar';
+    this.barChartData = {
+      labels: this.MONTHS,
+      datasets: [],
+    };
+    for (let i = 0; i < this.labels.length; i++) {
+      this.barChartData.datasets.push({
+        label: this.labels[i],
+        data: this.numbers(this.NUMBER_CFG),
+        backgroundColor: this.CHART_COLORS[i],
+      });
+    }
+
     this.randomize();
   }
 
-  public barChartOptions: ChartConfiguration['options'] = {
-    scales: {
-      x: {
-        stacked: true,
-      },
-      y: {
-        stacked: true,
-      },
-    },
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'bottom',
-      },
-    },
-  };
-  public barChartType: ChartType = 'bar';
-
-  public barChartData: ChartData<'bar'> = {
-    labels: this.MONTHS,
-    datasets: [
-      {
-        label: 'Fake Account',
-        data: this.numbers(this.NUMBER_CFG),
-        borderColor: this.CHART_COLORS.red,
-        backgroundColor: this.CHART_COLORS.blue,
-      },
-      {
-        label: 'Pretending',
-        data: this.numbers(this.NUMBER_CFG),
-        borderColor: this.CHART_COLORS.red,
-        backgroundColor: this.CHART_COLORS.red,
-      },
-      {
-        label: 'Suspicious Activity',
-        data: this.numbers(this.NUMBER_CFG),
-        borderColor: this.CHART_COLORS.red,
-        backgroundColor: this.CHART_COLORS.orange,
-      },
-    ],
-  };
-
-  transparentize(value, opacity) {
-    var alpha = opacity === undefined ? 0.5 : 1 - opacity;
-    return colorLib(value).alpha(alpha).rgbString();
-  }
+  public barChartOptions: ChartConfiguration['options'] = {};
+  public barChartType: ChartType;
+  public barChartData: ChartData<'bar'>;
 
   public numbers(config) {
     var cfg = config || {};
@@ -132,25 +146,11 @@ export class ReportedPostChartComponent implements OnInit {
   }
 
   public randomize(): void {
-    // Only Change 3 values
-    this.barChartData.datasets[0].data = [
-      Math.round(Math.random() * 100),
-      Math.round(Math.random() * 100),
-      Math.round(Math.random() * 100),
-      Math.round(Math.random() * 100),
-    ];
-    this.barChartData.datasets[1].data = [
-      Math.round(Math.random() * 100),
-      Math.round(Math.random() * 100),
-      Math.round(Math.random() * 100),
-      Math.round(Math.random() * 100),
-    ];
-    this.barChartData.datasets[2].data = [
-      Math.round(Math.random() * 100),
-      Math.round(Math.random() * 100),
-      Math.round(Math.random() * 100),
-      Math.round(Math.random() * 100),
-    ];
+    for (let i = 0; i < this.DATA_COUNT; i++) {
+      for (let j = 0; j < this.barChartData.datasets.length; j++) {
+        this.barChartData.datasets[j].data[i] = Math.round(Math.random() * 100);
+      }
+    }
 
     this.chart?.update();
   }

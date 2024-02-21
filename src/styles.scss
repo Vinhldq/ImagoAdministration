@@ -12,7 +12,8 @@ $feature-flags: (
 
 @import "carbon-components/scss/globals/scss/styles";
 
-*,body{
+*,
+body {
   padding: 0;
   margin: 0;
   box-sizing: border-box;

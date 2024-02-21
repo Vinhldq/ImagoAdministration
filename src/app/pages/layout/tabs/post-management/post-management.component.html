@@ -1,1 +1,130 @@
-<p>post-management works!</p>
+<cds-table-container id="left-table">
+  <cds-table-header>
+    <h4 cdsTableHeaderTitle>Post Management</h4>
+  </cds-table-header>
+  <cds-table-toolbar>
+    <cds-table-toolbar-content>
+      <cds-table-toolbar-search
+        [expandable]="true"
+        (valueChange)="filterNodeNames($event)"
+        (clear)="filterNodeNames('')">
+      </cds-table-toolbar-search>
+      <button
+        cdsButton="ghost"
+        class="toolbar-action"
+        [cdsOverflowMenu]="templateRef"
+        placement="bottom"
+        [flip]="true"
+        [offset]="{ x: 3, y: 0 }">
+        <svg cdsIcon="filter" size="16" class="cds--toolbar-action__icon"></svg>
+      </button>
+      <button class="btn-search" cdsButton="secondary" size="sm">
+        Search
+        <svg class="cds--btn__icon"></svg>
+      </button>
+    </cds-table-toolbar-content>
+  </cds-table-toolbar>
+  <cds-table
+    [model]="model"
+    [sortable]="false"
+    size="md"
+    [skeleton]="skeleton"
+    [showSelectionColumn]="false"
+    [enableSingleSelect]="enableSingleSelect"
+    [stickyHeader]="stickyHeader"
+    [striped]="striped"
+    [isDataGrid]="isDataGrid">
+    <ng-content></ng-content>
+  </cds-table>
+</cds-table-container>
+
+<ng-template #templateRef>
+  <div style="padding: 0 1rem;" (click)="overflowOnClick($event)">
+    <div style="padding-top: 0.5rem; color: grey;">Countries shown</div>
+    <cds-checkbox
+      [checked]="displayedCountries.includes('US')"
+      (checkedChange)="filterCountries('US', $event)">
+      US
+    </cds-checkbox>
+    <cds-checkbox
+      [checked]="displayedCountries.includes('France')"
+      (checkedChange)="filterCountries('France', $event)">
+      France
+    </cds-checkbox>
+    <cds-checkbox
+      [checked]="displayedCountries.includes('Argentina')"
+      (checkedChange)="filterCountries('Argentina', $event)">
+      Argentina
+    </cds-checkbox>
+    <cds-checkbox
+      [checked]="displayedCountries.includes('Japan')"
+      (checkedChange)="filterCountries('Japan', $event)">
+      Japan
+    </cds-checkbox>
+  </div>
+</ng-template>
+
+<!--/////////////////////////////////////////////////////////////////////-->
+
+
+<cds-table-container id="right-table">
+  <cds-table-header>
+    <h4 cdsTableHeaderTitle>List Category</h4>
+  </cds-table-header>
+  <cds-table-toolbar>
+    <cds-table-toolbar-content>
+      <cds-table-toolbar-search
+        [expandable]="true"
+        (valueChange)="filterNodeNamesRight($event)"
+        (clear)="filterNodeNamesRight('')">
+      </cds-table-toolbar-search>
+      <button #trigger cdsButton="secondary" (click)="openDialog = true">Add new category</button>
+    </cds-table-toolbar-content>
+  </cds-table-toolbar>
+  <cds-table
+    [model]="modelRight"
+    [sortable]="false"
+    size="md"
+    [skeleton]="skeleton"
+    [showSelectionColumn]="false"
+    [enableSingleSelect]="enableSingleSelect"
+    [stickyHeader]="stickyHeader"
+    [striped]="striped"
+    [isDataGrid]="isDataGrid">
+  </cds-table>
+</cds-table-container>
+
+<cds-modal [open]="openDialog" [trigger]="trigger" (overlaySelected)="openDialog = false">
+  <cds-modal-header
+    (closeSelect)="openDialog = false"
+    [showCloseButton]="showCloseButton">
+    <p class="cds--modal-header__label cds--type-delta"></p>
+    <p class="cds--modal-header__heading cds--type-beta">Enter the category you want to add</p>
+  </cds-modal-header>
+  <div class="cds--modal-content">
+    <input class="input" type="text">
+  </div>
+  <cds-modal-footer>
+    <ng-container>
+      <button
+        class="btn-close"
+        cdsButton="secondary"
+        (click)="openDialog = false"
+        [attr.modal-primary-focus]="true">Close
+      </button>
+      <button
+        class="btn-add"
+        cdsButton="secondary"
+        (click)="openDialog = false"
+        [attr.modal-primary-focus]="true">Add
+      </button>
+    </ng-container>
+  </cds-modal-footer>
+</cds-modal>
+
+
+
+
+
+
+

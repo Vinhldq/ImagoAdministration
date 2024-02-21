@@ -4,6 +4,8 @@ import { SharedModule } from '../../../../../../shared/shared.module';
 import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import colorLib from '@kurkle/color';
 import { valueOrDefault } from 'chart.js/helpers';
+import { Store } from '@ngrx/store';
+import { DashboardState } from '../../../../../../ngrx/dashboard/dashboard.state';
 
 @Component({
   selector: 'app-category-chart',
@@ -13,59 +15,72 @@ import { valueOrDefault } from 'chart.js/helpers';
   styleUrl: './category-chart.component.scss',
 })
 export class CategoryChartComponent implements OnInit {
+  constructor(private store: Store<{ dashboard: DashboardState }>) {}
+
+  dashboardDetail$ = this.store.select((state) => state.dashboard);
+
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
-  public CATEGORIES = [
-    'Giáo dục',
-    'Ẩm thực',
-    'Người nổi tiếng',
-    'Thời trang',
-    'Cà phê',
-    'Xe hơi',
-    'Kiến trúc',
+  public CATEGORIES = [];
+  public CHART_COLORS: string[] = [
+    'rgb(255, 99, 132)',
+    'rgb(255, 159, 64)',
+    'rgb(255, 205, 86)',
+    'rgb(75, 192, 192)',
+    'rgb(54, 162, 235)',
+    'rgb(153, 102, 255)',
+    'rgb(201, 203, 207)',
   ];
-  public CHART_COLORS = {
-    red: 'rgb(255, 99, 132)',
-    orange: 'rgb(255, 159, 64)',
-    yellow: 'rgb(255, 205, 86)',
-    green: 'rgb(75, 192, 192)',
-    blue: 'rgb(54, 162, 235)',
-    purple: 'rgb(153, 102, 255)',
-    grey: 'rgb(201, 203, 207)',
-  };
-  public DATA_COUNT = this.CATEGORIES.length;
-  public NUMBER_CFG = { count: this.DATA_COUNT, min: -100, max: 100 };
+  public DATA_COUNT: number;
+  public NUMBER_CFG: any = {};
 
   ngOnInit(): void {
+    this.dashboardDetail$.subscribe((data) => {
+      if (data.chart == '') {
+        this.CATEGORIES = [
+          'Giáo dục',
+          'Ẩm thực',
+          'Người nổi tiếng',
+          'Thời trang',
+        ];
+      } else {
+        this.CATEGORIES = [
+          'Giáo dục',
+          'Ẩm thực',
+          'Người nổi tiếng',
+          'Thời trang',
+          'Cà phê',
+          'Xe hơi',
+          'Kiến trúc',
+        ];
+      }
+    });
+    this.DATA_COUNT = this.CATEGORIES.length;
+    this.NUMBER_CFG = { count: this.DATA_COUNT, min: 0, max: 100 };
+    this.barChartOptions = {
+      indexAxis: 'y',
+      responsive: true,
+      plugins: {
+        legend: {
+          display: false,
+        },
+      },
+    };
+    this.barChartType = 'bar';
+    this.barChartData = {
+      labels: this.CATEGORIES,
+      datasets: [
+        {
+          data: this.numbers(this.NUMBER_CFG),
+          backgroundColor: this.CHART_COLORS[3],
+        },
+      ],
+    };
     this.randomize();
   }
 
-  public barChartOptions: ChartConfiguration['options'] = {
-    indexAxis: 'y',
-    responsive: true,
-    plugins: {
-      legend: {
-        display: false,
-      },
-    },
-  };
-  public barChartType: ChartType = 'bar';
-
-  public barChartData: ChartData<'bar'> = {
-    labels: this.CATEGORIES,
-    datasets: [
-      {
-        label: '16 đến 24 tuổi',
-        data: this.numbers(this.NUMBER_CFG),
-        borderColor: this.CHART_COLORS.red,
-        backgroundColor: this.CHART_COLORS.green,
-      },
-    ],
-  };
-
-  transparentize(value, opacity) {
-    var alpha = opacity === undefined ? 0.5 : 1 - opacity;
-    return colorLib(value).alpha(alpha).rgbString();
-  }
+  public barChartOptions: ChartConfiguration['options'] = {};
+  public barChartType: ChartType;
+  public barChartData: ChartData<'bar'>;
 
   public numbers(config) {
     var cfg = config || {};
@@ -121,15 +136,9 @@ export class CategoryChartComponent implements OnInit {
   }
 
   public randomize(): void {
-    this.barChartData.datasets[0].data = [
-      Math.round(Math.random() * 100),
-      Math.round(Math.random() * 100),
-      Math.round(Math.random() * 100),
-      Math.round(Math.random() * 100),
-      Math.round(Math.random() * 100),
-      Math.round(Math.random() * 100),
-      Math.round(Math.random() * 100),
-    ];
+    for (let i = 0; i < this.DATA_COUNT; i++) {
+      this.barChartData.datasets[0].data[i] = Math.round(Math.random() * 100);
+    }
 
     this.chart?.update();
   }

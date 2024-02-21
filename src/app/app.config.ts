@@ -2,18 +2,20 @@ import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
-import { provideStore } from '@ngrx/store';
+import { provideState, provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { provideHttpClient } from '@angular/common/http';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getStorage, provideStorage } from '@angular/fire/storage';
+import { dashboardReducer } from './ngrx/dashboard/dashboard.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideStore(),
+    provideState({ name: 'dashboard', reducer: dashboardReducer }),
     provideEffects(),
     provideHttpClient(),
     importProvidersFrom(
@@ -26,8 +28,8 @@ export const appConfig: ApplicationConfig = {
           authDomain: 'itss-imago-0000.firebaseapp.com',
           messagingSenderId: '1098187958856',
           measurementId: 'G-7TVCQGP8RS',
-        })
-      )
+        }),
+      ),
     ),
     importProvidersFrom(provideAuth(() => getAuth())),
     importProvidersFrom(provideFirestore(() => getFirestore())),
