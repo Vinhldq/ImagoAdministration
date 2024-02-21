@@ -30,8 +30,6 @@ import {
 
 import Add16 from '@carbon/icons/es/add/16';
 import Filter16 from '@carbon/icons/es/filter/16';
-import { tabbableSelector } from 'carbon-components-angular/common';
-import { Add } from '@carbon/icons-react';
 
 // import { toString } from 'zone.js';
 

@@ -11,3 +11,10 @@ $feature-flags: (
 @import "@carbon/type/scss/styles";
 
 @import "carbon-components/scss/globals/scss/styles";
+
+*,
+body {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}

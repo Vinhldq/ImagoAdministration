@@ -8,18 +8,33 @@ import {
   GridModule,
   BreadcrumbModule,
   ButtonModule,
+  ToggleModule,
+  
   TabsModule,
   ThemeModule,
+ 
+  TableModule,
+  DialogModule,
+  CheckboxModule,
+  PaginationModule,
+  ModalModule,
+  InputModule,
+  DropdownModule,
 } from 'carbon-components-angular';
+import { NgChartsModule } from 'ng2-charts';
 
 export const CarbonModules = [
   UIShellModule,
   IconModule,
   GridModule,
   BreadcrumbModule,
-  ButtonModule,
+  InputModule,
   TabsModule,
   ThemeModule,
+  ToggleModule,
+  ButtonModule,
+  DropdownModule,
+  PaginationModule,
 ];
 
 @NgModule({
@@ -30,7 +45,30 @@ export const CarbonModules = [
     ReactiveFormsModule,
     RouterModule,
     ...CarbonModules,
+    TableModule,
+    DialogModule,
+    CheckboxModule,
+    ButtonModule,
+    PaginationModule,
+    ModalModule,
+    InputModule,
+    DropdownModule,
+    NgChartsModule,
   ],
-  exports: [FormsModule, ReactiveFormsModule, RouterModule, ...CarbonModules],
+  exports: [
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule,
+    ...CarbonModules,
+    TableModule,
+    DialogModule,
+    CheckboxModule,
+    ButtonModule,
+    PaginationModule,
+    ModalModule,
+    InputModule,
+    DropdownModule,
+    NgChartsModule,
+  ],
 })
 export class SharedModule {}

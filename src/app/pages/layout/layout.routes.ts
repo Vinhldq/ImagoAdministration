@@ -14,7 +14,10 @@ export const LAYOUT_ROUTES: Route[] = [
     children: [
       {
         path: '',
-        component: DashboardComponent,
+        loadChildren: () =>
+          import('./tabs/dashboard/dashboard.routes').then(
+            (mod) => mod.DASHBOARD_ROUTES,
+          ),
       },
       {
         path: 'user',
