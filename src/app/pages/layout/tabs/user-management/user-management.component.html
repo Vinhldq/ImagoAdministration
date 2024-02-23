@@ -4,9 +4,9 @@
     <cds-table-toolbar>
       <cds-table-toolbar-content>
         <cds-table-toolbar-search
-          [expandable]="true"
-          (valueChange)="filterNodeNames($event)"
           (clear)="filterNodeNames('')"
+          (valueChange)="filterNodeNames($event)"
+          [expandable]="true"
         >
         </cds-table-toolbar-search>
         <button cdsButton="secondary" size="md">
@@ -21,10 +21,10 @@
              src="https://i.pinimg.com/564x/1a/74/04/1a7404e4d590f8dd0a32563b9217697a.jpg">
       </ng-template>
       <cds-table
+        [enableSingleSelect]="enableSingleSelect"
         [isDataGrid]="isDataGrid"
         [model]="model"
         [showSelectionColumn]="showSelectionColumn"
-        [enableSingleSelect]="enableSingleSelect"
         [size]="'md'"
         [skeleton]="skeleton"
         [sortable]="sortable"
@@ -32,16 +32,29 @@
         [striped]="striped">
       </cds-table>
       <ng-template #overflowMenuItemTemplateBlock let-data="data">
-        <span class="material-symbols-outlined">
-          block
-        </span>
+        <div>
+          <button
+            [disabled]="disabled"
+            id="icon-btn1"
+            type="button"
+          >
+             <span class="material-symbols-outlined">
+               block
+             </span>
+          </button>
+          <button
+            [disabled]="true"
+            id="icon-btn2"
+            type="button"
+          >
+            <span class="material-symbols-outlined">
+              restart_alt
+            </span>
+          </button>
+
+        </div>
       </ng-template>
 
-      <ng-template #overflowMenuItemTemplateUnBlock let-data="data">
-        <span class="material-symbols-outlined">
-          restart_alt
-        </span>
-      </ng-template>
       <ng-template #overflowMenuItemTemplateChoose let-data="data">
         <cds-overflow-menu>
           <cds-overflow-menu-option>
@@ -54,10 +67,11 @@
       </ng-template>
 
       <cds-pagination-nav
-        (selectPage)="selectPage($event)"
+        [model]="modelPagination"
         [disabled]="disabled"
-        [model]="model"
-        [numOfItemsToShow]="8">
+        (selectPage)="selectPage($event)"
+        [numOfItemsToShow]="dataLengthPerPage"
+      >
       </cds-pagination-nav>
     </div>
   </cds-table-container>
