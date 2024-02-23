@@ -12,7 +12,7 @@ export const routes: Routes = [
       import('./pages/layout/layout.routes').then((mod) => mod.LAYOUT_ROUTES),
   },
   {
-    path: 'error',
+    path: 'error/404',
     loadChildren: () =>
       import('./pages/error/error.routes').then((mod) => mod.ERROR_ROUTES),
   },
@@ -23,6 +23,6 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'error',
+    redirectTo: 'error/404',
   },
 ];
