@@ -1,0 +1,14 @@
+.editrole {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  margin-left: 20px;
+
+  cds-table {
+    width: 400px;
+  }
+
+  cds-pagination-nav {
+    align-self: center;
+  }
+}
