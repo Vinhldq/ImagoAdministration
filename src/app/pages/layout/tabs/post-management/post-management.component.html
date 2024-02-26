@@ -18,24 +18,28 @@
         [offset]="{ x: 3, y: 0 }">
         <svg cdsIcon="filter" size="16" class="cds--toolbar-action__icon"></svg>
       </button>
-      <button class="btn-search" cdsButton="secondary" size="sm">
-        Search
-        <svg class="cds--btn__icon"></svg>
-      </button>
     </cds-table-toolbar-content>
   </cds-table-toolbar>
-  <cds-table
-    [model]="model"
-    [sortable]="false"
-    size="md"
-    [skeleton]="skeleton"
-    [showSelectionColumn]="false"
-    [enableSingleSelect]="enableSingleSelect"
-    [stickyHeader]="stickyHeader"
-    [striped]="striped"
-    [isDataGrid]="isDataGrid">
-    <ng-content></ng-content>
-  </cds-table>
+  <div class="left-content">
+    <cds-table
+      [model]="model"
+      [sortable]="false"
+      size="md"
+      [skeleton]="skeleton"
+      [showSelectionColumn]="false"
+      [enableSingleSelect]="enableSingleSelect"
+      [stickyHeader]="stickyHeader"
+      [striped]="striped"
+      [isDataGrid]="isDataGrid">
+      <ng-content></ng-content>
+    </cds-table>
+    <cds-pagination-nav
+      [model]="modelPagination"
+      [disabled]="disabled"
+      (selectPage)="selectPage($event)"
+      [numOfItemsToShow]="dataLengthPerPage">
+    </cds-pagination-nav>
+  </div>
 </cds-table-container>
 
 <ng-template #templateRef>
@@ -93,12 +97,11 @@
     [isDataGrid]="isDataGrid">
   </cds-table>
 </cds-table-container>
-
 <cds-modal [open]="openDialog" [trigger]="trigger" (overlaySelected)="openDialog = false">
   <cds-modal-header
     (closeSelect)="openDialog = false"
     [showCloseButton]="showCloseButton">
-    <p class="cds--modal-header__label cds--type-delta"></p>
+    <!--    <p class="cds&#45;&#45;modal-header__label cds&#45;&#45;type-delta"></p>-->
     <p class="cds--modal-header__heading cds--type-beta">Enter the category you want to add</p>
   </cds-modal-header>
   <div class="cds--modal-content">
