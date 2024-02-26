@@ -2,6 +2,11 @@
   padding: 15px 0 0 0;
 }
 
+::ng-deep
+  .cds--pagination-nav__page:not(.cds--pagination-nav__page--direction)::after {
+  background-color: var(--cds-border-interactive, #161616);
+}
+
 ::ng-deep .cds--tabs .cds--tabs__nav-item--selected {
   border-block-end: 2px solid #161616;
 }
