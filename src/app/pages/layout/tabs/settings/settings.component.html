@@ -120,7 +120,7 @@
       </h3>
       @for(item of this.dataChoose| slice :0 : dataLengthPerPage;track item.id){
         <div class = "myDiv">
-          <p>{{item.id}}</p>
+
           <img class="img-mini-avatar" src="{{item.src}}" alt= "Italian Truli">
           <p>{{item.cap}}</p>
              </div>
@@ -144,7 +144,7 @@
 <cds-modal [open]="open" [trigger]="trigger" (overlaySelected)="open = false">
   <cds-modal-header
     (closeSelect)="open = false"
-    [showCloseButton]="true"
+    [showCloseButton]="false"
   >
 
   </cds-modal-header>

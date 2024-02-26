@@ -5,6 +5,9 @@ import { ReportedPostChartComponent } from '../reported-post-chart/reported-post
 import { UniqueVisitorChartComponent } from '../unique-visitor-chart/unique-visitor-chart.component';
 import { UserChartComponent } from '../user-chart/user-chart.component';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { DashboardState } from '../../../../../../ngrx/dashboard/dashboard.state';
+import * as DashboardActions from '../../../../../../ngrx/dashboard/dashboard.action';
 
 @Component({
   selector: 'app-dashboard-overview',
@@ -25,7 +28,7 @@ export class DashboardOverviewComponent implements OnInit {
   constructor(private router: Router) {}
 
   viewDetailChart(chartType: string) {
-    this.router.navigate([`/dashboard/`, chartType]);
+    this.router.navigate([`/dashboard/detail/`, chartType]);
   }
 
   viewUserManagement() {
