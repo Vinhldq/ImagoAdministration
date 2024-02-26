@@ -1,0 +1,21 @@
+<div class="editrole">
+  <cds-table
+    [model]="modelUserListRole"
+    [size]="'md'"
+    [sortable]="sortable"
+    [showSelectionColumn]="false"
+    [enableSingleSelect]="false"
+    [stickyHeader]="stickyHeader"
+    [skeleton]="skeleton"
+    [isDataGrid]="isDataGrid"
+    [striped]="striped">
+  </cds-table>
+  <cds-pagination-nav
+    [model]="modelPagination"
+    [disabled]="disabled"
+    (selectPage)="selectPage($event)"
+    [numOfItemsToShow]="dataLengthPerPage"
+  >
+
+  </cds-pagination-nav>
+</div>
