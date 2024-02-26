@@ -1,1 +1,78 @@
-<p>user-management works!</p>
+<h1>User Management</h1>
+<div class="all">
+  <cds-table-container>
+    <cds-table-toolbar>
+      <cds-table-toolbar-content>
+        <cds-table-toolbar-search
+          (clear)="filterNodeNames('')"
+          (valueChange)="filterNodeNames($event)"
+          [expandable]="true"
+        >
+        </cds-table-toolbar-search>
+        <button cdsButton="secondary" size="md">
+          Filter
+          <svg cdsIcon="filter" class="cds--btn__icon" size="20"></svg>
+        </button>
+      </cds-table-toolbar-content>
+    </cds-table-toolbar>
+    <div class="table">
+      <ng-template #overflowMenuItemTemplateImg let-data="data">
+        <img id="img"
+             src="https://i.pinimg.com/564x/1a/74/04/1a7404e4d590f8dd0a32563b9217697a.jpg">
+      </ng-template>
+      <cds-table
+        [enableSingleSelect]="enableSingleSelect"
+        [isDataGrid]="isDataGrid"
+        [model]="model"
+        [showSelectionColumn]="showSelectionColumn"
+        [size]="'md'"
+        [skeleton]="skeleton"
+        [sortable]="sortable"
+        [stickyHeader]="stickyHeader"
+        [striped]="striped">
+      </cds-table>
+      <ng-template #overflowMenuItemTemplateBlock let-data="data">
+        <div>
+          <button
+            [disabled]="disabled"
+            id="icon-btn1"
+            type="button"
+          >
+             <span class="material-symbols-outlined">
+               block
+             </span>
+          </button>
+          <button
+            [disabled]="true"
+            id="icon-btn2"
+            type="button"
+          >
+            <span class="material-symbols-outlined">
+              restart_alt
+            </span>
+          </button>
+
+        </div>
+      </ng-template>
+
+      <ng-template #overflowMenuItemTemplateChoose let-data="data">
+        <cds-overflow-menu>
+          <cds-overflow-menu-option>
+            User
+          </cds-overflow-menu-option>
+          <cds-overflow-menu-option>
+            Admin
+          </cds-overflow-menu-option>
+        </cds-overflow-menu>
+      </ng-template>
+
+      <cds-pagination-nav
+        [model]="modelPagination"
+        [disabled]="disabled"
+        (selectPage)="selectPage($event)"
+        [numOfItemsToShow]="dataLengthPerPage"
+      >
+      </cds-pagination-nav>
+    </div>
+  </cds-table-container>
+</div>

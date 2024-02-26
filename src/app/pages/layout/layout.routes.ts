@@ -29,7 +29,10 @@ export const LAYOUT_ROUTES: Route[] = [
       },
       {
         path: 'report',
-        component: ReportManagementComponent,
+        loadChildren: () =>
+          import('./tabs/report-management/report-management.routes').then(
+            (mod) => mod.REPORT_MANAGEMENT,
+          ),
       },
       {
         path: 'post',

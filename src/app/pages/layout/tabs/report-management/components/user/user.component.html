@@ -23,10 +23,6 @@
               class="cds--toolbar-action__icon"
             ></svg>
           </button>
-          <!--          <button cdsButton="secondary" size="sm">-->
-          <!--            Primary button-->
-          <!--            <svg cdsIcon="add" size="20" class="cds&#45;&#45;btn__icon"></svg>-->
-          <!--          </button>-->
         </cds-table-toolbar-content>
       </cds-table-toolbar>
 
@@ -110,15 +106,6 @@
     </ng-template>
   </div>
   <div class="right">
-    <!--    <div class="row">-->
-    <!--      <h2>USER</h2>-->
-    <!--      <div class="icon">-->
-    <!--        <img src="./assets/img/more.png" alt="" />-->
-    <!--      </div>-->
-    <!--    </div>-->
-
-    <!--    <div class="line"></div>-->
-
     <div class="row">
       <div class="info">
         <div class="image">
@@ -135,7 +122,20 @@
         </div>
       </div>
       <div class="icon">
-        <img src="./assets/img/overflow-menu--vertical.svg" alt="" />
+        <cds-overflow-menu
+          placement="bottom"
+          [open]="false"
+          [flip]="true"
+          [offset]="{ x: 0, y: 50 }"
+          (click)="more()"
+        >
+          <cds-overflow-menu-option>More info</cds-overflow-menu-option>
+          <cds-overflow-menu-option (click)="open = true"
+            >Action
+          </cds-overflow-menu-option>
+          <cds-overflow-menu-option>Reject</cds-overflow-menu-option>
+        </cds-overflow-menu>
+        <cds-placeholder></cds-placeholder>
       </div>
     </div>
 
@@ -155,15 +155,7 @@
     </div>
 
     <div class="action">
-      <cds-button-set>
-        <button cdsButton="secondary" size="lg">Skip</button>
-      </cds-button-set>
-      <button #trigger cdsButton="secondary" (click)="open = true">Open</button>
-      <cds-modal
-        [open]="open"
-        [trigger]="trigger"
-        (overlaySelected)="open = false"
-      >
+      <cds-modal [open]="open" (overlaySelected)="open = false">
         <cds-modal-header (closeSelect)="open = false" [showCloseButton]="true">
           <p class="cds--modal-header__heading cds--type-beta">CONFIRM</p>
         </cds-modal-header>
