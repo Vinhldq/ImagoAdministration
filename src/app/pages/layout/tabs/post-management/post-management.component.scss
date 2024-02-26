@@ -1,0 +1,49 @@
+#left-table {
+  width: 65%;
+  float: left;
+}
+
+#right-table {
+  width: 30%;
+  float: right;
+  //margin-left: 10px;
+}
+
+.btn-search {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+
+}
+
+.cds--modal-content .input {
+  width: 100%;
+  height: 40px;
+}
+
+.btn-add {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  font-weight: bold;
+  border: 0 none;
+  border-radius: 1px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.btn-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  font-weight: bold;
+  border: 0 none;
+  border-radius: 1px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 14px;
+}
