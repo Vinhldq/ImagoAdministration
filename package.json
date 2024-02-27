@@ -20,7 +20,7 @@
     "@angular/platform-browser-dynamic": "^17.1.0",
     "@angular/router": "^17.1.0",
     "@carbon/icons": "^11.34.1",
-    "@carbon/themes": "^11.29.1",
+    "@carbon/themes": "^11.32.0",
     "@ngrx/effects": "^17.1.0",
     "@ngrx/store": "^17.1.0",
     "carbon-components": "^10.58.12",
