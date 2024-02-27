@@ -1,13 +1,13 @@
 #left-table {
-  width: 65%;
+  width: 100%;
   float: left;
 
-  //.left-content {
-  //  display: flex;
-  //  align-content: center;
-  //  flex-direction: column;
-  //  justify-content: center;
-  //}
+  .left-content {
+    display: flex;
+    align-content: center;
+    flex-direction: column;
+    justify-content: center;
+  }
 }
 
 #right-table {
