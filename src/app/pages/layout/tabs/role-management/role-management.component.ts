@@ -17,6 +17,7 @@ import {RoleCategoryComponent} from "./components/role-category/role-category.co
 import {FormControl, FormGroup} from "@angular/forms";
 import {ReactiveFormsModule} from '@angular/forms';
 
+
 @Component({
   selector: 'app-role-management',
   standalone: true,
@@ -228,6 +229,7 @@ export class RoleManagementComponent implements OnInit, OnChanges, AfterViewInit
   dataLengthPerPage = 10;
   dataResidual = this.dataLength % this.dataLengthPerPage;
 
+
   filterNodeNames(searchString: string) {
     this.model.data = this.dataSet
       .filter((row: TableItem[]) => row[1].data.toLowerCase().includes(searchString.toLowerCase()));
@@ -254,20 +256,43 @@ export class RoleManagementComponent implements OnInit, OnChanges, AfterViewInit
   openCUD(role: number) {
     this.currentOpenRole = role;
     this.isActiveOpenCUD = true;
+
+    if (role == 3) {
+      let dataUpdate = {
+        id: this.selectedId,
+        name: this.dataSet.find((row: TableItem[]) => row[0].data === this.selectedId)[1].data,
+        description: this.dataSet.find((row: TableItem[]) => row[0].data === this.selectedId)[2].data,
+      }
+      this.editForm.patchValue(dataUpdate);
+    }
   }
 
   closeCUD() {
     this.isActiveOpenCUD = false;
   }
 
+  selectedId: string = '';
+  selectedRowData: string = '';
+  numberIdRole: number = 6;
+
+  onRowSelected(event: any) {
+    if (event.selectedRowIndex !== undefined && event.selectedRowIndex > 0) {
+      this.selectedRowData = this.dataSet[event.selectedRowIndex][0].data;
+      this.selectedId = this.selectedRowData
+    } else {
+      console.log('No row selected')
+    }
+  }
+
   addForm = new FormGroup({
+    id: new FormControl({value: '', disabled: true}),
     name: new FormControl(''),
     description: new FormControl(''),
   });
 
   onSubmitAdd() {
     let additem: TableItem[] = [
-      new TableItem({data: Date.now()}),
+      new TableItem({data: this.numberIdRole++}),
       new TableItem({data: this.addForm.value.name}),
       new TableItem({data: this.addForm.value.description}),
     ];
@@ -278,13 +303,35 @@ export class RoleManagementComponent implements OnInit, OnChanges, AfterViewInit
     this.isActiveOpenCUD = false;
   }
 
-  selectedId: string = '';
+  editForm = new FormGroup({
+    id: new FormControl({value: '', disabled: true}),
+    name: new FormControl(''),
+    description: new FormControl(''),
+  });
+
+  editFormRole() {
+    let form: TableItem[] = [
+      new TableItem({data: this.selectedId}),
+      new TableItem({data: this.editForm.value.name}),
+      new TableItem({data: this.editForm.value.description}),
+    ]
+    let rowIndex = this.dataSet.findIndex((row: TableItem[]) => row[0].data === this.selectedId);
+    if (rowIndex !== -1) {
+      this.dataSet[rowIndex] = form;
+    }
+    this.model.data = this.dataSet;
+    this.isActiveOpenCUD = false;
+  }
 
   deleteData() {
-    for (let i = 0; i < this.dataSet.length; i++) {
-      let row = this.dataSet[i];
-      let index = row.findIndex((item) => item.data === this.selectedId);
-      this.dataSet.splice(index, 1);
+    if (this.selectedId !== undefined) {
+      let rowIndex = this.dataSet.findIndex((row: TableItem[]) => row[0].data === this.selectedId);
+      if (rowIndex !== -1) {
+        this.dataSet.splice(rowIndex, 1);
+        this.model.data = this.dataSet;
+      }
+    } else {
+      console.log('No data')
     }
   }
 }
