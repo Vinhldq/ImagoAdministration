@@ -2,27 +2,6 @@
   padding: 15px 0 0 0;
 }
 
-::ng-deep
-  .cds--pagination-nav__page:not(.cds--pagination-nav__page--direction)::after {
-  background-color: var(--cds-border-interactive, #161616);
-}
-
-::ng-deep .cds--tabs .cds--tabs__nav-item--selected {
-  border-block-end: 2px solid #161616;
-}
-
-::ng-deep .cds--tabs .cds--tabs__nav-link:focus,
-.cds--tabs .cds--tabs__nav-link:active {
-  outline: none;
-}
-
-::ng-deep .cds--btn--secondary:focus {
-  border-color: var(--cds-button-focus-color, var(--cds-focus, #161616));
-  box-shadow:
-    inset 0 0 0 1px var(--cds-button-focus-color, var(--cds-focus, #161616)),
-    inset 0 0 0 2px var(--cds-background, #ffffff);
-}
-
 h1 {
   font-size: 18px;
   font-weight: 800;
