@@ -21,27 +21,24 @@ export class SettingsComponent implements OnInit{
   @Input() modelPagination = new PaginationModel();
   @Input() disabledPagination = false;
   @Input() pageInputDisabled = false;
+  translations: any;
   items = [
     <ListItem>{content: "Vienamese", selected: false},
     <ListItem>{content: "English", selected: false},
     <ListItem>{content: "France", selected: false},
-
   ];
   themes = [
     <ListItem>{content: "Dark", selected: false},
     <ListItem>{content: "Light", selected: false},
   ];
+
   selected: ListItem;
   onSelect(ev) {
     this.selected = ev.item;
   }
-  model = new PaginationModel();
+ 
   disabled = false;
-
-
   protected open = false;
-
-
   dataset:History[] = [
     {
       id: 1,
@@ -166,11 +163,10 @@ export class SettingsComponent implements OnInit{
 
   ]
   @Input() modelPagigation = new PaginationModel();
-    @Input() disabledPagigation = false;
+  @Input() disabledPagigation = false;
+
     // @ts-ignore
   @Input() pageInputDisabled = false;
-
-
   dataChoose:History[];
   dataLength = this.dataset.length;
   dataLengthPerPage = 7;
@@ -178,21 +174,20 @@ export class SettingsComponent implements OnInit{
 
 
   ngOnInit() {
-   console.log('Daata length', this.dataLength);
+   console.log('Data length', this.dataLength);
    this.modelPagigation.currentPage = 1;
    this.modelPagigation.totalDataLength =Math.ceil(this.dataLength / this.dataLengthPerPage);
    this.dataChoose = this.dataset.slice(0, this.dataLengthPerPage);
-
   }
 
   selectPage(page) {
     console.log('Loading page', page, 'from pagination model');
     let beginGet = (page - 1) * this.dataLengthPerPage;
     let endGet = page * this.dataLengthPerPage ;
-    this.modelPagination.currentPage = page;
+    this.modelPagigation.currentPage = page; // Corrected here
     this.dataChoose = this.dataset.slice(beginGet, endGet);
     console.log(beginGet,'+' ,endGet);
- }
+  }
 protected openModal = false;
 }
 
