@@ -152,9 +152,25 @@ button:focus {
   width: 30px;
 }
 
+h1 {
+ font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
 h2 {
-  font-weight: 500;
-  color: #000;
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+h3 {
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+h4 {
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 10px;
 }
 
 @media (min-width: 1024px) {

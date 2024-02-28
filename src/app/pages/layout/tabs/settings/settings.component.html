@@ -1,7 +1,7 @@
 <div class="container">
 
   <div class='top'>
-    <h2>Setting</h2>
+    <h1>Setting</h1>
     <cds-button-set>
       <button #trigger  cdsButton="secondary" [size]="'sm'" [isExpressive]="true"
                 (click)="open = true"   class="btn-signout"
@@ -10,11 +10,11 @@
   </div>
   <div class="content">
     <div class="left">
-      <h3>Account</h3>
+      <h2>Account</h2>
       <div class="account">
         <img src="../../../../../assets/avatar.png">
         <div class="info">
-          <h4> Tiến Thịnh</h4>
+          <h3> Tiến Thịnh</h3>
           <h4>thinhbui1907gmail.com</h4>
         </div>
       </div>
@@ -120,20 +120,18 @@
       </h3>
       @for(item of this.dataChoose| slice :0 : dataLengthPerPage;track item.id){
         <div class = "myDiv">
-
+          <p>{{item.id}}</p>
           <img class="img-mini-avatar" src="{{item.src}}" alt= "Italian Truli">
           <p>{{item.cap}}</p>
              </div>
       }
-
-
-
       <cds-pagination-nav
         class="pagi"
         [model]="modelPagigation"
-
+        [disabled]="disabled"
         [numOfItemsToShow]="dataLengthPerPage"
-        (selectPage)="selectPage($event)">
+        (selectPage)="selectPage($event)"
+      >
       </cds-pagination-nav>
     </div>
     </div>
