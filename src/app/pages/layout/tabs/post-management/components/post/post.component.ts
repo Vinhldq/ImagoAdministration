@@ -589,12 +589,6 @@ export class PostComponent implements OnInit {
     );
   }
 
-  filterNodeNamesRight(searchString: string) {
-    this.modelRight.data = this.datasetRight.filter((row: TableItem[]) =>
-      row[1].data.toLowerCase().includes(searchString.toLowerCase()),
-    );
-  }
-
   filterCountries(countryName: string, checked: boolean) {
     if (checked) {
       this.displayedCountries.push(countryName);
