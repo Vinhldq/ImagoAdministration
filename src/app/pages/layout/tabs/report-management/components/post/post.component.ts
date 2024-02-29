@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import {
   IconService,
   PaginationModel,
+  PlaceholderModule,
   TableHeaderItem,
   TableItem,
   TableModel,
@@ -14,11 +15,15 @@ import { SharedModule } from '../../../../../../shared/shared.module';
 @Component({
   selector: 'app-post',
   standalone: true,
-  imports: [SharedModule],
+  imports: [SharedModule, PlaceholderModule],
   templateUrl: './post.component.html',
   styleUrl: './post.component.scss',
 })
 export class PostComponent implements OnInit {
+  more() {
+    console.log('more');
+  }
+
   @Input() modelPagination = new PaginationModel();
   @Input() disabledPagination = false;
   @Input() pageInputDisabled = false;
@@ -449,7 +454,7 @@ export class PostComponent implements OnInit {
         data: 'ID',
       }),
       new TableHeaderItem({
-        data: 'User Name',
+        data: 'Creator',
       }),
       new TableHeaderItem({
         data: 'Date',

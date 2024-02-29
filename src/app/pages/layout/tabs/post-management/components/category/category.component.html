@@ -1,4 +1,4 @@
-<cds-table-container id="right-table">
+<cds-table-container id="cate-table">
   <cds-table-header>
     <h4 cdsTableHeaderTitle>List Category</h4>
   </cds-table-header>
@@ -13,7 +13,7 @@
     </cds-table-toolbar-content>
   </cds-table-toolbar>
   <cds-table
-    [model]="modelRight"
+    [model]="model"
     [sortable]="false"
     size="md"
     [skeleton]="skeleton"
@@ -23,6 +23,14 @@
     [striped]="striped"
     [isDataGrid]="isDataGrid">
   </cds-table>
+
+  <cds-pagination-nav
+    [model]="modelPagination"
+    [disabled]="disabled"
+    (selectPage)="selectPage($event)"
+    [numOfItemsToShow]="dataLengthPerPage"
+  >
+  </cds-pagination-nav>
 </cds-table-container>
 
 <cds-modal [open]="openDialog" [trigger]="trigger" (overlaySelected)="openDialog = false">
@@ -52,3 +60,42 @@
     </ng-container>
   </cds-modal-footer>
 </cds-modal>
+
+
+<!--//////////////////////////////////////////////////////////////-->
+
+<cds-table-container id="hashtag-table">
+  <cds-table-header>
+    <h4 cdsTableHeaderTitle>Hashtag List</h4>
+  </cds-table-header>
+  <cds-table-toolbar>
+    <cds-table-toolbar-content>
+      <cds-table-toolbar-search
+        [expandable]="true"
+        (valueChange)="filterSearchName($event)"
+        (clear)="filterSearchName('')">
+      </cds-table-toolbar-search>
+    </cds-table-toolbar-content>
+  </cds-table-toolbar>
+  <cds-table
+    [model]="modelright"
+    [sortable]="false"
+    size="md"
+    [skeleton]="skeleton"
+    [showSelectionColumn]="false"
+    [enableSingleSelect]="enableSingleSelect"
+    [stickyHeader]="stickyHeader"
+    [striped]="striped"
+    [isDataGrid]="isDataGrid">
+  </cds-table>
+  <cds-pagination-nav
+    [model]="modelPagination"
+    [disabled]="disabled"
+    (selectPage)="selectPage($event)"
+    [numOfItemsToShow]="dataLengthPerPage"
+  >
+  </cds-pagination-nav>
+</cds-table-container>
+
+
+

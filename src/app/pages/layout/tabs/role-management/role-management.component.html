@@ -1,1 +1,176 @@
-<p>role-management works!</p>
+<h1>Role Management</h1>
+<div class="all">
+  <div class="left">
+    <cds-table-container id="cdTableCon">
+      <cds-table-toolbar>
+        <cds-table-toolbar-content>
+          <cds-table-toolbar-search
+            [expandable]="true"
+            (valueChange)="filterNodeNames($event)"
+            (clear)="filterNodeNames('')"
+          >
+          </cds-table-toolbar-search>
+          <button cdsButton="ghost" size="lg" class="categoryrole" (click)="openCUD(1)">
+            Category
+          </button>
+          <button cdsButton="ghost" size="lg" class="categoryrole" (click)="openCUD(2)">
+            Add
+          </button>
+          <button cdsButton="ghost" size="lg" class="categoryrole" (click)="openCUD(3)">
+            Edit
+          </button>
+          <button cdsButton="ghost" size="lg" class="categoryrole" (click)="deleteData()">
+            Delete
+          </button>
+          <button cdsButton="secondary" size="lg">
+            Filter
+            <svg cdsIcon="filter" size="20" class="cds--btn__icon"></svg>
+          </button>
+        </cds-table-toolbar-content>
+      </cds-table-toolbar>
+
+      <div class="table">
+        <cds-table
+          [model]="model"
+          [size]="'md'"
+          [sortable]="sortable"
+          [showSelectionColumn]="showSelectionColumn"
+          [enableSingleSelect]="enableSingleSelect"
+          [stickyHeader]="stickyHeader"
+          [skeleton]="skeleton"
+          [isDataGrid]="isDataGrid"
+          [striped]="striped">
+        </cds-table>
+        <cds-pagination-nav
+          [model]="modelPagination"
+          [disabled]="disabled"
+          [numOfItemsToShow]="dataLengthPerPage"
+        >
+        </cds-pagination-nav>
+      </div>
+    </cds-table-container>
+  </div>
+
+  @if (isActiveOpenCUD == true) {
+    @if (currentOpenRole == 1) {
+      <cds-table-container>
+        <!--        <cds-table-header>-->
+        <!--          <h4 cdsTableHeaderTitle>List User Role</h4>-->
+        <!--          <svg cdsIcon="exit" size="20" class="cds&#45;&#45;btn__icon"></svg>-->
+        <!--        </cds-table-header>-->
+        <cds-table-toolbar>
+          <cds-table-toolbar-content>
+            <h4 cdsTableHeaderTitle>List User Role</h4>
+            <cds-button-set>
+              <button (click)="closeCUD()">
+                <svg class="cds--btn__icon" cdsIcon="close" size="20"></svg>
+              </button>
+            </cds-button-set>
+          </cds-table-toolbar-content>
+        </cds-table-toolbar>
+        <app-role-category></app-role-category>
+      </cds-table-container>
+    } @else if (currentOpenRole == 2) {
+      <div class="editrole">
+        <cds-button-set>
+          <button cdsButton="secondary" [size]="'md'" [isExpressive]="true" (click)="closeCUD()">
+            Add Role
+            <svg class="cds--btn__icon" cdsIcon="close" size="20"></svg>
+          </button>
+        </cds-button-set>
+
+        <h3>Name Role</h3>
+        <form
+          [formGroup]="addForm"
+        >
+          <div>
+            <input
+              cdsText
+              [invalid]="invalid"
+              [warn]="warn"
+              [disabled]="disabled"
+              [placeholder]="placeholder"
+              formControlName="name"
+            />
+          </div>
+
+          <div class="drbrole">
+            <h3>Describle Role</h3>
+            <h4>0/100</h4>
+          </div>
+          <textarea
+            id="textarea"
+            cdsTextArea
+            [placeholder]="placeholder"
+            [invalid]="invalid"
+            [disabled]="disabled"
+            formControlName="description"
+            aria-label="textarea"
+          ></textarea>
+          <cds-button-set>
+            <button cdsButton="secondary"
+                    [size]="'md'"
+                    [isExpressive]="true"
+                    (click)="onSubmitAdd()"
+                    [disabled]="!addForm.valid"
+            >
+              Add and Save
+              <svg class="cds--btn__icon" cdsIcon="add" size="20"></svg>
+            </button>
+          </cds-button-set>
+        </form>
+      </div>
+    } @else {
+      <div class="editrole">
+        <cds-button-set>
+          <button cdsButton="secondary" [size]="'md'" [isExpressive]="true" (click)="closeCUD()">
+            Edit Role
+            <svg class="cds--btn__icon" cdsIcon="close" size="20"></svg>
+          </button>
+        </cds-button-set>
+
+        <h3>Name Role</h3>
+        <form
+          [formGroup]="addForm"
+        >
+          <div>
+            <input
+              cdsText
+              [invalid]="invalid"
+              [warn]="warn"
+              [disabled]="disabled"
+              [placeholder]="placeholder"
+              formControlName="name"
+            />
+          </div>
+
+          <div class="drbrole">
+            <h3>Describle Role</h3>
+            <h4>0/100</h4>
+          </div>
+          <textarea
+            id="textarea"
+            cdsTextArea
+            [placeholder]="placeholder"
+            [invalid]="invalid"
+            [disabled]="disabled"
+            formControlName="description"
+            aria-label="textarea"
+          ></textarea>
+          <cds-button-set>
+            <button cdsButton="secondary"
+                    [size]="'md'"
+                    [isExpressive]="true"
+                    (click)="onSubmitAdd()"
+                    [disabled]="!addForm.valid"
+            >
+              Edit and Save
+              <svg class="cds--btn__icon" cdsIcon="add" size="20"></svg>
+            </button>
+          </cds-button-set>
+        </form>
+      </div>
+    }
+  }
+</div>
+

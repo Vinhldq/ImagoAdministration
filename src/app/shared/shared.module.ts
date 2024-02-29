@@ -9,10 +9,10 @@ import {
   BreadcrumbModule,
   ButtonModule,
   ToggleModule,
-  
+
   TabsModule,
   ThemeModule,
- 
+
   TableModule,
   DialogModule,
   CheckboxModule,
@@ -30,11 +30,19 @@ export const CarbonModules = [
   BreadcrumbModule,
   InputModule,
   TabsModule,
+  TableModule,
   ThemeModule,
   ToggleModule,
   ButtonModule,
   DropdownModule,
   PaginationModule,
+  DialogModule,
+  CheckboxModule,
+  ButtonModule,
+  ModalModule,
+  InputModule,
+  DropdownModule,
+  NgChartsModule,
 ];
 
 @NgModule({
@@ -45,30 +53,12 @@ export const CarbonModules = [
     ReactiveFormsModule,
     RouterModule,
     ...CarbonModules,
-    TableModule,
-    DialogModule,
-    CheckboxModule,
-    ButtonModule,
-    PaginationModule,
-    ModalModule,
-    InputModule,
-    DropdownModule,
-    NgChartsModule,
   ],
   exports: [
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
     ...CarbonModules,
-    TableModule,
-    DialogModule,
-    CheckboxModule,
-    ButtonModule,
-    PaginationModule,
-    ModalModule,
-    InputModule,
-    DropdownModule,
-    NgChartsModule,
   ],
 })
 export class SharedModule {}
