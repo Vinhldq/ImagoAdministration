@@ -29,9 +29,7 @@ h4 {
 
   .left {
     display: flex;
-    align-items: center;
     width: 100%;
-
   }
 
   #cdTableCon {
@@ -65,8 +63,28 @@ h4 {
   width: 400px;
   margin-left: 20px;
 
-  cds-pagination-nav {
-    align-self: center;
+  cds-table-container {
+    width: 400px;
+
+    .exitCloseRole {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #f4f4f4;
+      height: 44px;
+      padding: 0 10px 0 10px;
+
+      h2 {
+        font-size: 16px;
+      }
+
+      cds-button-set {
+        button {
+          border: none;
+          background-color: #f4f4f4;
+        }
+      }
+    }
   }
 }
 
@@ -121,4 +139,12 @@ select {
 .listExit {
   display: flex;
   justify-content: space-between;
+}
+
+::ng-deep .cds--btn-set .cds--btn.cds--btn--expressive {
+  max-inline-size: 100%;
+}
+
+::ng-deep .cds--pagination-nav__page:not(.cds--pagination-nav__page--direction)::after {
+  background-color: var(--cds-border-interactive, #161616);
 }
