@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, HostBinding, Input, OnInit } from '@angular/core';
 import {
   ButtonModule,
   CheckboxModule,
@@ -16,8 +16,9 @@ import Add16 from '@carbon/icons/es/add/16';
 import Filter16 from '@carbon/icons/es/filter/16';
 import Favoritefilled20 from '@carbon/icons/es/favorite--filled/20';
 import Chat20 from '@carbon/icons/es/chat/20';
-import Send20 from '@carbon/icons/es/send/20';
+import Sendalt20 from '@carbon/icons/es/send--alt/20';
 import { SharedModule } from '../../../../../../shared/shared.module';
+import { trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-post',
@@ -45,6 +46,7 @@ export class PostComponent implements OnInit {
   @Input() modelPagination = new PaginationModel();
   @Input() disablePagination = false;
   @Input() pageInputDisabled = false;
+  @Input() nowrap = false;
   model = new TableModel();
   displayedTitle = ['US', 'France', 'Argentina', 'Japan'];
   searchValue = '';
@@ -53,7 +55,7 @@ export class PostComponent implements OnInit {
     [
       new TableItem({ data: '1' }),
       new TableItem({
-        data: "I'm rich because took a lot of money from the team",
+        data: "I'm rich because took a lot of money from the team I'm rich because took a lot of money from the team I'm rich because took a lot of money from the team",
       }),
       new TableItem({ data: 'Store' }),
       new TableItem({ data: 'thief' }),
@@ -420,7 +422,7 @@ export class PostComponent implements OnInit {
 
   constructor(protected iconService: IconService) {
     this.iconService.registerAll([
-      Send20,
+      Sendalt20,
       Chat20,
       Add16,
       Filter16,
@@ -447,6 +449,10 @@ export class PostComponent implements OnInit {
   onRowClick(index: number) {
     console.log('Row item selected:', index);
   }
+
+  openDialog: boolean;
+  showCloseButton = true;
+  openDialogShare: boolean;
 
   ngOnInit() {
     console.log('Data length:', this.dataLength);
@@ -508,4 +514,6 @@ export class PostComponent implements OnInit {
     }
     this.model.data = this.dataChoose;
   }
+
+  protected readonly trigger = trigger;
 }

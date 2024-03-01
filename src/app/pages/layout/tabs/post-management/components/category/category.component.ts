@@ -154,7 +154,7 @@ export class CategoryComponent implements OnInit {
 
   dataChoose: TableItem[][] = [];
   dataLength = this.dataset.length;
-  dataLengthPerPage = 10;
+  dataLengthPerPage = 8;
   dataResidual = this.dataLength % this.dataLengthPerPage;
 
   constructor(protected iconService: IconService) {

@@ -67,6 +67,7 @@
 
 <div class="content">
   <div class="left">
+
     <cds-table-container>
       <cds-table-toolbar>
         <cds-table-toolbar-content>
@@ -203,22 +204,246 @@
         />
       </div>
       <div class="likes">
-        <div class="heart-icon" style="display: flex; align-items: center">
+        <div class="heart-icon" style="display: flex; align-items: center" #trigger (click)="openDialog = true">
           <svg cdsIcon="favorite--filled" size="20"></svg>
-          <p>110K Likes</p>
+          <p class="like">10 Likes</p>
         </div>
         <div class="comment" style="display: flex; align-items: center">
           <svg cdsIcon="chat" size="20"></svg>
-          <p>10K Comments</p>
+          <p>10 Comments</p>
         </div>
-        <div class="share" style="display: flex; align-items: center">
-          <svg cdsIcon="send" size="20"></svg>
-          <p>5K Share</p>
+        <div class="share" style="display: flex; align-items: center" #trigger (click)="openDialogShare = true">
+          <svg cdsIcon="send--alt" size="20"></svg>
+          <p>5 Shares</p>
         </div>
       </div>
-      <cds-table-container></cds-table-container>
+      <div class="all-comments">
+        <div class="quyComments">
+          <img
+            src="./assets/QuyTheAccountant.jpg"
+            alt=""/>
+        </div>
+        <div class="detail">
+          <div class="title" style="padding: 5px 10px 5px 10px; margin-left: 5px">
+            <div style="display: flex; justify-content: space-between">
+              <p id="titleName">Quy Do</p>
+              <p style="font-size: 14px">13:00 12/12/2020</p>
+            </div>
+            <p>My name is Quy The Accountant</p>
+          </div>
+          <div style="display: flex">
+            <div class="likeComment">
+              <p>0</p>
+              <svg cdsIcon="favorite--filled" size="20"></svg>
+            </div>
+            <!--            <div class="reply">-->
+            <!--              <p>Reply</p>-->
+            <!--              <svg cdsIcon="chat" size="20"></svg>-->
+            <!--            </div>-->
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
+
+<cds-modal size="xs" class="like-dialog" [open]="openDialog" [trigger]="trigger" (overlaySelected)="openDialog = false">
+  <cds-modal-header
+    (closeSelect)="openDialog = false"
+    [showCloseButton]="showCloseButton">
+    <div class="cds--modal-header__label cds--type-delta">
+      <div class="list-like">
+        <svg class="icon-like" cdsIcon="favorite--filled" size="20"></svg>
+        <p>10</p>
+      </div>
+    </div>
+  </cds-modal-header>
+  <div class="all-like">
+    <div>
+      <div class="like">
+        <img
+          src="./assets/QuyTheAccountant.jpg"
+          alt=""
+        />
+        <p>Quy Do</p>
+      </div>
+      <div class="like">
+        <img
+          src="./assets/QuyTheAccountant.jpg"
+          alt=""
+        />
+        <p>Quy Do</p>
+      </div>
+      <div class="like">
+        <img
+          src="./assets/QuyTheAccountant.jpg"
+          alt=""
+        />
+        <p>Quy Do</p>
+      </div>
+      <div class="like">
+        <img
+          src="./assets/QuyTheAccountant.jpg"
+          alt=""
+        />
+        <p>Quy Do</p>
+      </div>
+      <div class="like">
+        <img
+          src="./assets/QuyTheAccountant.jpg"
+          alt=""
+        />
+        <p>Quy Do</p>
+      </div>
+      <div class="like">
+        <img
+          src="./assets/QuyTheAccountant.jpg"
+          alt=""
+        />
+        <p>Quy Do</p>
+      </div>
+      <div class="like">
+        <img
+          src="./assets/QuyTheAccountant.jpg"
+          alt=""
+        />
+        <p>Quy Do</p>
+      </div>
+      <div class="like">
+        <img
+          src="./assets/QuyTheAccountant.jpg"
+          alt=""
+        />
+        <p>Quy Do</p>
+      </div>
+      <div class="like">
+        <img
+          src="./assets/QuyTheAccountant.jpg"
+          alt=""
+        />
+        <p>Quy Do</p>
+      </div>
+      <div class="like">
+        <img
+          src="./assets/QuyTheAccountant.jpg"
+          alt=""
+        />
+        <p>Quy Do</p>
+      </div>
+      <div class="like">
+        <img
+          src="./assets/QuyTheAccountant.jpg"
+          alt=""
+        />
+        <p>Quy Do</p>
+      </div>
+      <div class="like">
+        <img
+          src="./assets/QuyTheAccountant.jpg"
+          alt=""
+        />
+        <p>Quy Do</p>
+      </div>
+      <div class="like">
+        <img
+          src="./assets/QuyTheAccountant.jpg"
+          alt=""
+        />
+        <p>Quy Do</p>
+      </div>
+      <div class="like">
+        <img
+          src="./assets/QuyTheAccountant.jpg"
+          alt=""
+        />
+        <p>Quy Do</p>
+      </div>
+      <div class="like">
+        <img
+          src="./assets/QuyTheAccountant.jpg"
+          alt=""
+        />
+        <p>Quy Do</p>
+      </div>
+      <div class="like">
+        <img
+          src="./assets/QuyTheAccountant.jpg"
+          alt=""
+        />
+        <p>Quy Do</p>
+      </div>
+      <div class="like">
+        <img
+          src="./assets/QuyTheAccountant.jpg"
+          alt=""
+        />
+        <p>Quy Do</p>
+      </div>
+      <div class="like">
+        <img
+          src="./assets/QuyTheAccountant.jpg"
+          alt=""
+        />
+        <p>Quy Do</p>
+      </div>
+    </div>
+  </div>
+
+</cds-modal>
+
+<!--//////////////////////////-->
+<cds-modal size="xs" class="share-dialog" [open]="openDialogShare" [trigger]="trigger"
+           (overlaySelected)="openDialogShare = false">
+  <cds-modal-header
+    (closeSelect)="openDialogShare = false"
+    [showCloseButton]="showCloseButton">
+    <div class="cds--modal-header__label cds--type-delta">
+      <div class="list-share">
+        <svg class="icon-share" cdsIcon="send--alt" size="20"></svg>
+        <p>5</p>
+      </div>
+    </div>
+  </cds-modal-header>
+  <div class="all-share">
+    <div>
+      <div class="share">
+        <img
+          src="./assets/QuyTheAccountant.jpg"
+          alt=""
+        />
+        <p>Quy Do</p>
+      </div>
+      <div class="share">
+        <img
+          src="./assets/QuyTheAccountant.jpg"
+          alt=""
+        />
+        <p>Quy Do</p>
+      </div>
+      <div class="share">
+        <img
+          src="./assets/QuyTheAccountant.jpg"
+          alt=""
+        />
+        <p>Quy Do</p>
+      </div>
+      <div class="share">
+        <img
+          src="./assets/QuyTheAccountant.jpg"
+          alt=""
+        />
+        <p>Quy Do</p>
+      </div>
+      <div class="share">
+        <img
+          src="./assets/QuyTheAccountant.jpg"
+          alt=""
+        />
+        <p>Quy Do</p>
+      </div>
+    </div>
+  </div>
+
+</cds-modal>
 
 
