@@ -36,7 +36,10 @@ export const LAYOUT_ROUTES: Route[] = [
       },
       {
         path: 'post',
-        component: PostManagementComponent,
+        loadChildren: () =>
+          import('./tabs/post-management/post-management.routes').then(
+            (mod) => mod.POST_MANAGEMENT,
+          ),
       },
       {
         path: 'settings',
