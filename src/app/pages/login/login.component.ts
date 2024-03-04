@@ -1,22 +1,56 @@
-import { Component } from '@angular/core';
-import {ButtonModule} from "carbon-components-angular";
-import {SharedModule} from "../../shared/shared.module";
-import {AuthService} from "../../service/auth.service";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ButtonModule } from "carbon-components-angular";
+import { SharedModule } from "../../shared/shared.module";
+import { AuthService } from "../../service/auth.service";
+import { Store } from "@ngrx/store";
+import { AuthState } from "../../ngrx/auth/auth.state";
+import { Subscription } from "rxjs";
+import * as AuthActions from "../../ngrx/auth/auth.action";
+import { Router } from "@angular/router"; // Import Router
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [
     ButtonModule,
-    SharedModule ,
+    SharedModule,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export class LoginComponent {
-  constructor(private auth: AuthService) {
+export class LoginComponent implements OnInit, OnDestroy {
+  constructor(private auth: AuthService,
+              private store: Store<{ auth: AuthState }>,
+              private router: Router // Inject Router
+  ) {
   }
-  signWithGoogle(){
-    this.auth.signWithGoogle();
+
+  
+  subscriptions: Subscription[] = [];
+  idToken$ = this.store.select('auth', 'idToken');
+  uid$ = this.store.select('auth', 'uid');
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((val) => {
+      val.unsubscribe();
+    });
   }
+
+  ngOnInit(): void {
+    this.subscriptions.push(
+      this.store.select('auth', 'isSuccessful').subscribe((val) => {
+        if(val){
+          this.router.navigate(['/loading']); // Navigate to home page
+        }
+      }),
+      this.store.select('auth', 'errorMessage').subscribe((val) => {
+       
+      }),
+      
+    );
+  }
+
+  signWithGoogle() {
+    this.store.dispatch(AuthActions.login());
+  }
+ 
 }

@@ -17,6 +17,11 @@ export const routes: Routes = [
       import('./pages/error/error.routes').then((mod) => mod.ERROR_ROUTES),
   },
   {
+    path: 'loading',
+    loadChildren: () =>
+      import('./pages/loading/loading.routes').then((mod) => mod.LOADING_ROUTES),
+  },
+  {
     path: '',
     redirectTo: 'login',
     pathMatch: 'full',

@@ -1,0 +1,86 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+$secondary: #643d26;
+$primary: #79275a;
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotate2 {
+  0% {
+    transform: rotate(0deg);
+    border-top-color: $secondary;
+  }
+  50% {
+    transform: rotate(180deg);
+    border-top-color: $primary;
+  }
+  100% {
+    transform: rotate(360deg);
+    border-top-color: $secondary;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h1,
+h3 {
+  font-size: 2.25rem;
+  font-weight: 500;
+  color: $secondary;
+  letter-spacing: 1.5px;
+}
+
+@mixin loaderDivMixin {
+  border-radius: 50%;
+  padding: 8px;
+  border: 4px solid transparent;
+  animation: rotate linear 6s infinite;
+}
+
+.loader {
+  position: relative;
+  margin: 100px auto;
+  width: 275px;
+  height: 275px;
+  display: block;
+  //overflow: hidden;
+  div {
+    height: 100%;
+  }
+}
+
+/* loader 1 */
+.loader1,
+.loader1 div {
+  @include loaderDivMixin;
+  border-top-color: $secondary;
+  border-bottom-color: $primary;
+}
+
+div:hover {
+  animation-play-state: paused;
+}
+
+.loader,
+.loader * {
+  will-change: transform;
+}
