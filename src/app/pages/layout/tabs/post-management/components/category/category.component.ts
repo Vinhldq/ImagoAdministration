@@ -7,6 +7,7 @@ import {
   ModalModule,
   PaginationModel,
   PaginationModule,
+  PlaceholderModule,
   TableHeaderItem,
   TableItem,
   TableModel,
@@ -27,19 +28,21 @@ import { SharedModule } from '../../../../../../shared/shared.module';
     PaginationModule,
     SharedModule,
     ModalModule,
+    PlaceholderModule,
   ],
   templateUrl: './category.component.html',
   styleUrl: './category.component.scss',
 })
 export class CategoryComponent implements OnInit {
   @Input() size = 'md';
-  @Input() showSelectionColumn = true;
+  @Input() showSelectionColumn = false;
   @Input() enableSingleSelect = true;
-  @Input() striped = true;
+  @Input() striped = false;
   @Input() isDataGrid = false;
   @Input() noData = false;
   @Input() stickyHeader = false;
   @Input() skeleton = false;
+
   @Input() modelPagination = new PaginationModel();
   @Input() disablePagination = false;
   @Input() pageInputDisabled = false;
@@ -153,6 +156,7 @@ export class CategoryComponent implements OnInit {
   ];
 
   dataChoose: TableItem[][] = [];
+  // dataChooseRight: TableItem[][] = [];
   dataLength = this.dataset.length;
   dataLengthPerPage = 8;
   dataResidual = this.dataLength % this.dataLengthPerPage;
@@ -195,13 +199,7 @@ export class CategoryComponent implements OnInit {
       for (let i = 0; i <= this.dataResidual; i++) {
         this.dataset = [
           ...this.dataset,
-          [
-            new TableItem({ data: '' }),
-            new TableItem({ data: '' }),
-            new TableItem({ data: '' }),
-            new TableItem({ data: '' }),
-            new TableItem({ data: '' }),
-          ],
+          [new TableItem({ data: '' }), new TableItem({ data: '' })],
         ];
         console.log(this.dataLength);
       }

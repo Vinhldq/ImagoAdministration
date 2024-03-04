@@ -515,5 +515,9 @@ export class PostComponent implements OnInit {
     this.model.data = this.dataChoose;
   }
 
+  selected(e) {
+    console.log(e);
+  }
+
   protected readonly trigger = trigger;
 }
