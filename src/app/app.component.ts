@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { SharedModule } from './shared/shared.module';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { Auth, onAuthStateChanged } from '@angular/fire/auth';
@@ -16,7 +16,7 @@ import { Subscription, combineLatest } from 'rxjs';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent  {
+export class AppComponent implements OnInit, OnDestroy {
   title = 'Imago Admin';
   subscriptions: Subscription[] = [];
   idToken$ = this.store.select('auth', 'idToken');
@@ -35,8 +35,8 @@ export class AppComponent  {
         let idToken = await user!.getIdToken(true);
         this.store.dispatch(AuthActions.storedIdToken({ idToken }));
         this.store.dispatch(AuthActions.storedUserUid({ uid: user.uid }));
-          this.router.navigateByUrl('/loading');
       } else {
+        console.log(user)
         console.log('User is signed out');
         this.router.navigateByUrl('/login');
       }
@@ -55,19 +55,20 @@ ngOnInit(): void {
         uid: this.uid$,
       }).subscribe(async (res) => {
          if(res.idToken && res.uid){
-         await this.store.dispatch(AuthActions.getAuthById({
-            token: res.idToken,
-            id: res.uid
-          }))
+           this.store.dispatch(AuthActions.getAuthById({
+             token: res.idToken,
+             id: res.uid
+           }))
       }
     }),
       this.store.select('auth', 'authDetail').subscribe((val) => {
-        if(val.id != undefined && val.id != ''){    
+        if(val.id != undefined && val.id != ''){
           if(val.role == 'admin'){
-            this.router.navigate(['/dashboard']);
+                this.router.navigate(['/dashboard']);
           }else{
-            alert('You are not admin');
             this.router.navigate(['/login']);
+            alert('You are not admin');
+
           }
         }
       })

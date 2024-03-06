@@ -12,11 +12,12 @@ import  * as AuthActions from "../../ngrx/auth/auth.action";
   styleUrl: './loading.component.scss'
 })
 export class LoadingComponent {
- 
+
   constructor(
     private router: Router,
     private store: Store<{ auth: AuthState }>,
   ) {}
+
 
 
 }

@@ -28,47 +28,32 @@ export class AuthService {
           let idToken = await creadential.user.getIdToken();
           resolve(idToken);
           console.log(idToken);
-          let listAuth = await this.getAuth(idToken).toPromise();
-          let id = creadential.user.uid;
-          for (let i = 0; i < listAuth.length; i++) {
-            if (listAuth[i].id === id 
-              && listAuth[i].email === creadential.user.email
-              ) {
-              console.log('da ton tai')
-              await this.signIn(
-                idToken,
-              ).toPromise();
-            }
-            else {
-              console.log('chua ton tai');
-              await this.createAuth(idToken).toPromise();
-            }
-            
-          }  
+          let auth = await this.signUp(idToken).toPromise();
+          console.log(auth);
+          // let listAuth = await this.getAuth(idToken).toPromise();
+          // let id = creadential.user.uid;
+          // for (let i = 0; i < listAuth.length; i++) {
+          //   if (listAuth[i].id === id
+          //     && listAuth[i].email === creadential.user.email
+          //     ) {
+          //     console.log('da ton tai')
+          //     await this.signIn(
+          //       idToken,
+          //     ).toPromise();
+          //   }
+          //   else {
+          //     console.log('chua ton tai');
+          //     await this.createAuth(idToken).toPromise();
+          //   }
+          //
+          // }
         } catch {
           reject('Cannot login with Google');
         }
       })
     );
   }
-  signinWithGoogle() {
-    return from(
-      new Promise<string>(async (resolve, reject) => {
-        try {
-          let creadential = await signInWithPopup(
-            this.auth,
-            new GoogleAuthProvider()
-          );
-          let idToken = await creadential.user.getIdToken();
-          resolve(idToken);
-          let res = await this.getAuthById(idToken, creadential.user.uid).toPromise();
-          return reject(res);
-        } catch {
-          reject('Cannot login with Google');
-        }
-      })
-    );
-  }
+
   logout() {
     return from(
       new Promise<string>(async (resolve, reject) => {
@@ -82,20 +67,9 @@ export class AuthService {
       })
     );
   }
-  createAuth(idToken: string) {
-    return this.httpClient.post<any>(
-      environment.local_url + `auth/signup`,{},
-      {
-        headers : new HttpHeaders({
-          Authorization:` ${idToken}`,
-        })
-      }
-    );
-  }
-
   getAuthById(idToken: string, id: string) {
     return this.httpClient.get<AuthModel>(
-      environment.local_url + `auth/getId?id=${id}`,
+      environment.local_url + `auth/?id=${id}`,
       {
         headers : new HttpHeaders({
           Authorization:` ${idToken}`,
@@ -104,14 +78,16 @@ export class AuthService {
     );
   }
 
-  signIn(idToken: string){
+  signUp(idToken: string){
+    console.log(idToken);
     return this.httpClient.post<AuthModel>(
-      environment.local_url + `auth/signin`,
+      environment.local_url + `auth`,{},
       {
         headers : new HttpHeaders({
           Authorization:` ${idToken}`,
         })
       }
+
     );
   }
   getAuth(idToken: string){

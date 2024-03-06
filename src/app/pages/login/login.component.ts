@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   ) {
   }
 
-  
+
   subscriptions: Subscription[] = [];
   idToken$ = this.store.select('auth', 'idToken');
   uid$ = this.store.select('auth', 'uid');
@@ -39,18 +39,17 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.store.select('auth', 'isSuccessful').subscribe((val) => {
         if(val){
-          this.router.navigate(['/loading']); // Navigate to home page
+          this.router.navigate(['/login']); // Navigate to home page
         }
       }),
       this.store.select('auth', 'errorMessage').subscribe((val) => {
-       
       }),
-      
+
     );
   }
 
   signWithGoogle() {
     this.store.dispatch(AuthActions.login());
   }
- 
+
 }
