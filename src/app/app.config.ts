@@ -10,13 +10,22 @@ import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getStorage, provideStorage } from '@angular/fire/storage';
 import { dashboardReducer } from './ngrx/dashboard/dashboard.reducer';
+import {authReducer} from "./ngrx/auth/auth.reducer";
+import {AuthEffects} from "./ngrx/auth/auth.effect";
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
-    provideStore(),
+    provideStore(
+      {
+        auth: authReducer,
+      }
+    ),
     provideState({ name: 'dashboard', reducer: dashboardReducer }),
-    provideEffects(),
+    provideState({ name: 'auth', reducer: authReducer }),
+    provideEffects([
+      AuthEffects,
+    ]),
     provideHttpClient(),
     importProvidersFrom(
       provideFirebaseApp(() =>

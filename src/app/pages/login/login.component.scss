@@ -3,7 +3,11 @@
   width: 100%;
   height: auto;
 }
-
+.img-logo {
+  width: 70px;
+  height: 70px;
+  align-items:center;
+}
 .overlay-panel {
   width: 50%;
   float: left;
@@ -87,11 +91,7 @@ input {
   height: 48px;
 }
 
-.img-logo {
-  width: 60px;
-  height: 60px;
-  align-items: center;
-}
+
 
 input {
   border: none;
@@ -206,6 +206,11 @@ input:focus, input:active {
     padding: 0 0 0 20px;
 
 
+  }
+  .img-logo{
+    width: 70px;
+    height: 70px;
+    margin-top: 150px;
   }
 
 }
