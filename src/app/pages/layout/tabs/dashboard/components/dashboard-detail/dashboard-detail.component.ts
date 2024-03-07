@@ -15,7 +15,7 @@ import { CategoryChartComponent } from '../category-chart/category-chart.compone
 import { NgClass, NgIf } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { DashboardState } from '../../../../../../ngrx/dashboard/dashboard.state';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as DashboardActions from '../../../../../../ngrx/dashboard/dashboard.action';
 import { SharedModule } from '../../../../../../shared/shared.module';
 
@@ -43,13 +43,17 @@ export class DashboardDetailComponent implements OnInit, OnDestroy {
   @Input() model = new TableModel();
   @Input() noData = false;
 
-  tabIndex: number = 0;
+  selectedIndex = 0;
+
+  constructor(
+    private store: Store<{ dashboard: DashboardState }>,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    const chartName = this.activatedRoute.snapshot.params['name'];
+    let chartName = this.router.url.split('/').pop();
     this.store.dispatch(DashboardActions.getChart({ chart: chartName }));
-    // this.setActiveChart(chartName, this.tabIndex);
-
+    this.setActiveChart(chartName, this.selectedIndex);
     this.model.header = [
       new TableHeaderItem({
         data: 'Days of the week',
@@ -82,37 +86,9 @@ export class DashboardDetailComponent implements OnInit, OnDestroy {
     }
   }
 
-  constructor(
-    private store: Store<{ dashboard: DashboardState }>,
-    private activatedRoute: ActivatedRoute
-  ) {
-    activatedRoute.params.subscribe((id) => {
-      console.log(id);
-    });
+  ngOnDestroy(): void {
+    this.store.dispatch(DashboardActions.getChart({ chart: '' }));
   }
-
-  tabList = [
-    {
-      name: 'Posts',
-      activeTab: 'post',
-    },
-    {
-      name: 'Reported Posts',
-      activeTab: 'reportedPost',
-    },
-    {
-      name: 'Users',
-      activeTab: 'user',
-    },
-    {
-      name: 'Unique Visitors',
-      activeTab: 'uniqueVisitor',
-    },
-    {
-      name: 'Categories',
-      activeTab: 'category',
-    },
-  ];
 
   @Input() skeleton = false;
   @Input() followFocus = true;
@@ -120,15 +96,38 @@ export class DashboardDetailComponent implements OnInit, OnDestroy {
   @Input() isNavigation = true;
   @Input() type = 'line';
 
-  activeChart: string = '';
-
   setActiveChart(chart: string, index: number) {
-    this.activeChart = chart;
-    this.tabIndex = index;
-    console.log(this.tabIndex);
+    this.selectedIndex = index;
+    console.log(this.selectedIndex);
+
+    this.router.navigate(['dashboard/detail/', chart]);
   }
 
-  ngOnDestroy(): void {
-    this.store.dispatch(DashboardActions.getChart({ chart: '' }));
-  }
+  chartItems = [
+    {
+      index: 0,
+      name: 'Posts',
+      url: 'post',
+    },
+    {
+      index: 1,
+      name: 'Reported Posts',
+      url: 'reportedPost',
+    },
+    {
+      index: 2,
+      name: 'Users',
+      url: 'user',
+    },
+    {
+      index: 3,
+      name: 'Unique Visitors',
+      url: 'uniqueVisitor',
+    },
+    {
+      index: 4,
+      name: 'Categories',
+      url: 'category',
+    },
+  ];
 }
