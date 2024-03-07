@@ -55,7 +55,7 @@ export class PostComponent implements OnInit {
     [
       new TableItem({ data: '1' }),
       new TableItem({
-        data: "I'm rich because took a lot of money from the team I'm rich because took a lot of money from the team I'm rich because took a lot of money from the team",
+        data: "I'm rich because took a lot of money from the team",
       }),
       new TableItem({ data: 'Store' }),
       new TableItem({ data: 'thief' }),
@@ -431,7 +431,10 @@ export class PostComponent implements OnInit {
   }
 
   filterUserNames(searchString: string) {
-    this.searchValue = searchString;
+    // this.searchValue = searchString;
+    this.model.data = this.dataset.filter((row: TableItem[]) =>
+      row[1].data.toLowerCase().includes(searchString.toLowerCase()),
+    );
   }
 
   filterTitle(titleName: string, checked: boolean) {
@@ -501,6 +504,15 @@ export class PostComponent implements OnInit {
       this.dataChoose = [...this.dataChoose, this.dataset[i]];
     }
     this.model.data = this.dataChoose;
+
+    // this.model.isRowFiltered = (index: number) => {
+    //   const userName = this.model.row(index)[1].data;
+    //   const title = this.model.row(index)[3].data;
+    //   return (
+    //     !userName.toLowerCase().includes(this.searchValue.toLowerCase()) ||
+    //     !this.displayedTitle.includes(title)
+    //   );
+    // };
   }
 
   selectPage(page) {
@@ -515,9 +527,23 @@ export class PostComponent implements OnInit {
     this.model.data = this.dataChoose;
   }
 
-  selected(e) {
-    console.log(e);
-  }
-
-  protected readonly trigger = trigger;
+  protected open = false;
+  items = [
+    {
+      content: 'item one',
+      selected: false,
+    },
+    {
+      content: 'item two',
+      selected: false,
+    },
+    {
+      content: 'item three',
+      selected: false,
+    },
+    {
+      content: 'item four',
+      selected: false,
+    },
+  ];
 }

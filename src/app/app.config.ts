@@ -10,12 +10,14 @@ import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getStorage, provideStorage } from '@angular/fire/storage';
 import { dashboardReducer } from './ngrx/dashboard/dashboard.reducer';
+import { postManagementReducer } from './ngrx/post-management/post-management.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideStore(),
     provideState({ name: 'dashboard', reducer: dashboardReducer }),
+    provideState({ name: 'postManagement', reducer: postManagementReducer }),
     provideEffects(),
     provideHttpClient(),
     importProvidersFrom(
