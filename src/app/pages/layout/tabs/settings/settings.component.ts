@@ -3,7 +3,11 @@ import { SharedModule } from '../../../../shared/shared.module';
 import {AccordionModule, ButtonModule, ListItem, ModalModule, PaginationModel,} from "carbon-components-angular";
 import {set} from "@angular/fire/database";
 import {SlicePipe} from "@angular/common";
-
+import {Store} from "@ngrx/store";
+import {AuthState} from "../../../../ngrx/auth/auth.state";
+import * as AuthActions from "../../../../ngrx/auth/auth.action";
+import {logout} from "../../../../ngrx/auth/auth.action";
+import { Router } from '@angular/router';
 export interface History {
   id: number;
   src: string;
@@ -31,12 +35,26 @@ export class SettingsComponent implements OnInit{
     <ListItem>{content: "Dark", selected: false},
     <ListItem>{content: "Light", selected: false},
   ];
+constructor(private store: Store<{auth: AuthState}>,  private router: Router,) {
+}
+
+signOut(){
+  this.store.dispatch(AuthActions.logout());
+  this.store.select('auth', 'isLogoutSuccess').subscribe((res) => {
+    if (res) {
+      this.router.navigate(['/login']);
+      console.log('Logout success!!!');
+    }
+  });
+
+}
+
 
   selected: ListItem;
   onSelect(ev) {
     this.selected = ev.item;
   }
- 
+
   disabled = false;
   protected open = false;
   dataset:History[] = [
@@ -189,5 +207,8 @@ export class SettingsComponent implements OnInit{
     console.log(beginGet,'+' ,endGet);
   }
 protected openModal = false;
+
+
+  protected readonly logout = logout;
 }
 

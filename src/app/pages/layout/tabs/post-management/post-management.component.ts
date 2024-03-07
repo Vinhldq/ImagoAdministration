@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import {
   Component,
   ComponentRef,
@@ -32,35 +33,31 @@ import Add16 from '@carbon/icons/es/add/16';
 import Filter16 from '@carbon/icons/es/filter/16';
 
 // import { toString } from 'zone.js';
+=======
+import { Component, input, Input, OnInit, signal } from '@angular/core';
+import { SharedModule } from '../../../../shared/shared.module';
+import { PostComponent } from './components/post/post.component';
+import { CategoryComponent } from './components/category/category.component';
+import { Router } from '@angular/router';
+>>>>>>> eefc7034a574266390ea376a0bf623687490f0a4
 
 @Component({
   selector: 'app-post-management',
   standalone: true,
-  imports: [
-    SharedModule,
-    TableModule,
-    DialogModule,
-    CheckboxModule,
-    ModalModule,
-  ],
+  imports: [SharedModule, CategoryComponent, PostComponent],
   templateUrl: './post-management.component.html',
   styleUrl: './post-management.component.scss',
 })
 export class PostManagementComponent implements OnInit {
-  @Input() size = 'md';
-  @Input() showSelectionColumn = true;
-  @Input() enableSingleSelect = false;
-  @Input() striped = true;
-  @Input() isDataGrid = false;
-  @Input() noData = false;
-  @Input() stickyHeader = false;
   @Input() skeleton = false;
+  @Input() followFocus = true;
+  @Input() cacheActive = false;
+  @Input() isNavigation = true;
+  @Input() type = 'line';
 
-  model = new TableModel();
-  //create mew table
-  modelRight = new TableModel();
-  displayedCountries = ['US', 'France', 'Argentina', 'Japan'];
+  tabIndex = 0;
 
+<<<<<<< HEAD
   dataset = [
     [
       new TableItem({data: '1'}),
@@ -155,11 +152,27 @@ export class PostManagementComponent implements OnInit {
     [new TableItem({data: '7'}), new TableItem({data: 'Rheabury'})],
     [new TableItem({data: '8'}), new TableItem({data: 'East Arcelyside'})],
   ];
+=======
+  types = [
+    {
+      name: 'Post',
+      route: 'post',
+    },
+    {
+      name: 'Category',
+      route: 'category',
+    },
+  ];
 
-  constructor(protected iconService: IconService) {
-    this.iconService.registerAll([Add16, Filter16]);
+  constructor(private router: Router) {}
+>>>>>>> eefc7034a574266390ea376a0bf623687490f0a4
+
+  navigateTo(route: string, tabIndex: number) {
+    this.tabIndex = tabIndex;
+    this.router.navigate(['dashboard/post/', route]);
   }
 
+<<<<<<< HEAD
   filterNodeNames(searchString: string) {
     this.model.data = this.dataset.filter((row: TableItem[]) =>
       row[1].data.toLowerCase().includes(searchString.toLowerCase()),
@@ -232,5 +245,11 @@ export class PostManagementComponent implements OnInit {
 
     this.model.data = this.dataset;
     this.modelRight.data = this.datasetRight;
+=======
+  ngOnInit(): void {
+    let name = this.router.url.split('/').pop();
+    let index = this.types.findIndex((item) => item.route === name);
+    this.navigateTo(name, index);
+>>>>>>> eefc7034a574266390ea376a0bf623687490f0a4
   }
 }

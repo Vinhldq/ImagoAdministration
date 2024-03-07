@@ -161,9 +161,9 @@
       </button>
       <button
         cdsButton="primary"
-        (click)="open = false"
         [attr.modal-primary-focus]="true"
         routerLink="/login" routerLinkActive="active"
+        (click)="signOut()"
       >
         Ok
       </button>

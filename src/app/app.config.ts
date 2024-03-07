@@ -1,6 +1,7 @@
 import {ApplicationConfig, importProvidersFrom} from '@angular/core';
 import {provideRouter} from '@angular/router';
 
+<<<<<<< HEAD
 import {routes} from './app.routes';
 import {provideState, provideStore} from '@ngrx/store';
 import {provideEffects} from '@ngrx/effects';
@@ -12,10 +13,24 @@ import {getStorage, provideStorage} from '@angular/fire/storage';
 import {dashboardReducer} from './ngrx/dashboard/dashboard.reducer';
 import {RoleEffect} from "./ngrx/role/role.effect";
 import {roleReducer} from "./ngrx/role/role.reducer";
+=======
+import { routes } from './app.routes';
+import { provideState, provideStore } from '@ngrx/store';
+import { provideEffects } from '@ngrx/effects';
+import { provideHttpClient } from '@angular/common/http';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { getAuth, provideAuth } from '@angular/fire/auth';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { getStorage, provideStorage } from '@angular/fire/storage';
+import { dashboardReducer } from './ngrx/dashboard/dashboard.reducer';
+import {authReducer} from "./ngrx/auth/auth.reducer";
+import {AuthEffects} from "./ngrx/auth/auth.effect";
+>>>>>>> eefc7034a574266390ea376a0bf623687490f0a4
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
+<<<<<<< HEAD
     provideStore(),
     provideState({name: 'dashboard', reducer: dashboardReducer}),
     provideState({name: 'role', reducer: roleReducer}),
@@ -24,6 +39,18 @@ export const appConfig: ApplicationConfig = {
         RoleEffect,
       ]
     ),
+=======
+    provideStore(
+      {
+        auth: authReducer,
+      }
+    ),
+    provideState({ name: 'dashboard', reducer: dashboardReducer }),
+    provideState({ name: 'auth', reducer: authReducer }),
+    provideEffects([
+      AuthEffects,
+    ]),
+>>>>>>> eefc7034a574266390ea376a0bf623687490f0a4
     provideHttpClient(),
     importProvidersFrom(
       provideFirebaseApp(() =>
