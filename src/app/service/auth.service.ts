@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-import {Injectable} from '@angular/core';
-import {Auth, getAuth, signInWithPopup, signOut} from "@angular/fire/auth";
-import {GoogleAuthProvider} from "firebase/auth";
-=======
 import { Injectable } from '@angular/core';
 import {
   Auth,
@@ -11,52 +6,14 @@ import {
   signOut,
 } from '@angular/fire/auth';
 import { from } from 'rxjs';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {environment} from "../../environments/environment";
-import {AuthModel} from "../models/auth.model";
->>>>>>> eefc7034a574266390ea376a0bf623687490f0a4
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../environments/environment';
+import { AuthModel } from '../models/auth.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-
-<<<<<<< HEAD
-  constructor(public auth: Auth) {
-  }
-
-  signWithGoogle() {
-    const provider = new GoogleAuthProvider();
-    signInWithPopup(this.auth, provider)
-      .then((result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential!.accessToken;
-        // The signed-in user info.
-        const user = result.user;
-        // IdP data available using getAdditionalUserInfo(result)
-        console.log(user)
-        // ...
-      }).catch((error) => {
-      // Handle Errors here.
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // The email of the user's account used.
-      const email = error.customData.email;
-      // The AuthCredential type that was used.
-      const credential = GoogleAuthProvider.credentialFromError(error);
-      // ...
-    });
-  }
-
-
-  signOut() {
-    signOut(this.auth).then(() => {
-      // Sign-out successful.
-    }).catch((error) => {
-      // An error happened.
-    });
-=======
   constructor(private auth: Auth, private httpClient: HttpClient) {}
 
   loginWithGoogle() {
@@ -113,33 +70,32 @@ export class AuthService {
     return this.httpClient.get<AuthModel>(
       environment.local_url + `auth/?id=${id}`,
       {
-        headers : new HttpHeaders({
-          Authorization:` ${idToken}`,
-        })
+        headers: new HttpHeaders({
+          Authorization: ` ${idToken}`,
+        }),
       }
     );
->>>>>>> eefc7034a574266390ea376a0bf623687490f0a4
   }
 
-  signUp(idToken: string){
+  signUp(idToken: string) {
     console.log(idToken);
     return this.httpClient.post<AuthModel>(
-      environment.local_url + `auth`,{},
+      environment.local_url + `auth`,
+      {},
       {
-        headers : new HttpHeaders({
-          Authorization:` ${idToken}`,
-        })
+        headers: new HttpHeaders({
+          Authorization: ` ${idToken}`,
+        }),
       }
-
     );
   }
-  getAuth(idToken: string){
+  getAuth(idToken: string) {
     return this.httpClient.get<AuthModel[]>(
       environment.local_url + `auth/list`,
       {
-        headers : new HttpHeaders({
-          Authorization:` ${idToken}`,
-        })
+        headers: new HttpHeaders({
+          Authorization: ` ${idToken}`,
+        }),
       }
     );
   }
