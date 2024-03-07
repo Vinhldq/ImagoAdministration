@@ -105,6 +105,7 @@ select {
   flex-direction: row;
   justify-content: space-between;
   font-size: 14px;
+  
 
 }
 
@@ -148,3 +149,5 @@ select {
 ::ng-deep .cds--pagination-nav__page:not(.cds--pagination-nav__page--direction)::after {
   background-color: var(--cds-border-interactive, #161616);
 }
+
+

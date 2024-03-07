@@ -9,7 +9,15 @@
           [expandable]="true"
         >
         </cds-table-toolbar-search>
-        <button cdsButton="secondary" size="md">
+        <button
+          cdsButton="secondary"
+          size="md"
+          class="toolbar-action"
+          [cdsOverflowMenu]="templateRef"
+          placement="bottom"
+          [flip]="true"
+          [offset]="{ x: 3, y: 0 }"
+        >
           Filter
           <svg cdsIcon="filter" class="cds--btn__icon" size="20"></svg>
         </button>
@@ -76,3 +84,45 @@
     </div>
   </cds-table-container>
 </div>
+
+<ng-template #templateRef>
+  <div style="padding: 0 1rem" (click)="overflowOnClick($event)">
+    <div style="padding-top: 0.5rem; color: grey;">Countries shown</div>
+    <cds-checkbox
+      [checked]="displayedCountries.includes('UserName')"
+      (checkedChange)="filterCountries('UserName', $event)">
+      UserName
+    </cds-checkbox>
+    <cds-checkbox
+      [checked]="displayedCountries.includes('NickName')"
+      (checkedChange)="filterCountries('NickName', $event)">
+      NickName
+    </cds-checkbox>
+    <cds-checkbox
+      [checked]="displayedCountries.includes('Argentina')"
+      (checkedChange)="filterCountries('Argentina', $event)">
+      Argentina
+    </cds-checkbox>
+    <cds-checkbox
+      [checked]="displayedCountries.includes('NamePost')"
+      (checkedChange)="filterCountries('NamePost', $event)">
+      NamePost
+    </cds-checkbox>
+    <cds-checkbox
+      [checked]="displayedCountries.includes('Role')"
+      (checkedChange)="filterCountries('Role', $event)">
+      Role
+    </cds-checkbox>
+    <cds-checkbox
+      [checked]="displayedCountries.includes('Followers')"
+      (checkedChange)="filterCountries('Followers', $event)">
+      Followers
+    </cds-checkbox>
+    <cds-checkbox
+      [checked]="displayedCountries.includes('Following')"
+      (checkedChange)="filterCountries('Following', $event)">
+      Following
+    </cds-checkbox>
+  </div>
+</ng-template>
+

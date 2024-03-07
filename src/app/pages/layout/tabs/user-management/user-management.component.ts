@@ -410,4 +410,18 @@ export class UserManagementComponent implements OnInit, OnChanges, AfterViewInit
     }
     this.model.data = this.dataChoose;
   }
+
+  overflowOnClick = (event: any) => {
+    event.stopPropagation();
+  }
+  displayedCountries = ["US", "France", "Argentina", "Japan"];
+
+  filterCountries(countryName: string, checked: boolean) {
+    if (checked) {
+      this.displayedCountries.push(countryName);
+    } else {
+      this.displayedCountries.splice(this.displayedCountries.indexOf(countryName), 1);
+    }
+  }
 }
+

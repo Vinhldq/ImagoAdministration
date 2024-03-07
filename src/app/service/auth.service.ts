@@ -1,13 +1,16 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Auth, getAuth, signInWithPopup, signOut} from "@angular/fire/auth";
-import { GoogleAuthProvider } from "firebase/auth";
+import {GoogleAuthProvider} from "firebase/auth";
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(public auth:Auth) {}
-  signWithGoogle(){
+  constructor(public auth: Auth) {
+  }
+
+  signWithGoogle() {
     const provider = new GoogleAuthProvider();
     signInWithPopup(this.auth, provider)
       .then((result) => {
@@ -32,7 +35,7 @@ export class AuthService {
   }
 
 
-  signOut(){
+  signOut() {
     signOut(this.auth).then(() => {
       // Sign-out successful.
     }).catch((error) => {
