@@ -199,6 +199,7 @@ signOut(){
   }
 
   selectPage(page) {
+    console.log(page);
     console.log('Loading page', page, 'from pagination model');
     let beginGet = (page - 1) * this.dataLengthPerPage;
     let endGet = page * this.dataLengthPerPage ;
