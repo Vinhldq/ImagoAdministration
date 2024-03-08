@@ -23,10 +23,10 @@ export class PostManagementComponent implements OnInit {
   types = [
     {
       name: 'Post',
-      route: 'post',
+      route: 'postDetails',
     },
     {
-      name: 'Category',
+      name: 'Category & Hashtag',
       route: 'category',
     },
   ];
