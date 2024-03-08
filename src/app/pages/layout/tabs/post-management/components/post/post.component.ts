@@ -1,6 +1,5 @@
-import { Component, HostBinding, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {
-  ButtonModule,
   CheckboxModule,
   DialogModule,
   IconService,
@@ -18,13 +17,10 @@ import Favoritefilled20 from '@carbon/icons/es/favorite--filled/20';
 import Chat20 from '@carbon/icons/es/chat/20';
 import Sendalt20 from '@carbon/icons/es/send--alt/20';
 import { SharedModule } from '../../../../../../shared/shared.module';
-import { PostService } from '../../../../../../service/post/post.service';
-
-// import { PostState }  from '../../../../../../ngrx/post/post.state';
-
-interface PostState {
-  AllPost: PostState;
-}
+import { Store } from '@ngrx/store';
+import { AuthState } from '../../../../../../ngrx/auth/auth.state';
+import * as PostActions from '../../../../../../ngrx/post/post.actions';
+import { PostState } from '../../../../../../ngrx/post/post.state';
 
 @Component({
   selector: 'app-post',
@@ -41,6 +37,8 @@ interface PostState {
   styleUrl: './post.component.scss',
 })
 export class PostComponent implements OnInit {
+  postList$ = this.store.select((state) => state.post.postList);
+
   @Input() size = 'md';
   @Input() showSelectionColumn = true;
   @Input() enableSingleSelect = true;
@@ -59,7 +57,9 @@ export class PostComponent implements OnInit {
   disabled = false;
   dataset = [
     [
-      new TableItem({ data: '1' }),
+      new TableItem({
+        data: '1',
+      }),
       new TableItem({
         data: "I'm rich because took a lot of money from the team",
       }),
@@ -73,13 +73,12 @@ export class PostComponent implements OnInit {
   dataLengthPerPage = 1;
   dataResidual = this.dataLength % this.dataLengthPerPage;
 
-  title = 'ngrx-effect';
-
-  // $allpost = this.store.select((state) => state.postManagement.post);
-
   constructor(
     protected iconService: IconService,
-    private postService: PostService,
+    private store: Store<{
+      auth: AuthState;
+      post: PostState;
+    }>,
   ) {
     this.iconService.registerAll([
       Sendalt20,
@@ -118,6 +117,16 @@ export class PostComponent implements OnInit {
   openDialogShare: boolean;
 
   ngOnInit() {
+    this.store.select('auth').subscribe((auth) => {
+      this.store.dispatch(
+        PostActions.getAllPosts({ page: 1, token: auth.idToken }),
+      );
+    });
+    this.postList$.subscribe((postList) => {
+      postList.data.map((post) => {
+        console.log(post.createdAt);
+      });
+    });
     console.log('Data length:', this.dataLength);
     this.modelPagination.currentPage = 1;
     if (this.dataResidual === 0) {
