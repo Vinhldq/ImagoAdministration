@@ -71,7 +71,7 @@ export class RoleManagementComponent implements OnInit, OnChanges, AfterViewInit
         if (token != '') {
           this.store.dispatch(RoleActions.getAllRole({
               token: token,
-              page: this.page
+              page: 1
             }
           ));
         }
