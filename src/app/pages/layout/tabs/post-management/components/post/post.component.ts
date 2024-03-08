@@ -18,7 +18,12 @@ import Favoritefilled20 from '@carbon/icons/es/favorite--filled/20';
 import Chat20 from '@carbon/icons/es/chat/20';
 import Sendalt20 from '@carbon/icons/es/send--alt/20';
 import { SharedModule } from '../../../../../../shared/shared.module';
-import { trigger } from '@angular/animations';
+import { PostService } from '../../../../../../service/post/post.service';
+import { PostManagementState } from '../../../../../../ngrx/post-management/post-management.state';
+
+interface PostState {
+  AllPost: PostManagementState;
+}
 
 @Component({
   selector: 'app-post',
@@ -67,7 +72,14 @@ export class PostComponent implements OnInit {
   dataLengthPerPage = 1;
   dataResidual = this.dataLength % this.dataLengthPerPage;
 
-  constructor(protected iconService: IconService) {
+  title = 'ngrx-effect';
+
+  // $allpost = this.store.select((state) => state.postManagement.post);
+
+  constructor(
+    protected iconService: IconService,
+    private postService: PostService,
+  ) {
     this.iconService.registerAll([
       Sendalt20,
       Chat20,
