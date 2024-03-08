@@ -1,4 +1,12 @@
-import {AfterViewInit, Component, Input, OnChanges, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
 import {SharedModule} from '../../../../shared/shared.module';
 import {
   IconService,
@@ -6,38 +14,44 @@ import {
   PaginationModel,
   TableHeaderItem,
   TableItem,
-  TableModel
+  TableModel,
 } from 'carbon-components-angular';
 import Filter20 from '@carbon/icons/es/filter/20';
 import TrashCan20 from '@carbon/icons/es/trash-can/20';
 import Close20 from '@carbon/icons/es/close/20';
 import Edit20 from '@carbon/icons/es/edit/20';
-import {AsyncPipe, NgClass} from "@angular/common";
-import {RoleCategoryComponent} from "./components/role-category/role-category.component";
-import {FormControl, FormGroup} from "@angular/forms";
+import {AsyncPipe, NgClass} from '@angular/common';
+import {RoleCategoryComponent} from './components/role-category/role-category.component';
+import {FormControl, FormGroup} from '@angular/forms';
 import {ReactiveFormsModule} from '@angular/forms';
-import {RoleState} from "../../../../ngrx/role/role.state";
-import {select, Store} from "@ngrx/store";
-import * as RoleActions from "../../../../ngrx/role/role.action";
-import {RoleDomain, RolePagination} from "../../../../ngrx/role/role.domain";
-import {Observable, Subscription} from "rxjs";
-import * as AuthActions from "../../../../ngrx/auth/auth.action";
-import {AuthService} from "../../../../service/auth.service";
-import {AuthState} from "../../../../ngrx/auth/auth.state";
-import {log} from "@angular-devkit/build-angular/src/builders/ssr-dev-server";
-
+import {RoleState} from '../../../../ngrx/role/role.state';
+import {Store} from '@ngrx/store';
+import * as RoleActions from '../../../../ngrx/role/role.action';
+import {RoleDomain, RolePagination} from '../../../../ngrx/role/role.domain';
+import {Observable, Subscription} from 'rxjs';
+import * as AuthActions from '../../../../ngrx/auth/auth.action';
+import {AuthService} from '../../../../service/auth/auth.service';
+import {AuthState} from '../../../../ngrx/auth/auth.state';
+import {log} from '@angular-devkit/build-angular/src/builders/ssr-dev-server';
 
 @Component({
   selector: 'app-role-management',
   standalone: true,
-  imports: [SharedModule, NgClass, RoleCategoryComponent, ReactiveFormsModule, AsyncPipe],
+  imports: [
+    SharedModule,
+    NgClass,
+    RoleCategoryComponent,
+    ReactiveFormsModule,
+    AsyncPipe,
+  ],
   templateUrl: './role-management.component.html',
   styleUrl: './role-management.component.scss',
 })
-export class RoleManagementComponent implements OnInit, OnChanges, AfterViewInit {
+export class RoleManagementComponent
+  implements OnInit, OnChanges, AfterViewInit {
   constructor(
     protected iconService: IconService,
-    private store: Store<{ role: RoleState, auth: AuthState }>
+    private store: Store<{ role: RoleState; auth: AuthState }>,
   ) {
     this.iconService.registerAll([Filter20, TrashCan20, Close20, Edit20]);
   }
@@ -46,44 +60,47 @@ export class RoleManagementComponent implements OnInit, OnChanges, AfterViewInit
 
   ngOnInit(): void {
     this.roles$.subscribe((roles) => {
-        if (roles.length > 0) {
-          this.dataSet = roles.map((role: RolePagination) => {
-              return [
-                new TableItem({data: role.data.map((role: RoleDomain) => role.id)}),
-                new TableItem({data: role.data.map((role: RoleDomain) => role.name)}),
-                new TableItem({data: role.data.map((role: RoleDomain) => role.description)}),
-              ];
-            }
-          );
-          this.model.data = this.dataSet;
-          console.log('Data:', this.dataSet);
-        }
-        console.log('Role:', roles);
-      }
-    );
-    this.roles$.subscribe((roles) => {
-        roles.map((role: RolePagination) => {
-          this.page = role.endPage;
+      if (roles.length > 0) {
+        this.dataSet = roles.map((role: RolePagination) => {
+          return [
+            new TableItem({
+              data: role.data.map((role: RoleDomain) => role.id),
+            }),
+            new TableItem({
+              data: role.data.map((role: RoleDomain) => role.name),
+            }),
+            new TableItem({
+              data: role.data.map((role: RoleDomain) => role.description),
+            }),
+          ];
         });
+        this.model.data = this.dataSet;
       }
-    );
+      console.log('Role:', roles);
+    });
+    this.roles$.subscribe((roles) => {
+      roles.map((role: RolePagination) => {
+        this.page = role.endPage;
+      });
+    });
     this.subscription.push(
       this.store.select('auth', 'idToken').subscribe((token) => {
         if (token != '') {
-          this.store.dispatch(RoleActions.getAllRole({
+          this.store.dispatch(
+            RoleActions.getAllRole({
               token: token,
-              page: 1
-            }
-          ));
+              page: 1,
+            }),
+          );
         }
       }),
     );
     console.log('Role:', this.roles$);
 
     this.model.header = [
-      new TableHeaderItem({data: "Id"}),
-      new TableHeaderItem({data: "Name"}),
-      new TableHeaderItem({data: "Describe"}),
+      new TableHeaderItem({data: 'Id'}),
+      new TableHeaderItem({data: 'Name'}),
+      new TableHeaderItem({data: 'Describe'}),
     ];
     //
     // this.modelPagination.currentPage = 1;
@@ -121,13 +138,13 @@ export class RoleManagementComponent implements OnInit, OnChanges, AfterViewInit
   ngAfterViewInit() {
   }
 
-  roles$ = this.store.select(state => state.role.roles);
-  loading$ = this.store.select(state => state.role.loading);
-  error$ = this.store.select(state => state.role.error);
+  roles$ = this.store.select((state) => state.role.roles);
+  loading$ = this.store.select((state) => state.role.loading);
+  error$ = this.store.select((state) => state.role.error);
 
   @Input() model = new TableModel();
   disabled = false;
-  @Input() size = "md";
+  @Input() size = 'md';
   @Input() showSelectionColumn = true;
   @Input() enableSingleSelect = true;
   @Input() striped = false;
@@ -136,25 +153,25 @@ export class RoleManagementComponent implements OnInit, OnChanges, AfterViewInit
   @Input() noData = false;
   @Input() stickyHeader = false;
   @Input() skeleton = false;
-  @Input() ariaLabelledby = "table";
-  @Input() ariaDescribedby = "desc";
+  @Input() ariaLabelledby = 'table';
+  @Input() ariaDescribedby = 'desc';
   @Input() invalid = true;
-  @Input() placeholder = "Content";
-  @Input() invalidText = "";
+  @Input() placeholder = 'Content';
+  @Input() invalidText = '';
   @Input() dropUp = false;
   @Input() warn = false;
-  @Input() theme = "dark";
-  @Input() warnText = "This is a warning";
+  @Input() theme = 'dark';
+  @Input() warnText = 'This is a warning';
 
   @Input() modelPagination = new PaginationModel();
   @Input() disabledPagination = false;
   @Input() pageInputDisabled = false;
 
-  @ViewChild("overflowMenuItemTemplate", {static: false})
+  @ViewChild('overflowMenuItemTemplate', {static: false})
   protected overflowMenuItemTemplate: TemplateRef<any> | undefined;
-  @ViewChild("overflowMenuItemTemplateRemove", {static: false})
+  @ViewChild('overflowMenuItemTemplateRemove', {static: false})
   protected overflowMenuItemTemplateRemove: TemplateRef<any> | undefined;
-  @ViewChild("overflowMenuItemTemplateEdit", {static: false})
+  @ViewChild('overflowMenuItemTemplateEdit', {static: false})
   protected overflowMenuItemTemplateEdit: TemplateRef<any> | undefined;
 
   page: number;
@@ -277,7 +294,6 @@ export class RoleManagementComponent implements OnInit, OnChanges, AfterViewInit
 
   // dataResidual = this.dataLength % this.dataLengthPerPage;
 
-
   filterNodeNames(searchString: string) {
     // this.model.data = this.dataSet
     //   .filter((row: TableItem[]) => row[1].data.toLowerCase().includes(searchString.toLowerCase()));
@@ -309,7 +325,7 @@ export class RoleManagementComponent implements OnInit, OnChanges, AfterViewInit
         id: this.selectedId,
         // name: this.dataSet.find((row: TableItem[]) => row[0].data === this.selectedId)[1].data,
         // description: this.dataSet.find((row: TableItem[]) => row[0].data === this.selectedId)[2].data,
-      }
+      };
       this.editForm.patchValue(dataUpdate);
     }
   }
@@ -325,9 +341,9 @@ export class RoleManagementComponent implements OnInit, OnChanges, AfterViewInit
   onRowSelected(event: any) {
     if (event.selectedRowIndex !== undefined && event.selectedRowIndex > 0) {
       // this.selectedRowData = this.dataSet[event.selectedRowIndex][0].data;
-      this.selectedId = this.selectedRowData
+      this.selectedId = this.selectedRowData;
     } else {
-      console.log('No row selected')
+      console.log('No row selected');
     }
   }
 
@@ -360,7 +376,7 @@ export class RoleManagementComponent implements OnInit, OnChanges, AfterViewInit
       new TableItem({data: this.selectedId}),
       new TableItem({data: this.editForm.value.name}),
       new TableItem({data: this.editForm.value.description}),
-    ]
+    ];
     // let rowIndex = this.dataSet.findIndex((row: TableItem[]) => row[0].data === this.selectedId);
     // if (rowIndex !== -1) {
     //   this.dataSet[rowIndex] = form;
@@ -377,10 +393,7 @@ export class RoleManagementComponent implements OnInit, OnChanges, AfterViewInit
       //   this.model.data = this.dataSet;
       // }
     } else {
-      console.log('No data')
+      console.log('No data');
     }
   }
 }
-
-
-
