@@ -13,6 +13,10 @@ import { authReducer } from './ngrx/auth/auth.reducer';
 import { AuthEffects } from './ngrx/auth/auth.effect';
 import { roleReducer } from './ngrx/role/role.reducer';
 import { RoleEffect } from './ngrx/role/role.effect';
+import {provideToastr} from "ngx-toastr";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {ProfileEffect} from "./ngrx/profile/profile.effect";
+import {profileReducer} from "./ngrx/profile/profile.reducer";
 import { postReducer } from './ngrx/post/post.reducer';
 import { categoryReducer } from './ngrx/category/category.reducer';
 import { PostEffects } from './ngrx/post/post.effects';
@@ -20,19 +24,23 @@ import { CategoryEffects } from './ngrx/category/category.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideToastr(),
     provideRouter(routes),
     provideStore({
       auth: authReducer,
       role: roleReducer,
+
     }),
+    importProvidersFrom(BrowserAnimationsModule),
     provideState({ name: 'dashboard', reducer: dashboardReducer }),
     provideState({ name: 'postManagement', reducer: postReducer }),
     provideEffects(),
     provideState({ name: 'auth', reducer: authReducer }),
     provideState({ name: 'role', reducer: roleReducer }),
+    provideState({ name: 'profile', reducer: profileReducer }),
     provideState({ name: 'post', reducer: postReducer }),
     provideState({ name: 'category', reducer: categoryReducer }),
-    provideEffects([AuthEffects, RoleEffect, PostEffects, CategoryEffects]),
+    provideEffects([AuthEffects, RoleEffect, PostEffects, CategoryEffects,ProfileEffect]),
     provideHttpClient(),
     importProvidersFrom(
       provideFirebaseApp(() =>
@@ -47,6 +55,7 @@ export const appConfig: ApplicationConfig = {
         }),
       ),
     ),
+
     importProvidersFrom(provideAuth(() => getAuth())),
     importProvidersFrom(provideFirestore(() => getFirestore())),
     importProvidersFrom(provideStorage(() => getStorage())),
