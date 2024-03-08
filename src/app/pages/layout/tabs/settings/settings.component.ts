@@ -48,8 +48,6 @@ signOut(){
   });
 
 }
-
-
   selected: ListItem;
   onSelect(ev) {
     this.selected = ev.item;

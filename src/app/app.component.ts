@@ -9,12 +9,15 @@ import * as AuthActions from './ngrx/auth/auth.action';
 import {AuthModel} from "./models/auth.model";
 import {LoadingComponent} from "./pages/loading/loading.component";
 import { Subscription, combineLatest } from 'rxjs';
+import {NotificationService} from "carbon-components-angular";
+
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [SharedModule, NavbarComponent, LoadingComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
+  providers: [NotificationService]
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = 'Imago Admin';
@@ -27,7 +30,8 @@ export class AppComponent implements OnInit, OnDestroy {
     private router: Router,
     private store: Store<{
       auth: AuthState;
-    }>
+    }>,
+    protected notificationService: NotificationService
   )
   {
     onAuthStateChanged(this.auth, async (user) => {
@@ -42,7 +46,7 @@ export class AppComponent implements OnInit, OnDestroy {
       }
     });
 }
-
+  protected open = false;
 ngOnDestroy(): void {
   this.subscriptions.forEach((val) => {
     val.unsubscribe();
@@ -64,11 +68,18 @@ ngOnInit(): void {
       this.store.select('auth', 'authDetail').subscribe((val) => {
         if(val.id != undefined && val.id != ''){
           if(val.role == 'admin'){
+            console.log(val.role);
                 this.router.navigate(['/dashboard']);
           }else{
+            this.notificationService.showNotification({
+              type: 'error',
+              title: 'Permission Denied',
+              message: 'You do not have permission to access this page',
+              target: '.notification-container',
+  toastClass: 'my-custom-toast'
+            });
+            console.log(val.role);
             this.router.navigate(['/login']);
-            alert('You are not admin');
-
           }
         }
       })

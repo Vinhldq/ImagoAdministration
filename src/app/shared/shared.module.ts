@@ -20,6 +20,8 @@ import {
   ModalModule,
   InputModule,
   DropdownModule,
+  NotificationModule,
+  NotificationService,
 } from 'carbon-components-angular';
 import { NgChartsModule } from 'ng2-charts';
 
@@ -43,6 +45,7 @@ export const CarbonModules = [
   InputModule,
   DropdownModule,
   NgChartsModule,
+  NotificationModule,
 ];
 
 @NgModule({
@@ -60,5 +63,6 @@ export const CarbonModules = [
     RouterModule,
     ...CarbonModules,
   ],
+
 })
 export class SharedModule {}

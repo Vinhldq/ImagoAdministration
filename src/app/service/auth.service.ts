@@ -27,26 +27,7 @@ export class AuthService {
           );
           let idToken = await creadential.user.getIdToken();
           resolve(idToken);
-          console.log(idToken);
-          let auth = await this.signUp(idToken).toPromise();
-          console.log(auth);
-          // let listAuth = await this.getAuth(idToken).toPromise();
-          // let id = creadential.user.uid;
-          // for (let i = 0; i < listAuth.length; i++) {
-          //   if (listAuth[i].id === id
-          //     && listAuth[i].email === creadential.user.email
-          //     ) {
-          //     console.log('da ton tai')
-          //     await this.signIn(
-          //       idToken,
-          //     ).toPromise();
-          //   }
-          //   else {
-          //     console.log('chua ton tai');
-          //     await this.createAuth(idToken).toPromise();
-          //   }
-          //
-          // }
+            await this.signUp(idToken).toPromise();
         } catch {
           reject('Cannot login with Google');
         }
@@ -62,7 +43,7 @@ export class AuthService {
             resolve('Logout success!!!');
           });
         } catch {
-          reject('Cannot login with Google');
+          reject('Cannot logout with Google');
         }
       })
     );
