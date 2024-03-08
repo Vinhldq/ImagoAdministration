@@ -3,35 +3,43 @@ import {RoleState} from "./role.state";
 import {createReducer, on} from "@ngrx/store";
 
 export const initialState: RoleState = {
-  roles: [],
-  loading: false,
-  error: ''
+  roleList: {
+    data: [],
+    endPage: 0,
+  },
+  isGetAllRole: false,
+  isGetAllRoleSuccess: false,
+  getAllRoleErrorMessage: ''
 }
 
 export const roleReducer = createReducer(
   initialState,
-  on(RoleActions.getAllRole, (state) => {
+  on(RoleActions.getAllRole, (state, {type}) => {
+      console.log('Get All Role', type)
       return {
         ...state,
-        loading: true
+        isGetAllRole: true,
+        isGetAllRoleSuccess: false,
       }
     }
   ),
-  on(RoleActions.getAllRoleSuccess, (state, {roles}) => {
+  on(RoleActions.getAllRoleSuccess, (state, {type, roleList}) => {
+    console.log(type);
+    return {
+      ...state,
+      isGetAllReport: false,
+      isGetAllReportSuccess: true,
+      roleList: roleList,
+    };
+  }),
+  on(RoleActions.getAllRoleFailure, (state, {error, type}) => {
+      console.log(type);
       return {
         ...state,
-        loading: false,
-        role: roles,
-        error: ''
-      }
-    }
-  ),
-  on(RoleActions.getAllRoleFailure, (state, {error}) => {
-      return {
-        ...state,
-        loading: false,
-        error: error
-      }
+        isGetAllReport: false,
+        isGetAllReportSuccess: false,
+        getAllReportErrorMessage: error,
+      };
     }
   ),
   on(RoleActions.getAllSearchRole, (state) => {
@@ -69,7 +77,7 @@ export const roleReducer = createReducer(
       return {
         ...state,
         loading: false,
-        role: [...state.roles, roles],
+        role: [...state.roleList.data, roles],
         error: ''
       }
     }
@@ -93,7 +101,7 @@ export const roleReducer = createReducer(
       return {
         ...state,
         loading: false,
-        role: state.roles.map(item => item.data.find(item => item.id === roles.id) ? roles : item),
+        role: state.roleList.data.map(item => item.id === roles.id ? roles : item),
         error: ''
       }
     }
@@ -117,7 +125,7 @@ export const roleReducer = createReducer(
       return {
         ...state,
         loading: false,
-        roles: state.roles.filter(item => item.data.find(item => item.id !== id)),
+        roles: state.roleList.data.filter(item => item.id !== id),
         error: ''
       }
     }
