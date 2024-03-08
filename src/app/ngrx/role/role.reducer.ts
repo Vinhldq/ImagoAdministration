@@ -17,16 +17,40 @@ export const roleReducer = createReducer(
       }
     }
   ),
-  on(RoleActions.getAllRoleSuccess, (state, {role}) => {
+  on(RoleActions.getAllRoleSuccess, (state, {roles}) => {
       return {
         ...state,
         loading: false,
-        roles: role,
+        role: roles,
         error: ''
       }
     }
   ),
   on(RoleActions.getAllRoleFailure, (state, {error}) => {
+      return {
+        ...state,
+        loading: false,
+        error: error
+      }
+    }
+  ),
+  on(RoleActions.getAllSearchRole, (state) => {
+      return {
+        ...state,
+        loading: true
+      }
+    }
+  ),
+  on(RoleActions.getAllSearchRoleSuccess, (state, {roles}) => {
+      return {
+        ...state,
+        loading: false,
+        role: roles,
+        error: ''
+      }
+    }
+  ),
+  on(RoleActions.getAllSearchRoleFailure, (state, {error}) => {
       return {
         ...state,
         loading: false,
@@ -41,11 +65,11 @@ export const roleReducer = createReducer(
       }
     }
   ),
-  on(RoleActions.createRoleSuccess, (state, {role}) => {
+  on(RoleActions.createRoleSuccess, (state, {roles}) => {
       return {
         ...state,
         loading: false,
-        roles: [...state.roles, role],
+        role: [...state.roles, roles],
         error: ''
       }
     }
@@ -65,11 +89,11 @@ export const roleReducer = createReducer(
       }
     }
   ),
-  on(RoleActions.updateRoleSuccess, (state, {role}) => {
+  on(RoleActions.updateRoleSuccess, (state, {roles}) => {
       return {
         ...state,
         loading: false,
-        roles: state.roles.map(item => item.id === role.id ? role : item),
+        role: state.roles.map(item => item.data.find(item => item.id === roles.id) ? roles : item),
         error: ''
       }
     }
@@ -93,7 +117,7 @@ export const roleReducer = createReducer(
       return {
         ...state,
         loading: false,
-        roles: state.roles.filter(item => item.id !== id),
+        roles: state.roles.filter(item => item.data.find(item => item.id !== id)),
         error: ''
       }
     }

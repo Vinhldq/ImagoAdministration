@@ -12,16 +12,20 @@ import { getStorage, provideStorage } from '@angular/fire/storage';
 import { dashboardReducer } from './ngrx/dashboard/dashboard.reducer';
 import { authReducer } from './ngrx/auth/auth.reducer';
 import { AuthEffects } from './ngrx/auth/auth.effect';
+import { roleReducer } from './ngrx/role/role.reducer';
+import { RoleEffect } from './ngrx/role/role.effect';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideStore({
       auth: authReducer,
+      role: roleReducer,
     }),
     provideState({ name: 'dashboard', reducer: dashboardReducer }),
     provideState({ name: 'auth', reducer: authReducer }),
-    provideEffects([AuthEffects]),
+    provideState({ name: 'role', reducer: roleReducer }),
+    provideEffects([AuthEffects,RoleEffect]),
     provideHttpClient(),
     importProvidersFrom(
       provideFirebaseApp(() =>

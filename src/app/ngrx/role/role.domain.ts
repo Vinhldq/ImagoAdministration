@@ -4,6 +4,7 @@ export interface RoleDomain {
   id: string
 }
 
-
-
-
+export interface RolePagination{
+  data: RoleDomain[];
+  endPage: number;
+}
