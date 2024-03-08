@@ -9,7 +9,6 @@ import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getStorage, provideStorage } from '@angular/fire/storage';
 import { dashboardReducer } from './ngrx/dashboard/dashboard.reducer';
-import { postManagementReducer } from './ngrx/post-management/post-management.reducer';
 import { authReducer } from './ngrx/auth/auth.reducer';
 import { AuthEffects } from './ngrx/auth/auth.effect';
 import { roleReducer } from './ngrx/role/role.reducer';
@@ -27,7 +26,7 @@ export const appConfig: ApplicationConfig = {
       role: roleReducer,
     }),
     provideState({ name: 'dashboard', reducer: dashboardReducer }),
-    provideState({ name: 'postManagement', reducer: postManagementReducer }),
+    provideState({ name: 'postManagement', reducer: postReducer }),
     provideEffects(),
     provideState({ name: 'auth', reducer: authReducer }),
     provideState({ name: 'role', reducer: roleReducer }),

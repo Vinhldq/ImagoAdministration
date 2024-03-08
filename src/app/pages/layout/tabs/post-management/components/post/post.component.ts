@@ -19,10 +19,11 @@ import Chat20 from '@carbon/icons/es/chat/20';
 import Sendalt20 from '@carbon/icons/es/send--alt/20';
 import { SharedModule } from '../../../../../../shared/shared.module';
 import { PostService } from '../../../../../../service/post/post.service';
-import { PostManagementState } from '../../../../../../ngrx/post-management/post-management.state';
+
+// import { PostState }  from '../../../../../../ngrx/post/post.state';
 
 interface PostState {
-  AllPost: PostManagementState;
+  AllPost: PostState;
 }
 
 @Component({

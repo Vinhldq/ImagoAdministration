@@ -1,6 +1,9 @@
 import { createAction, props } from '@ngrx/store';
 
-export const getPost = createAction('[Post] Get Post', props<{ post: [] }>());
+export const getALlPost = createAction(
+  '[Post] Get Post',
+  props<{ post: [] }>(),
+);
 
 export const getPostSuccess = createAction('[Post] Get Post Success');
 
