@@ -68,10 +68,6 @@ export class PostComponent implements OnInit {
       new TableItem({ data: 'Quy The Accountant' }),
     ],
   ];
-  dataChoose: TableItem[][] = [];
-  dataLength = this.dataset.length;
-  dataLengthPerPage = 1;
-  dataResidual = this.dataLength % this.dataLengthPerPage;
 
   constructor(
     protected iconService: IconService,
@@ -123,35 +119,42 @@ export class PostComponent implements OnInit {
       );
     });
     this.postList$.subscribe((postList) => {
-      postList.data.map((post) => {
-        console.log(post.createdAt);
-      });
+      this.dataset = postList.data.map((post) => [
+        new TableItem({
+          data: post.id,
+        }),
+        new TableItem({
+          data: post.content,
+        }),
+      ]);
+      this.model.data = this.dataset;
     });
-    console.log('Data length:', this.dataLength);
-    this.modelPagination.currentPage = 1;
-    if (this.dataResidual === 0) {
-      this.modelPagination.totalDataLength = Math.floor(
-        this.dataLength / this.dataLengthPerPage,
-      );
-    }
-    if (this.dataResidual !== 0) {
-      console.log('Residual:', this.dataResidual);
-      this.modelPagination.totalDataLength =
-        Math.floor(this.dataLength / this.dataLengthPerPage) + 1;
-      for (let i = 0; i <= this.dataResidual; i++) {
-        this.dataset = [
-          ...this.dataset,
-          [
-            new TableItem({ data: '' }),
-            new TableItem({ data: '' }),
-            new TableItem({ data: '' }),
-            new TableItem({ data: '' }),
-            new TableItem({ data: '' }),
-          ],
-        ];
-        console.log(this.dataLength);
-      }
-    }
+
+    // console.log('Data length:', this.dataLength);
+    // this.modelPagination.currentPage = 1;
+    // if (this.dataResidual === 0) {
+    //   this.modelPagination.totalDataLength = Math.floor(
+    //     this.dataLength / this.dataLengthPerPage,
+    //   );
+    // }
+    // if (this.dataResidual !== 0) {
+    //   console.log('Residual:', this.dataResidual);
+    //   this.modelPagination.totalDataLength =
+    //     Math.floor(this.dataLength / this.dataLengthPerPage) + 1;
+    //   for (let i = 0; i <= this.dataResidual; i++) {
+    //     this.dataset = [
+    //       ...this.dataset,
+    //       [
+    //         new TableItem({ data: '' }),
+    //         new TableItem({ data: '' }),
+    //         new TableItem({ data: '' }),
+    //         new TableItem({ data: '' }),
+    //         new TableItem({ data: '' }),
+    //       ],
+    //     ];
+    //     console.log(this.dataLength);
+    //   }
+    // }
     this.model.header = [
       new TableHeaderItem({
         data: 'ID',
@@ -169,10 +172,10 @@ export class PostComponent implements OnInit {
         data: 'Poster',
       }),
     ];
-    for (let i: number = 0; i < this.dataLengthPerPage; i++) {
-      this.dataChoose = [...this.dataChoose, this.dataset[i]];
-    }
-    this.model.data = this.dataChoose;
+    // for (let i: number = 0; i < this.dataLengthPerPage; i++) {
+    //   this.dataChoose = [...this.dataChoose, this.dataset[i]];
+    // }
+    // this.model.data = this.dataChoose;
 
     // this.model.isRowFiltered = (index: number) => {
     //   const userName = this.model.row(index)[1].data;
@@ -186,14 +189,14 @@ export class PostComponent implements OnInit {
 
   selectPage(page) {
     console.log('Loading page', page, 'from pagination model');
-    let beginGet = (page - 1) * this.dataLengthPerPage;
-    let endGet = page * this.dataLengthPerPage - 1;
-    this.modelPagination.currentPage = page;
-    this.dataChoose = [];
-    for (let i = beginGet; i <= endGet; i++) {
-      this.dataChoose = [...this.dataChoose, this.dataset[i]];
-    }
-    this.model.data = this.dataChoose;
+    // let beginGet = (page - 1) * this.dataLengthPerPage;
+    // let endGet = page * this.dataLengthPerPage - 1;
+    // this.modelPagination.currentPage = page;
+    // this.dataChoose = [];
+    // for (let i = beginGet; i <= endGet; i++) {
+    //   this.dataChoose = [...this.dataChoose, this.dataset[i]];
+    // }
+    // this.model.data = this.dataChoose;
   }
 
   protected open = false;
