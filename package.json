@@ -21,15 +21,17 @@
     "@angular/router": "^17.1.0",
     "@carbon/icons": "^11.34.1",
     "@carbon/themes": "^11.32.0",
-    "@ngrx/effects": "^17.1.0",
-    "@ngrx/store": "^17.1.0",
+    "@ngrx/effects": "^17.1.1",
+    "@ngrx/store": "^17.1.1",
     "carbon-components": "^10.58.12",
     "carbon-components-angular": "^5.16.4",
     "chart.js": "^4.4.1",
     "ng2-charts": "^5.0.4",
+    "ngx-toastr": "^18.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.14.3"
+    "zone.js": "~0.14.3",
+    "ngx-toaster": "^18.0.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^17.1.0",
