@@ -12,26 +12,32 @@ import Filter20 from '@carbon/icons/es/filter/20';
 import TrashCan20 from '@carbon/icons/es/trash-can/20';
 import Close20 from '@carbon/icons/es/close/20';
 import Edit20 from '@carbon/icons/es/edit/20';
-import {NgClass} from "@angular/common";
+import {AsyncPipe, NgClass} from "@angular/common";
 import {RoleCategoryComponent} from "./components/role-category/role-category.component";
 import {FormControl, FormGroup} from "@angular/forms";
 import {ReactiveFormsModule} from '@angular/forms';
+import {RoleState} from "../../../../ngrx/role/role.state";
+import {Store} from "@ngrx/store";
+import * as RoleActions from "../../../../ngrx/role/role.action";
 
 
 @Component({
   selector: 'app-role-management',
   standalone: true,
-  imports: [SharedModule, NgClass, RoleCategoryComponent, ReactiveFormsModule],
+  imports: [SharedModule, NgClass, RoleCategoryComponent, ReactiveFormsModule, AsyncPipe],
   templateUrl: './role-management.component.html',
   styleUrl: './role-management.component.scss',
 })
 export class RoleManagementComponent implements OnInit, OnChanges, AfterViewInit {
-  constructor(protected iconService: IconService) {
+  constructor(protected iconService: IconService, private store: Store<{ role: RoleState }>) {
     this.iconService.registerAll([Filter20, TrashCan20, Close20, Edit20]);
   }
 
   ngOnInit(): void {
     this.model.data = this.dataSet;
+
+    this.store.dispatch(RoleActions.getAllRole());
+    console.log('Role:', this.roles$);
 
     this.model.header = [
       new TableHeaderItem({data: "Id"}),
@@ -39,33 +45,33 @@ export class RoleManagementComponent implements OnInit, OnChanges, AfterViewInit
       new TableHeaderItem({data: "Describe"}),
     ];
 
-    // this.modelPagination.currentPage = 1;
-    // if (this.dataResidual === 0) {
-    //   this.modelPagination.totalDataLength = Math.floor(
-    //     this.dataLength / this.dataLengthPerPage,
-    //   );
-    // }
-    // if (this.dataResidual !== 0) {
-    //   console.log('Residual:', this.dataResidual);
-    //   this.modelPagination.totalDataLength =
-    //     Math.floor(this.dataLength / this.dataLengthPerPage) + 1;
-    //   for (let i = 0; i <= this.dataResidual; i++) {
-    //     this.dataSet = [
-    //       ...this.dataSet,
-    //       [
-    //         new TableItem({data: ''}),
-    //         new TableItem({data: ''}),
-    //         new TableItem({data: ''}),
-    //       ],
-    //     ];
-    //   }
-    // }
-    //
-    // for (let i = 0; i < this.dataLengthPerPage; i++) {
-    //   this.dataChoose = [...this.dataChoose, this.dataSet[i]];
-    // }
-    //
-    // this.model.data = this.dataChoose;
+    this.modelPagination.currentPage = 1;
+    if (this.dataResidual === 0) {
+      this.modelPagination.totalDataLength = Math.floor(
+        this.dataLength / this.dataLengthPerPage,
+      );
+    }
+    if (this.dataResidual !== 0) {
+      console.log('Residual:', this.dataResidual);
+      this.modelPagination.totalDataLength =
+        Math.floor(this.dataLength / this.dataLengthPerPage) + 1;
+      for (let i = 0; i <= this.dataResidual; i++) {
+        this.dataSet = [
+          ...this.dataSet,
+          [
+            new TableItem({data: ''}),
+            new TableItem({data: ''}),
+            new TableItem({data: ''}),
+          ],
+        ];
+      }
+    }
+
+    for (let i = 0; i < this.dataLengthPerPage; i++) {
+      this.dataChoose = [...this.dataChoose, this.dataSet[i]];
+    }
+
+    this.model.data = this.dataChoose;
   }
 
   ngOnChanges(): void {
@@ -73,6 +79,10 @@ export class RoleManagementComponent implements OnInit, OnChanges, AfterViewInit
 
   ngAfterViewInit() {
   }
+
+  roles$ = this.store.select(state => state.role.roles);
+  loading$ = this.store.select(state => state.role.loading);
+  error$ = this.store.select(state => state.role.error);
 
   @Input() model = new TableModel();
   disabled = false;
@@ -137,91 +147,91 @@ export class RoleManagementComponent implements OnInit, OnChanges, AfterViewInit
       new TableItem({data: "Viewer"}),
       new TableItem({data: "Role Viewer"}),
     ],
-    // [
-    //   new TableItem({data: "6"}),
-    //   new TableItem({data: "Super Admin"}),
-    //   new TableItem({data: "Super Admin"}),
-    // ],
-    // [
-    //   new TableItem({data: "7"}),
-    //   new TableItem({data: "Admin Dashboard"}),
-    //   new TableItem({data: "Role Admin Dashboard"}),
-    // ],
-    // [
-    //   new TableItem({data: "8"}),
-    //   new TableItem({data: "Admin User"}),
-    //   new TableItem({data: "Role Admin User"}),
-    // ],
-    // [
-    //   new TableItem({data: "9"}),
-    //   new TableItem({data: "Admin Role"}),
-    //   new TableItem({data: "Role Admin Role"}),
-    // ],
-    // [
-    //   new TableItem({data: "10"}),
-    //   new TableItem({data: "Admin Report"}),
-    //   new TableItem({data: "Role Admin Report"}),
-    // ],
-    // [
-    //   new TableItem({data: "11"}),
-    //   new TableItem({data: "Admin Report"}),
-    //   new TableItem({data: "Role Admin Report"}),
-    // ],
-    // [
-    //   new TableItem({data: "12"}),
-    //   new TableItem({data: "Admin Report"}),
-    //   new TableItem({data: "Role Admin Report"}),
-    // ],
-    // [
-    //   new TableItem({data: "13"}),
-    //   new TableItem({data: "Admin Report"}),
-    //   new TableItem({data: "Role Admin Report"}),
-    // ],
-    // [
-    //   new TableItem({data: "14"}),
-    //   new TableItem({data: "Admin Report"}),
-    //   new TableItem({data: "Role Admin Report"}),
-    // ],
-    // [
-    //   new TableItem({data: "15"}),
-    //   new TableItem({data: "Admin Report"}),
-    //   new TableItem({data: "Role Admin Report"}),
-    // ],
-    // [
-    //   new TableItem({data: "16"}),
-    //   new TableItem({data: "Admin Report"}),
-    //   new TableItem({data: "Role Admin Report"}),
-    // ],
-    // [
-    //   new TableItem({data: "17"}),
-    //   new TableItem({data: "Admin Report"}),
-    //   new TableItem({data: "Role Admin Report"}),
-    // ],
-    // [
-    //   new TableItem({data: "18"}),
-    //   new TableItem({data: "Admin Report"}),
-    //   new TableItem({data: "Role Admin Report"}),
-    // ],
-    // [
-    //   new TableItem({data: "19"}),
-    //   new TableItem({data: "Admin Report"}),
-    //   new TableItem({data: "Role Admin Report"}),
-    // ],
-    // [
-    //   new TableItem({data: "20"}),
-    //   new TableItem({data: "Admin Report"}),
-    //   new TableItem({data: "Role Admin Report"}),
-    // ],
-    // [
-    //   new TableItem({data: "21"}),
-    //   new TableItem({data: "Admin Report"}),
-    //   new TableItem({data: "Role Admin Report"}),
-    // ],
-    // [
-    //   new TableItem({data: "22"}),
-    //   new TableItem({data: "Admin Report"}),
-    //   new TableItem({data: "Role Admin Report"}),
-    // ],
+    [
+      new TableItem({data: "6"}),
+      new TableItem({data: "Super Admin"}),
+      new TableItem({data: "Super Admin"}),
+    ],
+    [
+      new TableItem({data: "7"}),
+      new TableItem({data: "Admin Dashboard"}),
+      new TableItem({data: "Role Admin Dashboard"}),
+    ],
+    [
+      new TableItem({data: "8"}),
+      new TableItem({data: "Admin User"}),
+      new TableItem({data: "Role Admin User"}),
+    ],
+    [
+      new TableItem({data: "9"}),
+      new TableItem({data: "Admin Role"}),
+      new TableItem({data: "Role Admin Role"}),
+    ],
+    [
+      new TableItem({data: "10"}),
+      new TableItem({data: "Admin Report"}),
+      new TableItem({data: "Role Admin Report"}),
+    ],
+    [
+      new TableItem({data: "11"}),
+      new TableItem({data: "Admin Report"}),
+      new TableItem({data: "Role Admin Report"}),
+    ],
+    [
+      new TableItem({data: "12"}),
+      new TableItem({data: "Admin Report"}),
+      new TableItem({data: "Role Admin Report"}),
+    ],
+    [
+      new TableItem({data: "13"}),
+      new TableItem({data: "Admin Report"}),
+      new TableItem({data: "Role Admin Report"}),
+    ],
+    [
+      new TableItem({data: "14"}),
+      new TableItem({data: "Admin Report"}),
+      new TableItem({data: "Role Admin Report"}),
+    ],
+    [
+      new TableItem({data: "15"}),
+      new TableItem({data: "Admin Report"}),
+      new TableItem({data: "Role Admin Report"}),
+    ],
+    [
+      new TableItem({data: "16"}),
+      new TableItem({data: "Admin Report"}),
+      new TableItem({data: "Role Admin Report"}),
+    ],
+    [
+      new TableItem({data: "17"}),
+      new TableItem({data: "Admin Report"}),
+      new TableItem({data: "Role Admin Report"}),
+    ],
+    [
+      new TableItem({data: "18"}),
+      new TableItem({data: "Admin Report"}),
+      new TableItem({data: "Role Admin Report"}),
+    ],
+    [
+      new TableItem({data: "19"}),
+      new TableItem({data: "Admin Report"}),
+      new TableItem({data: "Role Admin Report"}),
+    ],
+    [
+      new TableItem({data: "20"}),
+      new TableItem({data: "Admin Report"}),
+      new TableItem({data: "Role Admin Report"}),
+    ],
+    [
+      new TableItem({data: "21"}),
+      new TableItem({data: "Admin Report"}),
+      new TableItem({data: "Role Admin Report"}),
+    ],
+    [
+      new TableItem({data: "22"}),
+      new TableItem({data: "Admin Report"}),
+      new TableItem({data: "Role Admin Report"}),
+    ],
   ];
 
   dataChoose: TableItem[][] = [];
@@ -273,7 +283,7 @@ export class RoleManagementComponent implements OnInit, OnChanges, AfterViewInit
 
   selectedId: string = '';
   selectedRowData: string = '';
-  numberIdRole: number = 6;
+  numberIdRole: number = 23;
 
   onRowSelected(event: any) {
     if (event.selectedRowIndex !== undefined && event.selectedRowIndex > 0) {
@@ -335,5 +345,6 @@ export class RoleManagementComponent implements OnInit, OnChanges, AfterViewInit
     }
   }
 }
+
 
 

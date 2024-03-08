@@ -1,6 +1,5 @@
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
-
 import { routes } from './app.routes';
 import { provideState, provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
@@ -12,8 +11,8 @@ import { getStorage, provideStorage } from '@angular/fire/storage';
 import { dashboardReducer } from './ngrx/dashboard/dashboard.reducer';
 import { authReducer } from './ngrx/auth/auth.reducer';
 import { AuthEffects } from './ngrx/auth/auth.effect';
-import { ReportEffect } from './ngrx/report/report.effects';
-import {reportReducer} from "./ngrx/report/report.reducer";
+import { reportReducer } from './ngrx/report/report.reducer';
+import { ReportEffects } from './ngrx/report/report.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -24,7 +23,7 @@ export const appConfig: ApplicationConfig = {
     provideState({ name: 'dashboard', reducer: dashboardReducer }),
     provideState({ name: 'auth', reducer: authReducer }),
     provideState({ name: 'report', reducer: reportReducer }),
-    provideEffects([AuthEffects, ReportEffect]),
+    provideEffects([AuthEffects, ReportEffects]),
     provideHttpClient(),
     importProvidersFrom(
       provideFirebaseApp(() =>
@@ -36,8 +35,8 @@ export const appConfig: ApplicationConfig = {
           authDomain: 'itss-imago-0000.firebaseapp.com',
           messagingSenderId: '1098187958856',
           measurementId: 'G-7TVCQGP8RS',
-        }),
-      ),
+        })
+      )
     ),
     importProvidersFrom(provideAuth(() => getAuth())),
     importProvidersFrom(provideFirestore(() => getFirestore())),

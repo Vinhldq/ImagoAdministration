@@ -10,14 +10,13 @@ import {
 
 import Add16 from '@carbon/icons/es/add/16';
 import Filter16 from '@carbon/icons/es/filter/16';
+
 import { SharedModule } from '../../../../../../shared/shared.module';
-import { ReportState } from '../../../../../../ngrx/report/report.state';
-import { AuthState } from '../../../../../../ngrx/auth/auth.state';
 import { Store } from '@ngrx/store';
+import { AuthState } from '../../../../../../ngrx/auth/auth.state';
+import { ReportState } from '../../../../../../ngrx/report/report.state';
 import * as ReportActions from '../../../../../../ngrx/report/report.actions';
-import { timestamp } from 'rxjs';
-import _default from 'chart.js/dist/plugins/plugin.tooltip';
-import numbers = _default.defaults.animations.numbers;
+import { convertOutputFile } from '@angular-devkit/build-angular/src/tools/esbuild/utils';
 
 @Component({
   selector: 'app-post',
@@ -39,11 +38,6 @@ export class PostComponent implements OnInit {
     this.iconService.registerAll([Add16, Filter16]);
   }
 
-  timestampConvert: Object = {
-    _seconds: numbers,
-    _nanoseconds: numbers,
-  };
-
   ngOnInit() {
     this.store.select('auth').subscribe((auth) => {
       this.store.dispatch(ReportActions.getAllReports({ token: auth.idToken }));
@@ -51,7 +45,7 @@ export class PostComponent implements OnInit {
 
     this.reportList$.subscribe((reportList) => {
       reportList.map((report) => {
-        console.log(report);
+        console.log(report.createdAt);
       });
     });
 

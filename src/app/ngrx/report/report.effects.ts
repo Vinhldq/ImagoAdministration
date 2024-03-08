@@ -2,13 +2,11 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, mergeMap, of, switchMap } from 'rxjs';
 import * as ReportActions from './report.actions';
-import { ReportService } from '../../service/report.service';
+import { ReportService } from '../../service/report/report.service';
 import { error } from '@angular/compiler-cli/src/transformers/util';
 
-class PostService {}
-
 @Injectable()
-export class ReportEffect {
+export class ReportEffects {
   constructor(
     private action$: Actions,
     private reportService: ReportService,

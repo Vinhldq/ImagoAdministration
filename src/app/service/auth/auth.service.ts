@@ -6,16 +6,18 @@ import {
   signOut,
 } from '@angular/fire/auth';
 import { from } from 'rxjs';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {environment} from "../../environments/environment";
-import {AuthModel} from "../models/auth.model";
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
+import { AuthModel } from '../../models/auth.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-
-  constructor(private auth: Auth, private httpClient: HttpClient) {}
+  constructor(
+    private auth: Auth,
+    private httpClient: HttpClient,
+  ) {}
 
   loginWithGoogle() {
     return from(
@@ -23,7 +25,7 @@ export class AuthService {
         try {
           let creadential = await signInWithPopup(
             this.auth,
-            new GoogleAuthProvider()
+            new GoogleAuthProvider(),
           );
           let idToken = await creadential.user.getIdToken();
           resolve(idToken);
@@ -50,7 +52,7 @@ export class AuthService {
         } catch {
           reject('Cannot login with Google');
         }
-      })
+      }),
     );
   }
 
@@ -64,40 +66,42 @@ export class AuthService {
         } catch {
           reject('Cannot login with Google');
         }
-      })
+      }),
     );
   }
+
   getAuthById(idToken: string, id: string) {
     return this.httpClient.get<AuthModel>(
       environment.local_url + `auth/?id=${id}`,
       {
-        headers : new HttpHeaders({
-          Authorization:` ${idToken}`,
-        })
-      }
+        headers: new HttpHeaders({
+          Authorization: ` ${idToken}`,
+        }),
+      },
     );
   }
 
-  signUp(idToken: string){
+  signUp(idToken: string) {
     console.log(idToken);
     return this.httpClient.post<AuthModel>(
-      environment.local_url + `auth`,{},
+      environment.local_url + `auth`,
+      {},
       {
-        headers : new HttpHeaders({
-          Authorization:` ${idToken}`,
-        })
-      }
-
+        headers: new HttpHeaders({
+          Authorization: ` ${idToken}`,
+        }),
+      },
     );
   }
-  getAuth(idToken: string){
+
+  getAuth(idToken: string) {
     return this.httpClient.get<AuthModel[]>(
       environment.local_url + `auth/list`,
       {
-        headers : new HttpHeaders({
-          Authorization:` ${idToken}`,
-        })
-      }
+        headers: new HttpHeaders({
+          Authorization: ` ${idToken}`,
+        }),
+      },
     );
   }
 }

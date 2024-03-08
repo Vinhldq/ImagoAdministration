@@ -60,6 +60,33 @@ h1 {
   height: 50px;
 }
 
+::ng-deep .cds--overflow-menu-options--open {
+  margin: 3% 2.2%;
+}
+
+::ng-deep .cds--overflow-menu-options[data-floating-menu-direction=bottom]:not(.cds--breadcrumb-menu-options)::after {
+  block-size: 0;
+}
+
 ::ng-deep .cds--pagination-nav__page:not(.cds--pagination-nav__page--direction)::after {
   background-color: var(--cds-border-interactive, #161616);
 }
+
+::ng-deep .cds--btn--secondary:focus {
+  box-shadow: none;
+}
+
+::ng-deep .cds--overflow-menu-options--open {
+  width: 114px;
+}
+
+::ng-deep .cds--overflow-menu-options {
+  font-size: 90%;
+  align-items: center;
+}
+
+
+
+
+
+
