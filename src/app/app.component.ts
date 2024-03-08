@@ -1,10 +1,10 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {SharedModule} from './shared/shared.module';
-import {NavbarComponent} from './components/navbar/navbar.component';
-import {Auth, onAuthStateChanged} from '@angular/fire/auth';
-import {Router} from '@angular/router';
-import {Store} from '@ngrx/store';
-import {AuthState} from './ngrx/auth/auth.state';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { SharedModule } from './shared/shared.module';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { Auth, onAuthStateChanged } from '@angular/fire/auth';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { AuthState } from './ngrx/auth/auth.state';
 import * as AuthActions from './ngrx/auth/auth.action';
 import {LoadingComponent} from "./pages/loading/loading.component";
 import { Subscription, combineLatest } from 'rxjs';
@@ -43,7 +43,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this.store.dispatch(AuthActions.storedUserUid({uid: user.uid}));
         this.router.navigateByUrl('/loading');
       } else {
-        console.log(user)
+        console.log(user);
         console.log('User is signed out');
         this.router.navigateByUrl('/login');
       }
@@ -90,10 +90,7 @@ ngOnInit(): void {
             this.router.navigate(['/login']);
           }
         }
-      })
+      }),
     );
-
   }
-
-
 }

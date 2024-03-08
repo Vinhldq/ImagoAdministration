@@ -1,6 +1,5 @@
-import { Component, HostBinding, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {
-  ButtonModule,
   CheckboxModule,
   DialogModule,
   IconService,
@@ -18,7 +17,10 @@ import Favoritefilled20 from '@carbon/icons/es/favorite--filled/20';
 import Chat20 from '@carbon/icons/es/chat/20';
 import Sendalt20 from '@carbon/icons/es/send--alt/20';
 import { SharedModule } from '../../../../../../shared/shared.module';
-import { trigger } from '@angular/animations';
+import { Store } from '@ngrx/store';
+import { AuthState } from '../../../../../../ngrx/auth/auth.state';
+import * as PostActions from '../../../../../../ngrx/post/post.actions';
+import { PostState } from '../../../../../../ngrx/post/post.state';
 
 @Component({
   selector: 'app-post',
@@ -35,6 +37,8 @@ import { trigger } from '@angular/animations';
   styleUrl: './post.component.scss',
 })
 export class PostComponent implements OnInit {
+  postList$ = this.store.select((state) => state.post.postList);
+
   @Input() size = 'md';
   @Input() showSelectionColumn = true;
   @Input() enableSingleSelect = true;
@@ -53,374 +57,25 @@ export class PostComponent implements OnInit {
   disabled = false;
   dataset = [
     [
-      new TableItem({ data: '1' }),
       new TableItem({
-        data: "I'm rich because took a lot of money from the team I'm rich because took a lot of money from the team I'm rich because took a lot of money from the team",
+        data: '1',
+      }),
+      new TableItem({
+        data: "I'm rich because took a lot of money from the team",
       }),
       new TableItem({ data: 'Store' }),
       new TableItem({ data: 'thief' }),
       new TableItem({ data: 'Quy The Accountant' }),
     ],
-    [
-      new TableItem({ data: '2' }),
-      new TableItem({ data: 'Lueilwitzview' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'US' }),
-      new TableItem({ data: 'US' }),
-    ],
-    [
-      new TableItem({ data: '3' }),
-      new TableItem({ data: 'East Arcelyside' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'France' }),
-      new TableItem({ data: 'US' }),
-    ],
-    [
-      new TableItem({ data: '4' }),
-      new TableItem({ data: 'West Dylan' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'Argentina' }),
-      new TableItem({ data: 'US' }),
-    ],
-    [
-      new TableItem({ data: '5' }),
-      new TableItem({ data: 'Brandynberg' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'Japan' }),
-      new TableItem({ data: 'US' }),
-    ],
-    [
-      new TableItem({ data: '6' }),
-      new TableItem({ data: 'Stoltenbergport' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'Canada' }),
-      new TableItem({ data: 'US' }),
-    ],
-    [
-      new TableItem({ data: '7' }),
-      new TableItem({ data: 'Rheabury' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'US' }),
-      new TableItem({ data: 'US' }),
-    ],
-    [
-      new TableItem({ data: '8' }),
-      new TableItem({ data: 'East Arcelyside' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'France' }),
-      new TableItem({ data: 'US' }),
-    ],
-    [
-      new TableItem({ data: '9' }),
-      new TableItem({ data: 'East Arcelyside' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'France' }),
-      new TableItem({ data: 'US' }),
-    ],
-    [
-      new TableItem({ data: '10' }),
-      new TableItem({ data: 'East Arcelyside' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'France' }),
-      new TableItem({ data: 'US' }),
-    ],
-    [
-      new TableItem({ data: '11' }),
-      new TableItem({ data: 'East Arcelyside' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'France' }),
-      new TableItem({ data: 'US' }),
-    ],
-    [
-      new TableItem({ data: '12' }),
-      new TableItem({ data: 'East Arcelyside' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'France' }),
-      new TableItem({ data: 'US' }),
-    ],
-    [
-      new TableItem({ data: '13' }),
-      new TableItem({ data: 'East Arcelyside' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'France' }),
-      new TableItem({ data: 'US' }),
-    ],
-    [
-      new TableItem({ data: '14' }),
-      new TableItem({ data: 'East Arcelyside' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'France' }),
-      new TableItem({ data: 'US' }),
-    ],
-    [
-      new TableItem({ data: '15' }),
-      new TableItem({ data: 'East Arcelyside' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'France' }),
-      new TableItem({ data: 'US' }),
-    ],
-    [
-      new TableItem({ data: '16' }),
-      new TableItem({ data: 'East Arcelyside' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'France' }),
-      new TableItem({ data: 'US' }),
-    ],
-    [
-      new TableItem({ data: '17' }),
-      new TableItem({ data: 'East Arcelyside' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'France' }),
-      new TableItem({ data: 'US' }),
-    ],
-    [
-      new TableItem({ data: '18' }),
-      new TableItem({ data: 'East Arcelyside' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'France' }),
-      new TableItem({ data: 'US' }),
-    ],
-    [
-      new TableItem({ data: '19' }),
-      new TableItem({ data: 'East Arcelyside' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'France' }),
-      new TableItem({ data: 'US' }),
-    ],
-    [
-      new TableItem({ data: '20' }),
-      new TableItem({ data: 'East Arcelyside' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'France' }),
-      new TableItem({ data: 'US' }),
-    ],
-    [
-      new TableItem({ data: '21' }),
-      new TableItem({ data: 'East Arcelyside' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'France' }),
-      new TableItem({ data: 'US' }),
-    ],
-    [
-      new TableItem({ data: '22' }),
-      new TableItem({ data: 'East Arcelyside' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'France' }),
-      new TableItem({ data: 'US' }),
-    ],
-    [
-      new TableItem({ data: '23' }),
-      new TableItem({ data: 'East Arcelyside' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'France' }),
-      new TableItem({ data: 'US' }),
-    ],
-    [
-      new TableItem({ data: '24' }),
-      new TableItem({ data: 'East Arcelyside' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'France' }),
-      new TableItem({ data: 'US' }),
-    ],
-    [
-      new TableItem({ data: '25' }),
-      new TableItem({ data: 'East Arcelyside' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'France' }),
-      new TableItem({ data: 'US' }),
-    ],
-    [
-      new TableItem({ data: '26' }),
-      new TableItem({ data: 'East Arcelyside' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'France' }),
-      new TableItem({ data: 'US' }),
-    ],
-    [
-      new TableItem({ data: '27' }),
-      new TableItem({ data: 'East Arcelyside' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'France' }),
-      new TableItem({ data: 'US' }),
-    ],
-    [
-      new TableItem({ data: '28' }),
-      new TableItem({ data: 'East Arcelyside' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'France' }),
-      new TableItem({ data: 'US' }),
-    ],
-    [
-      new TableItem({ data: '29' }),
-      new TableItem({ data: 'East Arcelyside' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'France' }),
-      new TableItem({ data: 'US' }),
-    ],
-    [
-      new TableItem({ data: '30' }),
-      new TableItem({ data: 'East Arcelyside' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'France' }),
-      new TableItem({ data: 'US' }),
-    ],
-    [
-      new TableItem({ data: '31' }),
-      new TableItem({ data: 'East Arcelyside' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'France' }),
-      new TableItem({ data: 'US' }),
-    ],
-
-    [
-      new TableItem({ data: '32' }),
-      new TableItem({ data: 'East Arcelyside' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'France' }),
-      new TableItem({ data: 'US' }),
-    ],
-
-    [
-      new TableItem({ data: '33' }),
-      new TableItem({ data: 'East Arcelyside' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'France' }),
-      new TableItem({ data: 'US' }),
-    ],
-
-    [
-      new TableItem({ data: '34' }),
-      new TableItem({ data: 'East Arcelyside' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'France' }),
-      new TableItem({ data: 'US' }),
-    ],
-    [
-      new TableItem({ data: '35' }),
-      new TableItem({ data: 'East Arcelyside' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'France' }),
-      new TableItem({ data: 'US' }),
-    ],
-    [
-      new TableItem({ data: '36' }),
-      new TableItem({ data: 'East Arcelyside' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'France' }),
-      new TableItem({ data: 'US' }),
-    ],
-    [
-      new TableItem({ data: '37' }),
-      new TableItem({ data: 'East Arcelyside' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'France' }),
-      new TableItem({ data: 'US' }),
-    ],
-    [
-      new TableItem({ data: '38' }),
-      new TableItem({ data: 'East Arcelyside' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'France' }),
-      new TableItem({ data: 'US' }),
-    ],
-    [
-      new TableItem({ data: '39' }),
-      new TableItem({ data: 'East Arcelyside' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'France' }),
-      new TableItem({ data: 'US' }),
-    ],
-    [
-      new TableItem({ data: '40' }),
-      new TableItem({ data: 'East Arcelyside' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'France' }),
-      new TableItem({ data: 'US' }),
-    ],
-    [
-      new TableItem({ data: '41' }),
-      new TableItem({ data: 'East Arcelyside' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'France' }),
-      new TableItem({ data: 'US' }),
-    ],
-    [
-      new TableItem({ data: '42' }),
-      new TableItem({ data: 'East Arcelyside' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'France' }),
-      new TableItem({ data: 'US' }),
-    ],
-    [
-      new TableItem({ data: '43' }),
-      new TableItem({ data: 'East Arcelyside' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'France' }),
-      new TableItem({ data: 'US' }),
-    ],
-    [
-      new TableItem({ data: '44' }),
-      new TableItem({ data: 'East Arcelyside' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'France' }),
-      new TableItem({ data: 'US' }),
-    ],
-    [
-      new TableItem({ data: '45' }),
-      new TableItem({ data: 'East Arcelyside' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'France' }),
-      new TableItem({ data: 'US' }),
-    ],
-    [
-      new TableItem({ data: '46' }),
-      new TableItem({ data: 'East Arcelyside' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'France' }),
-      new TableItem({ data: 'US' }),
-    ],
-    [
-      new TableItem({ data: '47' }),
-      new TableItem({ data: 'East Arcelyside' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'France' }),
-      new TableItem({ data: 'US' }),
-    ],
-    [
-      new TableItem({ data: '48' }),
-      new TableItem({ data: 'East Arcelyside' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'France' }),
-      new TableItem({ data: 'US' }),
-    ],
-    [
-      new TableItem({ data: '49' }),
-      new TableItem({ data: 'East Arcelyside' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'France' }),
-      new TableItem({ data: 'US' }),
-    ],
-    [
-      new TableItem({ data: '50' }),
-      new TableItem({ data: 'East Arcelyside' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'France' }),
-      new TableItem({ data: 'US' }),
-    ],
-    [
-      new TableItem({ data: '51' }),
-      new TableItem({ data: 'East Arcelyside' }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'France' }),
-      new TableItem({ data: 'US' }),
-    ],
   ];
-  dataChoose: TableItem[][] = [];
-  dataLength = this.dataset.length;
-  dataLengthPerPage = 10;
-  dataResidual = this.dataLength % this.dataLengthPerPage;
 
-  constructor(protected iconService: IconService) {
+  constructor(
+    protected iconService: IconService,
+    private store: Store<{
+      auth: AuthState;
+      post: PostState;
+    }>,
+  ) {
     this.iconService.registerAll([
       Sendalt20,
       Chat20,
@@ -431,7 +86,10 @@ export class PostComponent implements OnInit {
   }
 
   filterUserNames(searchString: string) {
-    this.searchValue = searchString;
+    // this.searchValue = searchString;
+    this.model.data = this.dataset.filter((row: TableItem[]) =>
+      row[1].data.toLowerCase().includes(searchString.toLowerCase()),
+    );
   }
 
   filterTitle(titleName: string, checked: boolean) {
@@ -455,31 +113,48 @@ export class PostComponent implements OnInit {
   openDialogShare: boolean;
 
   ngOnInit() {
-    console.log('Data length:', this.dataLength);
-    this.modelPagination.currentPage = 1;
-    if (this.dataResidual === 0) {
-      this.modelPagination.totalDataLength = Math.floor(
-        this.dataLength / this.dataLengthPerPage,
+    this.store.select('auth').subscribe((auth) => {
+      this.store.dispatch(
+        PostActions.getAllPosts({ page: 1, token: auth.idToken }),
       );
-    }
-    if (this.dataResidual !== 0) {
-      console.log('Residual:', this.dataResidual);
-      this.modelPagination.totalDataLength =
-        Math.floor(this.dataLength / this.dataLengthPerPage) + 1;
-      for (let i = 0; i <= this.dataResidual; i++) {
-        this.dataset = [
-          ...this.dataset,
-          [
-            new TableItem({ data: '' }),
-            new TableItem({ data: '' }),
-            new TableItem({ data: '' }),
-            new TableItem({ data: '' }),
-            new TableItem({ data: '' }),
-          ],
-        ];
-        console.log(this.dataLength);
-      }
-    }
+    });
+    this.postList$.subscribe((postList) => {
+      this.dataset = postList.data.map((post) => [
+        new TableItem({
+          data: post.id,
+        }),
+        new TableItem({
+          data: post.content,
+        }),
+      ]);
+      this.model.data = this.dataset;
+    });
+
+    // console.log('Data length:', this.dataLength);
+    // this.modelPagination.currentPage = 1;
+    // if (this.dataResidual === 0) {
+    //   this.modelPagination.totalDataLength = Math.floor(
+    //     this.dataLength / this.dataLengthPerPage,
+    //   );
+    // }
+    // if (this.dataResidual !== 0) {
+    //   console.log('Residual:', this.dataResidual);
+    //   this.modelPagination.totalDataLength =
+    //     Math.floor(this.dataLength / this.dataLengthPerPage) + 1;
+    //   for (let i = 0; i <= this.dataResidual; i++) {
+    //     this.dataset = [
+    //       ...this.dataset,
+    //       [
+    //         new TableItem({ data: '' }),
+    //         new TableItem({ data: '' }),
+    //         new TableItem({ data: '' }),
+    //         new TableItem({ data: '' }),
+    //         new TableItem({ data: '' }),
+    //       ],
+    //     ];
+    //     console.log(this.dataLength);
+    //   }
+    // }
     this.model.header = [
       new TableHeaderItem({
         data: 'ID',
@@ -497,23 +172,50 @@ export class PostComponent implements OnInit {
         data: 'Poster',
       }),
     ];
-    for (let i: number = 0; i < this.dataLengthPerPage; i++) {
-      this.dataChoose = [...this.dataChoose, this.dataset[i]];
-    }
-    this.model.data = this.dataChoose;
+    // for (let i: number = 0; i < this.dataLengthPerPage; i++) {
+    //   this.dataChoose = [...this.dataChoose, this.dataset[i]];
+    // }
+    // this.model.data = this.dataChoose;
+
+    // this.model.isRowFiltered = (index: number) => {
+    //   const userName = this.model.row(index)[1].data;
+    //   const title = this.model.row(index)[3].data;
+    //   return (
+    //     !userName.toLowerCase().includes(this.searchValue.toLowerCase()) ||
+    //     !this.displayedTitle.includes(title)
+    //   );
+    // };
   }
 
   selectPage(page) {
     console.log('Loading page', page, 'from pagination model');
-    let beginGet = (page - 1) * this.dataLengthPerPage;
-    let endGet = page * this.dataLengthPerPage - 1;
-    this.modelPagination.currentPage = page;
-    this.dataChoose = [];
-    for (let i = beginGet; i <= endGet; i++) {
-      this.dataChoose = [...this.dataChoose, this.dataset[i]];
-    }
-    this.model.data = this.dataChoose;
+    // let beginGet = (page - 1) * this.dataLengthPerPage;
+    // let endGet = page * this.dataLengthPerPage - 1;
+    // this.modelPagination.currentPage = page;
+    // this.dataChoose = [];
+    // for (let i = beginGet; i <= endGet; i++) {
+    //   this.dataChoose = [...this.dataChoose, this.dataset[i]];
+    // }
+    // this.model.data = this.dataChoose;
   }
 
-  protected readonly trigger = trigger;
+  protected open = false;
+  items = [
+    {
+      content: 'item one',
+      selected: false,
+    },
+    {
+      content: 'item two',
+      selected: false,
+    },
+    {
+      content: 'item three',
+      selected: false,
+    },
+    {
+      content: 'item four',
+      selected: false,
+    },
+  ];
 }

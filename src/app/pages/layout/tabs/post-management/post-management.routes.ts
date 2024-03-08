@@ -9,7 +9,7 @@ export const POST_MANAGEMENT: Route[] = [
     component: PostManagementComponent,
     children: [
       {
-        path: 'post',
+        path: 'postDetails',
         component: PostComponent,
       },
       {
@@ -18,7 +18,7 @@ export const POST_MANAGEMENT: Route[] = [
       },
       {
         path: '',
-        redirectTo: 'post',
+        redirectTo: 'postDetails',
         pathMatch: 'full',
       },
     ],

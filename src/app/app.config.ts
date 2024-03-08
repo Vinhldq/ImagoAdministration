@@ -33,6 +33,8 @@ export const appConfig: ApplicationConfig = {
     }),
     importProvidersFrom(BrowserAnimationsModule),
     provideState({ name: 'dashboard', reducer: dashboardReducer }),
+    provideState({ name: 'postManagement', reducer: postReducer }),
+    provideEffects(),
     provideState({ name: 'auth', reducer: authReducer }),
     provideState({ name: 'role', reducer: roleReducer }),
     provideState({ name: 'profile', reducer: profileReducer }),
