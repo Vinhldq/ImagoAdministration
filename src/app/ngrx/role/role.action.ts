@@ -1,20 +1,26 @@
 import {createAction, props} from "@ngrx/store";
-import {RoleDomain} from "./role.domain";
+import {RoleDomain, RolePagination} from "./role.domain";
 
-export const getAllRole = createAction('[Role] Get All Role');
+export const getAllRole = createAction('[Role] Get All Role', props<{ token: string, page: number }>());
 
-export const getAllRoleSuccess = createAction('[Role] Get All Role Success', props<{ role: RoleDomain[] }>());
+export const getAllRoleSuccess = createAction('[Role] Get All Role Success', props<{ roles: RoleDomain[] }>());
 
 export const getAllRoleFailure = createAction('[Role] Get All Role Failure', props<{ error: string }>());
 
+export const getAllSearchRole = createAction('[Role] Get All Search Role', props<{ token: string, page: number }>());
+export const getAllSearchRoleSuccess = createAction('[Role] Get All Search Role Success', props<{
+  roles: RoleDomain[]
+}>());
+export const getAllSearchRoleFailure = createAction('[Role] Get All Search Role Failure', props<{ error: string }>());
+
 export const createRole = createAction('[Role] Create Role', props<{ role: RoleDomain }>());
 
-export const createRoleSuccess = createAction('[Role] Create Role Success', props<{ role: RoleDomain }>());
+export const createRoleSuccess = createAction('[Role] Create Role Success', props<{ roles: RoleDomain }>());
 
 export const createRoleFailure = createAction('[Role] Create Role Failure', props<{ error: string }>());
 
 export const updateRole = createAction('[Role] Update Role', props<{ role: RoleDomain }>());
-export const updateRoleSuccess = createAction('[Role] Update Role Success', props<{ role: RoleDomain }>());
+export const updateRoleSuccess = createAction('[Role] Update Role Success', props<{ roles: RoleDomain }>());
 export const updateRoleFailure = createAction('[Role] Update Role Failure', props<{ error: string }>());
 
 export const deleteRole = createAction('[Role] Delete Role', props<{ id: string }>());

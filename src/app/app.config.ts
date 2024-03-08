@@ -1,41 +1,31 @@
-import {ApplicationConfig, importProvidersFrom} from '@angular/core';
-import {provideRouter} from '@angular/router';
+import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import { provideRouter } from '@angular/router';
 
-import {routes} from './app.routes';
-import {provideState, provideStore} from '@ngrx/store';
-import {provideEffects} from '@ngrx/effects';
-import {provideHttpClient} from '@angular/common/http';
-import {initializeApp, provideFirebaseApp} from '@angular/fire/app';
-import {getAuth, provideAuth} from '@angular/fire/auth';
-import {getFirestore, provideFirestore} from '@angular/fire/firestore';
-import {getStorage, provideStorage} from '@angular/fire/storage';
-import {dashboardReducer} from './ngrx/dashboard/dashboard.reducer';
-import {RoleEffect} from "./ngrx/role/role.effect";
-import {roleReducer} from "./ngrx/role/role.reducer";
-import {authReducer} from "./ngrx/auth/auth.reducer";
-import {AuthEffects} from "./ngrx/auth/auth.effect";
+import { routes } from './app.routes';
+import { provideState, provideStore } from '@ngrx/store';
+import { provideEffects } from '@ngrx/effects';
+import { provideHttpClient } from '@angular/common/http';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { getAuth, provideAuth } from '@angular/fire/auth';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { getStorage, provideStorage } from '@angular/fire/storage';
+import { dashboardReducer } from './ngrx/dashboard/dashboard.reducer';
+import { authReducer } from './ngrx/auth/auth.reducer';
+import { AuthEffects } from './ngrx/auth/auth.effect';
+import { roleReducer } from './ngrx/role/role.reducer';
+import { RoleEffect } from './ngrx/role/role.effect';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
-    provideStore(),
-    provideState({name: 'dashboard', reducer: dashboardReducer}),
-    provideState({name: 'role', reducer: roleReducer}),
-    provideEffects(
-      [
-        RoleEffect,
-      ]
-    ),
-    provideStore(
-      {
-        auth: authReducer,
-      }
-    ),
+    provideStore({
+      auth: authReducer,
+      role: roleReducer,
+    }),
     provideState({ name: 'dashboard', reducer: dashboardReducer }),
     provideState({ name: 'auth', reducer: authReducer }),
-    provideEffects([
-      AuthEffects,
-    ]),
+    provideState({ name: 'role', reducer: roleReducer }),
+    provideEffects([AuthEffects,RoleEffect]),
     provideHttpClient(),
     importProvidersFrom(
       provideFirebaseApp(() =>
@@ -47,8 +37,8 @@ export const appConfig: ApplicationConfig = {
           authDomain: 'itss-imago-0000.firebaseapp.com',
           messagingSenderId: '1098187958856',
           measurementId: 'G-7TVCQGP8RS',
-        }),
-      ),
+        })
+      )
     ),
     importProvidersFrom(provideAuth(() => getAuth())),
     importProvidersFrom(provideFirestore(() => getFirestore())),

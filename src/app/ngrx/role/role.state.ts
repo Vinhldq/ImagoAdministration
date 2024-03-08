@@ -1,7 +1,7 @@
-import {RoleDomain} from "./role.domain";
+import {RoleDomain, RolePagination} from "./role.domain";
 
 export interface RoleState {
-  roles: RoleDomain[];
+  roles: RolePagination[];
   loading: boolean;
   error: string;
 }

@@ -6,15 +6,14 @@ import {
   signOut,
 } from '@angular/fire/auth';
 import { from } from 'rxjs';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {environment} from "../../environments/environment";
-import {AuthModel} from "../models/auth.model";
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../environments/environment';
+import { AuthModel } from '../models/auth.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-
   constructor(private auth: Auth, private httpClient: HttpClient) {}
 
   loginWithGoogle() {
@@ -71,32 +70,32 @@ export class AuthService {
     return this.httpClient.get<AuthModel>(
       environment.local_url + `auth/?id=${id}`,
       {
-        headers : new HttpHeaders({
-          Authorization:` ${idToken}`,
-        })
+        headers: new HttpHeaders({
+          Authorization: ` ${idToken}`,
+        }),
       }
     );
   }
 
-  signUp(idToken: string){
+  signUp(idToken: string) {
     console.log(idToken);
     return this.httpClient.post<AuthModel>(
-      environment.local_url + `auth`,{},
+      environment.local_url + `auth`,
+      {},
       {
-        headers : new HttpHeaders({
-          Authorization:` ${idToken}`,
-        })
+        headers: new HttpHeaders({
+          Authorization: ` ${idToken}`,
+        }),
       }
-
     );
   }
-  getAuth(idToken: string){
+  getAuth(idToken: string) {
     return this.httpClient.get<AuthModel[]>(
       environment.local_url + `auth/list`,
       {
-        headers : new HttpHeaders({
-          Authorization:` ${idToken}`,
-        })
+        headers: new HttpHeaders({
+          Authorization: ` ${idToken}`,
+        }),
       }
     );
   }
