@@ -27,7 +27,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {RoleState} from '../../../../ngrx/role/role.state';
 import {Store} from '@ngrx/store';
 import * as RoleActions from '../../../../ngrx/role/role.action';
-import {RoleDomain, RolePagination} from '../../../../ngrx/role/role.domain';
+import {RoleModel, RolePagination} from '../../../../models/role.model';
 import {Observable, Subscription} from 'rxjs';
 import * as AuthActions from '../../../../ngrx/auth/auth.action';
 import {AuthService} from '../../../../service/auth/auth.service';
@@ -64,13 +64,13 @@ export class RoleManagementComponent
         this.dataSet = roles.map((role: RolePagination) => {
           return [
             new TableItem({
-              data: role.data.map((role: RoleDomain) => role.id),
+              data: role.data.map((role: RoleModel) => role.id),
             }),
             new TableItem({
-              data: role.data.map((role: RoleDomain) => role.name),
+              data: role.data.map((role: RoleModel) => role.name),
             }),
             new TableItem({
-              data: role.data.map((role: RoleDomain) => role.description),
+              data: role.data.map((role: RoleModel) => role.description),
             }),
           ];
         });
@@ -138,9 +138,9 @@ export class RoleManagementComponent
   ngAfterViewInit() {
   }
 
-  roles$ = this.store.select((state) => state.role.roles);
-  loading$ = this.store.select((state) => state.role.loading);
-  error$ = this.store.select((state) => state.role.error);
+  roles$ = this.store.select((state) => state.role.roleList);
+  loading$ = this.store.select((state) => state.role.isGetAllRole);
+  error$ = this.store.select((state) => state.role.getAllRoleErrorMessage);
 
   @Input() model = new TableModel();
   disabled = false;

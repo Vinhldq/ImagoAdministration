@@ -1,7 +1,8 @@
-import {RoleDomain, RolePagination} from "./role.domain";
+import {RoleModel, RolePagination} from "../../models/role.model";
 
 export interface RoleState {
-  roles: RolePagination[];
-  loading: boolean;
-  error: string;
+  roleList: RolePagination[];
+  isGetAllRole: boolean;
+  isGetAllRoleSuccess: boolean;
+  getAllRoleErrorMessage: string;
 }
