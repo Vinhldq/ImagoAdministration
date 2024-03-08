@@ -12,7 +12,7 @@ export const initialPostState: PostState = {
   getAllPostErrorMessage: '',
 };
 
-export const PostReducer = createReducer(
+export const postReducer = createReducer(
   initialPostState,
   on(PostAction.getAllPosts, (state, { type }) => {
     console.log(type);

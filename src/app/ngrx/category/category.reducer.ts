@@ -12,7 +12,7 @@ export const initialState: CategoryState = {
   getAllCategoryErrorMessage: '',
 };
 
-export const CategoryReducer = createReducer(
+export const categoryReducer = createReducer(
   initialState,
   on(CategoryAction.getAllCategories, (state, { type }) => {
     console.log(type);

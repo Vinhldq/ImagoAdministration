@@ -11,19 +11,26 @@ import { getStorage, provideStorage } from '@angular/fire/storage';
 import { dashboardReducer } from './ngrx/dashboard/dashboard.reducer';
 import { authReducer } from './ngrx/auth/auth.reducer';
 import { AuthEffects } from './ngrx/auth/auth.effect';
-import { reportReducer } from './ngrx/report/report.reducer';
-import { ReportEffects } from './ngrx/report/report.effects';
+import { roleReducer } from './ngrx/role/role.reducer';
+import { RoleEffect } from './ngrx/role/role.effect';
+import { postReducer } from './ngrx/post/post.reducer';
+import { categoryReducer } from './ngrx/category/category.reducer';
+import { PostEffects } from './ngrx/post/post.effects';
+import { CategoryEffects } from './ngrx/category/category.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideStore({
       auth: authReducer,
+      role: roleReducer,
     }),
     provideState({ name: 'dashboard', reducer: dashboardReducer }),
     provideState({ name: 'auth', reducer: authReducer }),
-    provideState({ name: 'report', reducer: reportReducer }),
-    provideEffects([AuthEffects, ReportEffects]),
+    provideState({ name: 'role', reducer: roleReducer }),
+    provideState({ name: 'post', reducer: postReducer }),
+    provideState({ name: 'category', reducer: categoryReducer }),
+    provideEffects([AuthEffects, RoleEffect, PostEffects, CategoryEffects]),
     provideHttpClient(),
     importProvidersFrom(
       provideFirebaseApp(() =>
@@ -35,8 +42,8 @@ export const appConfig: ApplicationConfig = {
           authDomain: 'itss-imago-0000.firebaseapp.com',
           messagingSenderId: '1098187958856',
           measurementId: 'G-7TVCQGP8RS',
-        })
-      )
+        }),
+      ),
     ),
     importProvidersFrom(provideAuth(() => getAuth())),
     importProvidersFrom(provideFirestore(() => getFirestore())),
