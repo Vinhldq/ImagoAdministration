@@ -18,4 +18,7 @@ export class ReportService {
       headers: headers,
     });
   }
+  getReportStatus(token: string, page: number) {
+
+  }
 }
