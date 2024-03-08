@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {RoleService} from "../../service/role/role.service";
-import {catchError, map, switchMap} from "rxjs";
+import {catchError, map, of, switchMap} from "rxjs";
 import * as RoleActions from "../../ngrx/role/role.action";
 
 @Injectable()
@@ -14,8 +14,10 @@ export class RoleEffect {
     switchMap((action) => {
       return this.roleService.getAllRole(action.token, action.page).pipe(
         map((roles: any) => RoleActions.getAllRoleSuccess({roleList: roles})),
-        catchError((error) => [RoleActions.getAllRoleFailure({error})])
-      );
+        catchError((error) => {
+            return of(RoleActions.getAllRoleFailure({error}));
+          }
+        ));
     })
   ));
 

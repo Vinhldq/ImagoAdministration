@@ -59,30 +59,6 @@ export class RoleManagementComponent
   subscription: Subscription[] = [];
 
   ngOnInit(): void {
-    this.roles$.subscribe((roles) => {
-      if (roles.length > 0) {
-        this.dataSet = roles.map((role: RolePagination) => {
-          return [
-            new TableItem({
-              data: role.data.map((role: RoleModel) => role.id),
-            }),
-            new TableItem({
-              data: role.data.map((role: RoleModel) => role.name),
-            }),
-            new TableItem({
-              data: role.data.map((role: RoleModel) => role.description),
-            }),
-          ];
-        });
-        this.model.data = this.dataSet;
-      }
-      console.log('Role:', roles);
-    });
-    this.roles$.subscribe((roles) => {
-      roles.map((role: RolePagination) => {
-        this.page = role.endPage;
-      });
-    });
     this.subscription.push(
       this.store.select('auth', 'idToken').subscribe((token) => {
         if (token != '') {
@@ -95,7 +71,10 @@ export class RoleManagementComponent
         }
       }),
     );
-    console.log('Role:', this.roles$);
+    this.roles$.subscribe((data) => {
+        console.log('Data:', data);
+      }
+    );
 
     this.model.header = [
       new TableHeaderItem({data: 'Id'}),

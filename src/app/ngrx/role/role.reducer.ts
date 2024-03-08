@@ -11,8 +11,8 @@ export const initialState: RoleState = {
 
 export const roleReducer = createReducer(
   initialState,
-  on(RoleActions.getAllRole, (state) => {
-      console.log('Get All Role')
+  on(RoleActions.getAllRole, (state, {type}) => {
+      console.log('Get All Role', type)
       return {
         ...state,
         isGetAllRole: true,
@@ -26,7 +26,7 @@ export const roleReducer = createReducer(
       ...state,
       isGetAllReport: false,
       isGetAllReportSuccess: true,
-      roles: roleList,
+      roleList: roleList,
     };
   }),
   on(RoleActions.getAllRoleFailure, (state, {error, type}) => {

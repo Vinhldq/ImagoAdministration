@@ -1,4 +1,4 @@
-import {RoleModel, RolePagination} from "../../models/role.model";
+import {RolePagination} from "../../models/role.model";
 
 export interface RoleState {
   roleList: RolePagination[];

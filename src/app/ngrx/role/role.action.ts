@@ -3,7 +3,7 @@ import {RoleModel, RolePagination} from "../../models/role.model";
 
 export const getAllRole = createAction('[Role] Get All Role', props<{ token: string, page: number }>());
 
-export const getAllRoleSuccess = createAction('[Role] Get All Role Success', props<{ roleList: RoleModel[] }>());
+export const getAllRoleSuccess = createAction('[Role] Get All Role Success', props<{ roleList: RolePagination[] }>());
 
 export const getAllRoleFailure = createAction('[Role] Get All Role Failure', props<{ error: string }>());
 
