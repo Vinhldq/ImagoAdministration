@@ -4,14 +4,14 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, mergeMap, of, switchMap } from 'rxjs';
 
 import { Store } from '@ngrx/store';
-import {AuthService} from "../../service/auth.service";
+import { AuthService } from '../../service/auth/auth.service';
 
 @Injectable()
 export class AuthEffects {
   constructor(
     private action$: Actions,
     private authService: AuthService,
-    private store: Store<{}>
+    private store: Store<{}>,
   ) {}
 
   login$ = createEffect(() => {
@@ -21,12 +21,11 @@ export class AuthEffects {
         return this.authService.loginWithGoogle();
       }),
       map(() => {
-          return AuthActions.loginSuccess();
-
+        return AuthActions.loginSuccess();
       }),
       catchError((error) => {
         return of(AuthActions.loginFailure({ errorMessage: error }));
-      })
+      }),
     );
   });
 
@@ -41,21 +40,21 @@ export class AuthEffects {
       }),
       catchError((error) => {
         return of(AuthActions.logoutFailure({ errorMessage: error }));
-      })
+      }),
     );
   });
   getAuthById$ = createEffect(() => {
     return this.action$.pipe(
       ofType(AuthActions.getAuthById),
       switchMap((action) => {
-        return this.authService.getAuthById(action.token,action.id);
+        return this.authService.getAuthById(action.token, action.id);
       }),
       map((res) => {
         return AuthActions.getAuthByIdSuccess({ auth: res });
       }),
       catchError((error) => {
         return of(AuthActions.getAuthByIdFailure({ errorMessage: error }));
-      })
+      }),
     );
   });
 }

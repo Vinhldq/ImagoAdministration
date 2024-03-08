@@ -1,6 +1,5 @@
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
-
 import { routes } from './app.routes';
 import { provideState, provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
@@ -18,6 +17,11 @@ import {provideToastr} from "ngx-toastr";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {ProfileEffect} from "./ngrx/profile/profile.effect";
 import {profileReducer} from "./ngrx/profile/profile.reducer";
+import { postReducer } from './ngrx/post/post.reducer';
+import { categoryReducer } from './ngrx/category/category.reducer';
+import { PostEffects } from './ngrx/post/post.effects';
+import { CategoryEffects } from './ngrx/category/category.effects';
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideToastr(),
@@ -32,7 +36,9 @@ export const appConfig: ApplicationConfig = {
     provideState({ name: 'auth', reducer: authReducer }),
     provideState({ name: 'role', reducer: roleReducer }),
     provideState({ name: 'profile', reducer: profileReducer }),
-    provideEffects([AuthEffects,RoleEffect,ProfileEffect]),
+    provideState({ name: 'post', reducer: postReducer }),
+    provideState({ name: 'category', reducer: categoryReducer }),
+    provideEffects([AuthEffects, RoleEffect, PostEffects, CategoryEffects,ProfileEffect]),
     provideHttpClient(),
     importProvidersFrom(
       provideFirebaseApp(() =>
@@ -44,8 +50,8 @@ export const appConfig: ApplicationConfig = {
           authDomain: 'itss-imago-0000.firebaseapp.com',
           messagingSenderId: '1098187958856',
           measurementId: 'G-7TVCQGP8RS',
-        })
-      )
+        }),
+      ),
     ),
 
     importProvidersFrom(provideAuth(() => getAuth())),

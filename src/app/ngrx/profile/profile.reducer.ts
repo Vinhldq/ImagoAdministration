@@ -14,7 +14,8 @@ export const initialState : ProfileState= {
 }
 export const profileReducer = createReducer(
   initialState,
-  on(ProfileAction.getMineProfile, (state) => {
+  on(ProfileAction.getMineProfile, (state,type) => {
+    console.log(type)
     return {
       ...state,
       isGetLoading: true,
@@ -23,7 +24,8 @@ export const profileReducer = createReducer(
 
     }
   }),
-  on(ProfileAction.getMineProfileSuccess, (state, {profile}) => {
+  on(ProfileAction.getMineProfileSuccess, (state, {profile,type}) => {
+    console.log(type)
     return {
       ...state,
       profile: profile,
@@ -33,7 +35,8 @@ export const profileReducer = createReducer(
 
     }
   }),
-  on(ProfileAction.getMineProfileFailure, (state, {error}) => {
+  on(ProfileAction.getMineProfileFailure, (state, {error, type}) => {
+    console.log(type)
     return {
       ...state,
       isGetLoading: false,

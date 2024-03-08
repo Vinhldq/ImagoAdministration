@@ -66,6 +66,7 @@ ngOnInit(): void {
             token: res.idToken,
             id: res.uid
           }))
+          console.log(res.idToken);
         }
       }),
       this.store.select('auth', 'authDetail').subscribe((val) => {

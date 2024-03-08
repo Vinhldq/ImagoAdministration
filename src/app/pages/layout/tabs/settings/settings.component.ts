@@ -202,7 +202,6 @@ signOut(){
   ngOnInit() {
     this.subscriptions.push(
       this.store.select('auth', 'idToken').subscribe((val) => {
-        console.log(val);
          this.store.dispatch(ProfileAction.getMineProfile({
             idToken: val
           }));
