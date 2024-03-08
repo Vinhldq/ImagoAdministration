@@ -8,6 +8,9 @@ import {AuthState} from "../../../../ngrx/auth/auth.state";
 import * as AuthActions from "../../../../ngrx/auth/auth.action";
 import {logout} from "../../../../ngrx/auth/auth.action";
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { ReportState } from '../../../../ngrx/report/report.state';
+import * as ReportActions from '../../../../ngrx/report/report.actions';
 export interface History {
   id: number;
   src: string;
@@ -35,7 +38,8 @@ export class SettingsComponent implements OnInit{
     <ListItem>{content: "Dark", selected: false},
     <ListItem>{content: "Light", selected: false},
   ];
-constructor(private store: Store<{auth: AuthState}>,  private router: Router,) {
+  subscriptions: Subscription[] = [];
+constructor(private store: Store<{auth: AuthState, report: ReportState}>,  private router: Router,) {
 }
 
 signOut(){
@@ -192,6 +196,17 @@ signOut(){
 
 
   ngOnInit() {
+
+    this.subscriptions.push(
+      this.store.select('auth', 'idToken').subscribe((idToken) => {
+        if (idToken) {
+          console.log('Token', idToken);
+        }
+        let temp = this.store.dispatch(ReportActions.getReportStatus({ token: idToken, page: 1}));
+      }
+      
+      )
+    );
    console.log('Data length', this.dataLength);
    this.modelPagigation.currentPage = 1;
    this.modelPagigation.totalDataLength =Math.ceil(this.dataLength / this.dataLengthPerPage);

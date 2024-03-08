@@ -1,6 +1,5 @@
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
-
 import { routes } from './app.routes';
 import { provideState, provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
@@ -14,6 +13,12 @@ import { authReducer } from './ngrx/auth/auth.reducer';
 import { AuthEffects } from './ngrx/auth/auth.effect';
 import { roleReducer } from './ngrx/role/role.reducer';
 import { RoleEffect } from './ngrx/role/role.effect';
+import { postReducer } from './ngrx/post/post.reducer';
+import { categoryReducer } from './ngrx/category/category.reducer';
+import { PostEffects } from './ngrx/post/post.effects';
+import { CategoryEffects } from './ngrx/category/category.effects';
+import { reportReducer } from './ngrx/report/report.reducer';
+import { ReportEffects } from './ngrx/report/report.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -23,9 +28,12 @@ export const appConfig: ApplicationConfig = {
       role: roleReducer,
     }),
     provideState({ name: 'dashboard', reducer: dashboardReducer }),
+    provideState({name: 'report', reducer: reportReducer}),
     provideState({ name: 'auth', reducer: authReducer }),
     provideState({ name: 'role', reducer: roleReducer }),
-    provideEffects([AuthEffects,RoleEffect]),
+    provideState({ name: 'post', reducer: postReducer }),
+    provideState({ name: 'category', reducer: categoryReducer }),
+    provideEffects([AuthEffects, RoleEffect, PostEffects, CategoryEffects, ReportEffects]),
     provideHttpClient(),
     importProvidersFrom(
       provideFirebaseApp(() =>
@@ -37,8 +45,8 @@ export const appConfig: ApplicationConfig = {
           authDomain: 'itss-imago-0000.firebaseapp.com',
           messagingSenderId: '1098187958856',
           measurementId: 'G-7TVCQGP8RS',
-        })
-      )
+        }),
+      ),
     ),
     importProvidersFrom(provideAuth(() => getAuth())),
     importProvidersFrom(provideFirestore(() => getFirestore())),
