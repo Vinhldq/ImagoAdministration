@@ -27,12 +27,8 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {RoleState} from '../../../../ngrx/role/role.state';
 import {Store} from '@ngrx/store';
 import * as RoleActions from '../../../../ngrx/role/role.action';
-import {RoleModel, RolePagination} from '../../../../models/role.model';
-import {Observable, Subscription} from 'rxjs';
-import * as AuthActions from '../../../../ngrx/auth/auth.action';
-import {AuthService} from '../../../../service/auth/auth.service';
+import {Subscription} from 'rxjs';
 import {AuthState} from '../../../../ngrx/auth/auth.state';
-import {log} from '@angular-devkit/build-angular/src/builders/ssr-dev-server';
 
 @Component({
   selector: 'app-role-management',
@@ -71,10 +67,21 @@ export class RoleManagementComponent
         }
       }),
     );
-    this.roles$.subscribe((data) => {
-        console.log('Data:', data);
-      }
-    );
+    this.roles$.subscribe((roleList) => {
+      this.dataSet = roleList.data.map((role) => [
+        new TableItem({
+          data: role.id
+        }),
+        new TableItem({
+          data: role.name,
+        }),
+        new TableItem({
+          data: role.description,
+        }),
+      ]);
+      this.model.data = this.dataSet;
+      this.page = roleList.endPage;
+    });
 
     this.model.header = [
       new TableHeaderItem({data: 'Id'}),
@@ -165,113 +172,7 @@ export class RoleManagementComponent
     //     new TableItem({data: "Admin"}),
     //     new TableItem({data: "Role Admin"}),
     //   ],
-    //   [
-    //     new TableItem({data: " 3"}),
-    //     new TableItem({data: "Admin Post"}),
-    //     new TableItem({data: "Role Admin Post"}),
-    //   ],
-    //   [
-    //     new TableItem({data: "4"}),
-    //     new TableItem({data: "Admin Setting"}),
-    //     new TableItem({data: "Role Admin Setting"}),
-    //   ],
-    //   [
-    //     new TableItem({data: "5"}),
-    //     new TableItem({data: "Viewer"}),
-    //     new TableItem({data: "Role Viewer"}),
-    //   ],
-    //   [
-    //     new TableItem({data: "6"}),
-    //     new TableItem({data: "Super Admin"}),
-    //     new TableItem({data: "Super Admin"}),
-    //   ],
-    //   [
-    //     new TableItem({data: "7"}),
-    //     new TableItem({data: "Admin Dashboard"}),
-    //     new TableItem({data: "Role Admin Dashboard"}),
-    //   ],
-    //   [
-    //     new TableItem({data: "8"}),
-    //     new TableItem({data: "Admin User"}),
-    //     new TableItem({data: "Role Admin User"}),
-    //   ],
-    //   [
-    //     new TableItem({data: "9"}),
-    //     new TableItem({data: "Admin Role"}),
-    //     new TableItem({data: "Role Admin Role"}),
-    //   ],
-    //   [
-    //     new TableItem({data: "10"}),
-    //     new TableItem({data: "Admin Report"}),
-    //     new TableItem({data: "Role Admin Report"}),
-    //   ],
-    //   [
-    //     new TableItem({data: "11"}),
-    //     new TableItem({data: "Admin Report"}),
-    //     new TableItem({data: "Role Admin Report"}),
-    //   ],
-    //   [
-    //     new TableItem({data: "12"}),
-    //     new TableItem({data: "Admin Report"}),
-    //     new TableItem({data: "Role Admin Report"}),
-    //   ],
-    //   [
-    //     new TableItem({data: "13"}),
-    //     new TableItem({data: "Admin Report"}),
-    //     new TableItem({data: "Role Admin Report"}),
-    //   ],
-    //   [
-    //     new TableItem({data: "14"}),
-    //     new TableItem({data: "Admin Report"}),
-    //     new TableItem({data: "Role Admin Report"}),
-    //   ],
-    //   [
-    //     new TableItem({data: "15"}),
-    //     new TableItem({data: "Admin Report"}),
-    //     new TableItem({data: "Role Admin Report"}),
-    //   ],
-    //   [
-    //     new TableItem({data: "16"}),
-    //     new TableItem({data: "Admin Report"}),
-    //     new TableItem({data: "Role Admin Report"}),
-    //   ],
-    //   [
-    //     new TableItem({data: "17"}),
-    //     new TableItem({data: "Admin Report"}),
-    //     new TableItem({data: "Role Admin Report"}),
-    //   ],
-    //   [
-    //     new TableItem({data: "18"}),
-    //     new TableItem({data: "Admin Report"}),
-    //     new TableItem({data: "Role Admin Report"}),
-    //   ],
-    //   [
-    //     new TableItem({data: "19"}),
-    //     new TableItem({data: "Admin Report"}),
-    //     new TableItem({data: "Role Admin Report"}),
-    //   ],
-    //   [
-    //     new TableItem({data: "20"}),
-    //     new TableItem({data: "Admin Report"}),
-    //     new TableItem({data: "Role Admin Report"}),
-    //   ],
-    //   [
-    //     new TableItem({data: "21"}),
-    //     new TableItem({data: "Admin Report"}),
-    //     new TableItem({data: "Role Admin Report"}),
-    //   ],
-    //   [
-    //     new TableItem({data: "22"}),
-    //     new TableItem({data: "Admin Report"}),
-    //     new TableItem({data: "Role Admin Report"}),
-    //   ],
   ];
-
-  // dataChoose: TableItem[][] = [];
-  // dataLength = this.dataSet.length;
-  // dataLengthPerPage = 10;
-
-  // dataResidual = this.dataLength % this.dataLengthPerPage;
 
   filterNodeNames(searchString: string) {
     // this.model.data = this.dataSet
@@ -302,10 +203,11 @@ export class RoleManagementComponent
     if (role == 3) {
       let dataUpdate = {
         id: this.selectedId,
-        // name: this.dataSet.find((row: TableItem[]) => row[0].data === this.selectedId)[1].data,
-        // description: this.dataSet.find((row: TableItem[]) => row[0].data === this.selectedId)[2].data,
+        name: this.dataSet.find((row: TableItem[]) => row[0].data === this.selectedId)[1].data,
+        description: this.dataSet.find((row: TableItem[]) => row[0].data === this.selectedId)[2].data.description,
       };
-      this.editForm.patchValue(dataUpdate);
+      console.log('Data Update:', dataUpdate.name);
+      // this.editForm.patchValue(dataUpdate);
     }
   }
 
@@ -356,11 +258,19 @@ export class RoleManagementComponent
       new TableItem({data: this.editForm.value.name}),
       new TableItem({data: this.editForm.value.description}),
     ];
-    // let rowIndex = this.dataSet.findIndex((row: TableItem[]) => row[0].data === this.selectedId);
-    // if (rowIndex !== -1) {
-    //   this.dataSet[rowIndex] = form;
-    // }
-    // this.model.data = this.dataSet;
+    let rowIndex = this.dataSet.findIndex((row: TableItem[]) => row[0].data === this.selectedId);
+    if (rowIndex !== -1) {
+      // this.dataSet[rowIndex] = form;
+      this.store.dispatch(RoleActions.updateRole({
+        id: this.selectedId,
+        role: {
+          id: this.selectedId,
+          name: this.editForm.value.name,
+          description: this.editForm.value.description,
+        },
+      }));
+    }
+    this.model.data = this.dataSet;
     this.isActiveOpenCUD = false;
   }
 

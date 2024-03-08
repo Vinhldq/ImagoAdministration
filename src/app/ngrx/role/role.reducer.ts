@@ -3,7 +3,10 @@ import {RoleState} from "./role.state";
 import {createReducer, on} from "@ngrx/store";
 
 export const initialState: RoleState = {
-  roleList: [],
+  roleList: {
+    data: [],
+    endPage: 0,
+  },
   isGetAllRole: false,
   isGetAllRoleSuccess: false,
   getAllRoleErrorMessage: ''
@@ -74,7 +77,7 @@ export const roleReducer = createReducer(
       return {
         ...state,
         loading: false,
-        role: [...state.roleList, roles],
+        role: [...state.roleList.data, roles],
         error: ''
       }
     }
@@ -98,7 +101,7 @@ export const roleReducer = createReducer(
       return {
         ...state,
         loading: false,
-        role: state.roleList.map(item => item.data.find(item => item.id === roles.id) ? roles : item),
+        role: state.roleList.data.map(item => item.id === roles.id ? roles : item),
         error: ''
       }
     }
@@ -122,7 +125,7 @@ export const roleReducer = createReducer(
       return {
         ...state,
         loading: false,
-        roles: state.roleList.filter(item => item.data.find(item => item.id !== id)),
+        roles: state.roleList.data.filter(item => item.id !== id),
         error: ''
       }
     }
