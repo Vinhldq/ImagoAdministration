@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
-import {RoleDomain} from '../../ngrx/role/role.domain';
+import {RoleModel} from '../../models/role.model';
 import {AuthModel} from "../../models/auth.model";
 
 @Injectable({
@@ -13,7 +13,7 @@ export class RoleService {
   }
 
   getAllRole(idToken: string, page: number) {
-    return this.httpClient.get<RoleDomain>(
+    return this.httpClient.get<RoleModel>(
       environment.local_url + `role/all?page=${page}`,
       {
         headers: new HttpHeaders({
@@ -24,7 +24,7 @@ export class RoleService {
   }
 
   getAllSearchRole(idToken: string, page: number) {
-    return this.httpClient.get<RoleDomain>(
+    return this.httpClient.get<RoleModel>(
       environment.local_url + `role?page=${page}`,
       {
         headers: new HttpHeaders({
@@ -34,12 +34,12 @@ export class RoleService {
     );
   }
 
-  createRole(data: RoleDomain) {
+  createRole(data: RoleModel) {
     const header = {Authorization: `${localStorage.getItem('token')}`};
     return this.httpClient.post(`${environment.local_url}role`, data, {headers: header});
   }
 
-  updateRole(id: string, updateRole: RoleDomain) {
+  updateRole(id: string, updateRole: RoleModel) {
     const header = {Authorization: `${localStorage.getItem('token')}`};
     return this.httpClient.put(`${environment.local_url}role?id=${id}`, updateRole, {headers: header});
   }
