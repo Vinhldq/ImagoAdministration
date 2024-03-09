@@ -1,3 +1,11 @@
+::ng-deep .cds--btn--secondary:focus {
+  border-color: var(--cds-button-focus-color, var(--cds-focus, #161616));
+  box-shadow:
+    inset 0 0 0 1px var(--cds-button-focus-color, var(--cds-focus, #161616)),
+    inset 0 0 0 2px var(--cds-background, #ffffff);
+
+}
+
 
 .container {
   padding-top: 20px;
@@ -32,7 +40,7 @@ img {
   border-radius: 50%;
   width: 50px;
   height: 50px;
-
+  //margin-top: 20px;
 }
 
 .left {
@@ -107,21 +115,21 @@ cds-dropdown-list:focus , cds-dropdown-list:active {
   outline: none;
 
 }
-button:hover {
-  background-color: black;
-  border: none;
-  transform: scale(0.95);
-}
+//button:hover {
+//  background-color: black;
+//  border: none;
+//  transform: scale(0.95);
+//}
 
 button:focus {
   outline: none;
 }
-button:active {
-  border: 1px solid black;
-  outline: none;
-  background-color: black;
-  transform: scale(0.95);
-}
+//button:active {
+//  border: 1px solid black;
+//  outline: none;
+//  background-color: black;
+//  transform: scale(0.95);
+//}
 .btn-save {
   width: 132px;
 }
@@ -144,15 +152,38 @@ button:active {
   width: 30px;
 }
 
+h1 {
+ font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
 h2 {
-  font-weight: 500;
-  color: #000;
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+h3 {
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+h4 {
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 10px;
 }
 
 @media (min-width: 1024px) {
   .container {
     padding-right: 200px;
     padding-left: 200px;
+  }
+  .picture{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    object-fit: cover;
   }
 }
 
@@ -161,10 +192,17 @@ h2 {
     padding-right: 100px;
     padding-left: 100px;
   }
-
+  .picture{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    object-fit: cover;
+  }
 }
 
 @media (max-width: 740px) {
+
   .container {
     width: 100%;
     padding-right: 20px;
@@ -172,14 +210,14 @@ h2 {
   }
   .content {
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
   }
   .chat-box {
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
   }
   .chat-box-total {
-    gap: 20px;
+    gap: 10px;
   }
   .left {
     width: 100%;
@@ -194,11 +232,13 @@ h2 {
   }
   .account {
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
   }
   .myDiv {
-    flex-direction: column;
-    gap: 20px;
+  display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
   }
   .btn-save {
     width: 150px;
@@ -210,11 +250,12 @@ h2 {
   }
   .top {
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
   }
   .left {
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
+    margin-top: 20px;
   }
   .img-mini-avatar {
     height: 40px;
@@ -234,5 +275,14 @@ h2 {
 
 
   }
+ .picture{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+   object-fit: cover;
+  }
 }
-
+h4 {
+  margin-top: 10px;
+}

@@ -4,7 +4,7 @@
     </div>
 
     <div class="form-container">
-      <img src="../../../assets/logo.png" class="img-logo">
+      <img src="../../../assets/newlogo.jpg" class="img-logo">
       <h1>Imago Admin</h1>
       <div class="sigin">
         <h2>Sign in</h2>
@@ -60,7 +60,9 @@
          >Sign In</button>
        </cds-button-set>
        <cds-button-set>
-         <button cdsButton="secondary" [size]="'sm'" [isExpressive]="true">Sign In With Google</button>
+         <button cdsButton="secondary" [size]="'sm'" [isExpressive]="true"
+(click)="signWithGoogle()"
+         >Sign In With Google</button>
        </cds-button-set>
      </div>
       </div>

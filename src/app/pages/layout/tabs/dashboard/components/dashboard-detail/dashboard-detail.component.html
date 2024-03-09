@@ -1,20 +1,19 @@
-<cds-tabs
+<cds-tab-header-group
   type="line"
   [followFocus]="followFocus"
   [cacheActive]="cacheActive"
   [isNavigation]="isNavigation"
 >
   @for (chart of chartItems; track chart.name; let i = $index) {
-  <cds-tab
-    (selected)="setActiveChart(chart.url, i)"
-    [heading]="chart.name"
-    [tabIndex]="selectedIndex == i ? 0 : -1"
-    aria-selected="true"
+  <button
+    cdsTabHeader
+    (click)="setActiveChart(chart.url, i)"
+    [class.cds--tabs__nav-item--selected]="i === selectedIndex"
   >
-    <!--      {{ chart.name }}-->
-  </cds-tab>
+    {{ chart.name }}
+  </button>
   }
-</cds-tabs>
+</cds-tab-header-group>
 
 <div class="container">
   <div class="table">

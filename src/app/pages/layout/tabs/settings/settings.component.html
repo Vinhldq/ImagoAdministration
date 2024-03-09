@@ -1,6 +1,7 @@
 <div class="container">
+
   <div class='top'>
-    <h2>Setting</h2>
+    <h1>Setting</h1>
     <cds-button-set>
       <button #trigger  cdsButton="secondary" [size]="'sm'" [isExpressive]="true"
                 (click)="open = true"   class="btn-signout"
@@ -9,11 +10,11 @@
   </div>
   <div class="content">
     <div class="left">
-      <h3>Account</h3>
+      <h2>Account</h2>
       <div class="account">
         <img src="../../../../../assets/avatar.png">
         <div class="info">
-          <h4> Tiến Thịnh</h4>
+          <h3> Tiến Thịnh</h3>
           <h4>thinhbui1907gmail.com</h4>
         </div>
       </div>
@@ -113,51 +114,24 @@
       </div>
     </div>
     <div class="right">
+
       <h3>
         Activity History
       </h3>
-      <div class="myDiv">
-        <img class="img-mini-avatar"
-           src="../../../../../assets/avatar.png" alt="Italian Trulli">
-        <p>Bạn đã phê duyệt bài post của X vào 13:00 ngày 08/1/2024.</p>
-      </div>
-      <div class="myDiv">
-        <img class="img-mini-avatar"
-          src="../../../../../assets/avatar.png" alt="Italian Trulli">
-        <p>Bạn đã phê duyệt bài post của A vào 13:15 ngày 08/1/2024.</p>
-      </div>
-      <div class="myDiv">
-        <img class="img-mini-avatar"
-          src="../../../../../assets/avatar.png" alt="Italian Trulli">
-        <p>Bạn đã phê duyệt bài post của C vào 14:00 ngày 08/1/2024.</p>
-      </div>
-      <div class="myDiv">
-        <img
-          class="img-mini-avatar"
-          src="../../../../../assets/avatar.png" alt="Italian Trulli">
-        <p>Bạn đã phê duyệt bài post của D vào 15:00 ngày 08/1/2024.</p>
-      </div>
-      <div class="myDiv">
-        <img class="img-mini-avatar"
-          src="../../../../../assets/avatar.png" alt="Italian Trulli">
-        <p>Bạn đã phê duyệt bài post của Z vào 15:10 ngày 08/1/2024.</p>
-      </div>
-      <div class="myDiv">
-        <img
-          class="img-mini-avatar"src="../../../../../assets/avatar.png" alt="Italian Trulli">
-        <p>Bạn đã phê duyệt bài post của N vào 13:00 ngày 09/1/2024.</p>
-      </div>
-      <div class="myDiv">
-        <img class="img-mini-avatar"
-          src="../../../../../assets/avatar.png" alt="Italian Trulli">
-        <p>Bạn đã khóa bài post của X vào 13:00 ngày 09/1/2024.</p>
-      </div>
+      @for(item of this.dataChoose| slice :0 : dataLengthPerPage;track item.id){
+        <div class = "myDiv">
+          <p>{{item.id}}</p>
+          <img class="img-mini-avatar" src="{{item.src}}" alt= "Italian Truli">
+          <p>{{item.cap}}</p>
+             </div>
+      }
       <cds-pagination-nav
         class="pagi"
-        [model]="model"
+        [model]="modelPagigation"
         [disabled]="disabled"
-        [numOfItemsToShow]="7"
-        (selectPage)="selectPage($event)">
+        [numOfItemsToShow]="dataLengthPerPage"
+        (selectPage)="selectPage($event)"
+      >
       </cds-pagination-nav>
     </div>
     </div>
@@ -168,7 +142,7 @@
 <cds-modal [open]="open" [trigger]="trigger" (overlaySelected)="open = false">
   <cds-modal-header
     (closeSelect)="open = false"
-    [showCloseButton]="true"
+    [showCloseButton]="false"
   >
 
   </cds-modal-header>
@@ -187,9 +161,9 @@
       </button>
       <button
         cdsButton="primary"
-        (click)="open = false"
         [attr.modal-primary-focus]="true"
         routerLink="/login" routerLinkActive="active"
+        (click)="signOut()"
       >
         Ok
       </button>

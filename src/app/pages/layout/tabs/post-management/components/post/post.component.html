@@ -1,0 +1,449 @@
+<!--<div id="container">-->
+<!--  <cds-table-toolbar>-->
+<!--    <cds-table-toolbar-content>-->
+<!--      <cds-table-toolbar-search-->
+<!--        [expandable]="true"-->
+<!--        (valueChange)="filterNodeNames($event)"-->
+<!--        (clear)="filterNodeNames('')">-->
+<!--      </cds-table-toolbar-search>-->
+<!--      <button-->
+<!--        cdsButton="ghost"-->
+<!--        class="toolbar-action"-->
+<!--        [cdsOverflowMenu]="templateRef"-->
+<!--        placement="bottom"-->
+<!--        [flip]="true"-->
+<!--        [offset]="{ x: 3, y: 0 }">-->
+<!--        <svg cdsIcon="filter" size="16" class="cds&#45;&#45;toolbar-action__icon"></svg>-->
+<!--      </button>-->
+
+<!--    </cds-table-toolbar-content>-->
+<!--  </cds-table-toolbar>-->
+<!--  <div class="left-content">-->
+<!--    <cds-table-->
+<!--      [model]="model"-->
+<!--      [sortable]="false"-->
+<!--      size="md"-->
+<!--      [skeleton]="skeleton"-->
+<!--      [showSelectionColumn]="false"-->
+<!--      [enableSingleSelect]="enableSingleSelect"-->
+<!--      [stickyHeader]="stickyHeader"-->
+<!--      [striped]="striped"-->
+<!--      [isDataGrid]="isDataGrid">-->
+<!--      <ng-content></ng-content>-->
+<!--    </cds-table>-->
+<!--    <cds-pagination-nav-->
+<!--      [model]="modelPagination"-->
+<!--      [disabled]="disabled"-->
+<!--      (selectPage)="selectPage($event)"-->
+<!--      [numOfItemsToShow]="dataLengthPerPage">-->
+<!--    </cds-pagination-nav>-->
+<!--  </div>-->
+<!--</div>-->
+<!--<ng-template #templateRef>-->
+<!--  <div style="padding: 0 1rem;" (click)="overflowOnClick($event)">-->
+<!--    <div style="padding-top: 0.5rem; color: grey;">Countries shown</div>-->
+<!--    <cds-checkbox-->
+<!--      [checked]="displayedCountries.includes('US')"-->
+<!--      (checkedChange)="filterCountries('US', $event)">-->
+<!--      US-->
+<!--    </cds-checkbox>-->
+<!--    <cds-checkbox-->
+<!--      [checked]="displayedCountries.includes('France')"-->
+<!--      (checkedChange)="filterCountries('France', $event)">-->
+<!--      France-->
+<!--    </cds-checkbox>-->
+<!--    <cds-checkbox-->
+<!--      [checked]="displayedCountries.includes('Argentina')"-->
+<!--      (checkedChange)="filterCountries('Argentina', $event)">-->
+<!--      Argentina-->
+<!--    </cds-checkbox>-->
+<!--    <cds-checkbox-->
+<!--      [checked]="displayedCountries.includes('Japan')"-->
+<!--      (checkedChange)="filterCountries('Japan', $event)">-->
+<!--      Japan-->
+<!--    </cds-checkbox>-->
+<!--  </div>-->
+<!--</ng-template>-->
+
+<div class="content">
+  <div class="left">
+
+    <cds-table-container>
+      <cds-table-toolbar>
+        <cds-table-toolbar-content>
+          <cds-table-toolbar-search
+            [expandable]="true"
+            (valueChange)="filterUserNames($event)"
+            (clear)="searchValue = ''"
+          >
+          </cds-table-toolbar-search>
+          <button
+            cdsButton="ghost"
+            class="toolbar-action"
+            [cdsOverflowMenu]="templateRef"
+            placement="bottom"
+            [flip]="true"
+            [offset]="{ x: 3, y: 0 }"
+          >
+            <svg
+              cdsIcon="filter"
+              size="16"
+              class="cds--toolbar-action__icon"
+            ></svg>
+          </button>
+          <button
+            class="btn-show"
+            cdsButton="secondary"
+          >Show
+          </button>
+        </cds-table-toolbar-content>
+      </cds-table-toolbar>
+
+      <div class="left-content">
+        <cds-table
+          [model]="model"
+          [sortable]="false"
+          (rowClick)="onRowClick($event)"
+          size="md"
+          [skeleton]="skeleton"
+          [showSelectionColumn]="showSelectionColumn"
+          [enableSingleSelect]="enableSingleSelect"
+          [stickyHeader]="stickyHeader"
+          [striped]="striped"
+          [isDataGrid]="isDataGrid"
+        >
+        </cds-table>
+        <cds-pagination-nav
+          [model]="modelPagination"
+          [disabled]="disabled"
+          (selectPage)="selectPage($event)"
+          [numOfItemsToShow]="dataLengthPerPage"
+        >
+        </cds-pagination-nav>
+      </div>
+    </cds-table-container>
+
+    <ng-template #templateRef>
+      <div style="padding: 0 1rem" (click)="overflowOnClick($event)">
+        <div style="padding-top: 0.5rem; color: grey">Title shown</div>
+        <cds-checkbox
+          [checked]="displayedTitle.includes('Fake Account')"
+          (checkedChange)="filterTitle('Fake Account', $event)"
+        >
+          Fake Account
+        </cds-checkbox>
+        <cds-checkbox
+          [checked]="displayedTitle.includes('Pretending')"
+          (checkedChange)="filterTitle('Pretending', $event)"
+        >
+          Pretending
+        </cds-checkbox>
+        <cds-checkbox
+          [checked]="displayedTitle.includes('Suspicious Activity')"
+          (checkedChange)="filterTitle('Suspicious Activity', $event)"
+        >
+          Suspicious Activity
+        </cds-checkbox>
+        <cds-checkbox
+          [checked]="displayedTitle.includes('Harassment')"
+          (checkedChange)="filterTitle('Harassment', $event)"
+        >
+          Harassment
+        </cds-checkbox>
+        <cds-checkbox
+          [checked]="displayedTitle.includes('Inappropriate Content')"
+          (checkedChange)="filterTitle('Inappropriate Content', $event)"
+        >
+          Inappropriate Content
+        </cds-checkbox>
+        <cds-checkbox
+          [checked]="displayedTitle.includes('Spamming')"
+          (checkedChange)="filterTitle('Spamming', $event)"
+        >
+          Spamming
+        </cds-checkbox>
+        <cds-checkbox
+          [checked]="displayedTitle.includes('Hate Speech')"
+          (checkedChange)="filterTitle('Hate Speech', $event)"
+        >
+          Hate Speech
+        </cds-checkbox>
+        <cds-checkbox
+          [checked]="displayedTitle.includes('Inappropriate Behavior')"
+          (checkedChange)="filterTitle('Inappropriate Behavior', $event)"
+        >
+          Inappropriate Behavior
+        </cds-checkbox>
+      </div>
+    </ng-template>
+  </div>
+  <div class="right">
+    <div class="row">
+      <div class="info">
+        <div class="image">
+          <img
+            src="./assets/QuyTheAccountant.jpg"
+            alt=""
+          />
+        </div>
+
+        <div class="text">
+          <p class="name">Quy The Accountant</p>
+        </div>
+      </div>
+    </div>
+    <div class="post">
+      <div class="content-post">
+        <p>I took money from the team enough for me to buy a new car
+        </p>
+      </div>
+      <div class="image-post">
+        <img
+          src="./assets/QuyTheAccountant.jpg"
+          alt=""
+        />
+      </div>
+      <div class="likes">
+        <div class="heart-icon" style="display: flex; align-items: center" #trigger (click)="openDialog = true">
+          <svg cdsIcon="favorite--filled" size="20"></svg>
+          <p class="like">10 Likes</p>
+        </div>
+        <div class="comment" style="display: flex; align-items: center">
+          <svg cdsIcon="chat" size="20"></svg>
+          <p>10 Comments</p>
+        </div>
+        <div class="share" style="display: flex; align-items: center" #trigger (click)="openDialogShare = true">
+          <svg cdsIcon="send--alt" size="20"></svg>
+          <p>5 Shares</p>
+        </div>
+      </div>
+      <div class="all-comments">
+        <div class="quyComments">
+          <img
+            src="./assets/QuyTheAccountant.jpg"
+            alt=""/>
+        </div>
+        <div class="detail">
+          <div class="title" style="padding: 5px 10px 5px 10px; margin-left: 5px">
+            <div style="display: flex; justify-content: space-between">
+              <p id="titleName">Quy Do</p>
+              <p style="font-size: 14px">13:00 12/12/2020</p>
+            </div>
+            <p>My name is Quy The Accountant</p>
+          </div>
+          <div style="display: flex">
+            <div class="likeComment">
+              <p>0</p>
+              <svg cdsIcon="favorite--filled" size="20"></svg>
+            </div>
+            <!--            <div class="reply">-->
+            <!--              <p>Reply</p>-->
+            <!--              <svg cdsIcon="chat" size="20"></svg>-->
+            <!--            </div>-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<cds-modal size="xs" class="like-dialog" [open]="openDialog" [trigger]="trigger" (overlaySelected)="openDialog = false">
+  <cds-modal-header
+    (closeSelect)="openDialog = false"
+    [showCloseButton]="showCloseButton">
+    <div class="cds--modal-header__label cds--type-delta">
+      <div class="list-like">
+        <svg class="icon-like" cdsIcon="favorite--filled" size="20"></svg>
+        <p>10</p>
+      </div>
+    </div>
+  </cds-modal-header>
+  <div class="all-like">
+    <div>
+      <div class="like">
+        <img
+          src="./assets/QuyTheAccountant.jpg"
+          alt=""
+        />
+        <p>Quy Do</p>
+      </div>
+      <div class="like">
+        <img
+          src="./assets/QuyTheAccountant.jpg"
+          alt=""
+        />
+        <p>Quy Do</p>
+      </div>
+      <div class="like">
+        <img
+          src="./assets/QuyTheAccountant.jpg"
+          alt=""
+        />
+        <p>Quy Do</p>
+      </div>
+      <div class="like">
+        <img
+          src="./assets/QuyTheAccountant.jpg"
+          alt=""
+        />
+        <p>Quy Do</p>
+      </div>
+      <div class="like">
+        <img
+          src="./assets/QuyTheAccountant.jpg"
+          alt=""
+        />
+        <p>Quy Do</p>
+      </div>
+      <div class="like">
+        <img
+          src="./assets/QuyTheAccountant.jpg"
+          alt=""
+        />
+        <p>Quy Do</p>
+      </div>
+      <div class="like">
+        <img
+          src="./assets/QuyTheAccountant.jpg"
+          alt=""
+        />
+        <p>Quy Do</p>
+      </div>
+      <div class="like">
+        <img
+          src="./assets/QuyTheAccountant.jpg"
+          alt=""
+        />
+        <p>Quy Do</p>
+      </div>
+      <div class="like">
+        <img
+          src="./assets/QuyTheAccountant.jpg"
+          alt=""
+        />
+        <p>Quy Do</p>
+      </div>
+      <div class="like">
+        <img
+          src="./assets/QuyTheAccountant.jpg"
+          alt=""
+        />
+        <p>Quy Do</p>
+      </div>
+      <div class="like">
+        <img
+          src="./assets/QuyTheAccountant.jpg"
+          alt=""
+        />
+        <p>Quy Do</p>
+      </div>
+      <div class="like">
+        <img
+          src="./assets/QuyTheAccountant.jpg"
+          alt=""
+        />
+        <p>Quy Do</p>
+      </div>
+      <div class="like">
+        <img
+          src="./assets/QuyTheAccountant.jpg"
+          alt=""
+        />
+        <p>Quy Do</p>
+      </div>
+      <div class="like">
+        <img
+          src="./assets/QuyTheAccountant.jpg"
+          alt=""
+        />
+        <p>Quy Do</p>
+      </div>
+      <div class="like">
+        <img
+          src="./assets/QuyTheAccountant.jpg"
+          alt=""
+        />
+        <p>Quy Do</p>
+      </div>
+      <div class="like">
+        <img
+          src="./assets/QuyTheAccountant.jpg"
+          alt=""
+        />
+        <p>Quy Do</p>
+      </div>
+      <div class="like">
+        <img
+          src="./assets/QuyTheAccountant.jpg"
+          alt=""
+        />
+        <p>Quy Do</p>
+      </div>
+      <div class="like">
+        <img
+          src="./assets/QuyTheAccountant.jpg"
+          alt=""
+        />
+        <p>Quy Do</p>
+      </div>
+    </div>
+  </div>
+
+</cds-modal>
+
+<!--//////////////////////////-->
+<cds-modal size="xs" class="share-dialog" [open]="openDialogShare" [trigger]="trigger"
+           (overlaySelected)="openDialogShare = false">
+  <cds-modal-header
+    (closeSelect)="openDialogShare = false"
+    [showCloseButton]="showCloseButton">
+    <div class="cds--modal-header__label cds--type-delta">
+      <div class="list-share">
+        <svg class="icon-share" cdsIcon="send--alt" size="20"></svg>
+        <p>5</p>
+      </div>
+    </div>
+  </cds-modal-header>
+  <div class="all-share">
+    <div>
+      <div class="share">
+        <img
+          src="./assets/QuyTheAccountant.jpg"
+          alt=""
+        />
+        <p>Quy Do</p>
+      </div>
+      <div class="share">
+        <img
+          src="./assets/QuyTheAccountant.jpg"
+          alt=""
+        />
+        <p>Quy Do</p>
+      </div>
+      <div class="share">
+        <img
+          src="./assets/QuyTheAccountant.jpg"
+          alt=""
+        />
+        <p>Quy Do</p>
+      </div>
+      <div class="share">
+        <img
+          src="./assets/QuyTheAccountant.jpg"
+          alt=""
+        />
+        <p>Quy Do</p>
+      </div>
+      <div class="share">
+        <img
+          src="./assets/QuyTheAccountant.jpg"
+          alt=""
+        />
+        <p>Quy Do</p>
+      </div>
+    </div>
+  </div>
+
+</cds-modal>
+
+

@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import {
   IconService,
   PaginationModel,
+  PlaceholderModule,
   TableHeaderItem,
   TableItem,
   TableModel,
@@ -14,11 +15,15 @@ import { SharedModule } from '../../../../../../shared/shared.module';
 @Component({
   selector: 'app-user',
   standalone: true,
-  imports: [SharedModule],
+  imports: [SharedModule, PlaceholderModule],
   templateUrl: './user.component.html',
   styleUrl: './user.component.scss',
 })
 export class UserComponent implements OnInit {
+  more() {
+    console.log('more');
+  }
+
   @Input() modelPagination = new PaginationModel();
   @Input() disabledPagination = false;
   @Input() pageInputDisabled = false;

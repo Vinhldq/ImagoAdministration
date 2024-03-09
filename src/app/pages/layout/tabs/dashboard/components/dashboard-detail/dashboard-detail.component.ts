@@ -53,7 +53,11 @@ export class DashboardDetailComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     let chartName = this.router.url.split('/').pop();
     this.store.dispatch(DashboardActions.getChart({ chart: chartName }));
-    this.setActiveChart(chartName, this.selectedIndex);
+    let chartIndex = this.chartItems.findIndex(
+      (item) => item.url === chartName,
+    );
+    this.setActiveChart(chartName, chartIndex);
+
     this.model.header = [
       new TableHeaderItem({
         data: 'Days of the week',
@@ -94,12 +98,9 @@ export class DashboardDetailComponent implements OnInit, OnDestroy {
   @Input() followFocus = true;
   @Input() cacheActive = false;
   @Input() isNavigation = true;
-  @Input() type = 'line';
 
   setActiveChart(chart: string, index: number) {
     this.selectedIndex = index;
-    console.log(this.selectedIndex);
-
     this.router.navigate(['dashboard/detail/', chart]);
   }
 
