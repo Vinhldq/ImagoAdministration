@@ -126,9 +126,42 @@ export class PostComponent implements OnInit {
         new TableItem({
           data: post.content,
         }),
+        new TableItem({
+          data: post.reaction,
+        }),
+        new TableItem({
+          data: post.comments,
+        }),
+        new TableItem({
+          data: post.share,
+        }),
+        new TableItem({
+          data: post.createdAt,
+        }),
       ]);
       this.model.data = this.dataset;
     });
+
+    this.model.header = [
+      new TableHeaderItem({
+        data: 'Id Post',
+      }),
+      new TableHeaderItem({
+        data: 'Content',
+      }),
+      new TableHeaderItem({
+        data: 'reaction',
+      }),
+      new TableHeaderItem({
+        data: 'comments',
+      }),
+      new TableHeaderItem({
+        data: 'share',
+      }),
+      new TableHeaderItem({
+        data: 'Date Time',
+      }),
+    ];
 
     // console.log('Data length:', this.dataLength);
     // this.modelPagination.currentPage = 1;
@@ -155,23 +188,6 @@ export class PostComponent implements OnInit {
     //     console.log(this.dataLength);
     //   }
     // }
-    this.model.header = [
-      new TableHeaderItem({
-        data: 'ID',
-      }),
-      new TableHeaderItem({
-        data: 'Content',
-      }),
-      new TableHeaderItem({
-        data: 'DateTime',
-      }),
-      new TableHeaderItem({
-        data: 'Category',
-      }),
-      new TableHeaderItem({
-        data: 'Poster',
-      }),
-    ];
     // for (let i: number = 0; i < this.dataLengthPerPage; i++) {
     //   this.dataChoose = [...this.dataChoose, this.dataset[i]];
     // }
