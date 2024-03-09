@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+
 import {
   UIShellModule,
   IconModule,
@@ -20,6 +21,8 @@ import {
   ModalModule,
   InputModule,
   DropdownModule,
+  NotificationModule,
+  NotificationService,
 } from 'carbon-components-angular';
 import { NgChartsModule } from 'ng2-charts';
 
@@ -43,6 +46,7 @@ export const CarbonModules = [
   InputModule,
   DropdownModule,
   NgChartsModule,
+  NotificationModule,
 ];
 
 @NgModule({
@@ -52,6 +56,7 @@ export const CarbonModules = [
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
+
     ...CarbonModules,
   ],
   exports: [
@@ -60,5 +65,6 @@ export const CarbonModules = [
     RouterModule,
     ...CarbonModules,
   ],
+
 })
 export class SharedModule {}

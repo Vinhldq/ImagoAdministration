@@ -30,6 +30,7 @@
       </cds-table-toolbar>
 
       <div class="table">
+
         <cds-table
           [model]="model"
           [size]="'md'"
@@ -46,7 +47,8 @@
         <cds-pagination-nav
           [model]="modelPagination"
           [disabled]="disabled"
-          [numOfItemsToShow]="dataLengthPerPage"
+          (selectPage)="selectPage($event)"
+          [numOfItemsToShow]="page"
         >
         </cds-pagination-nav>
       </div>
@@ -169,4 +171,3 @@
     }
   }
 </div>
-

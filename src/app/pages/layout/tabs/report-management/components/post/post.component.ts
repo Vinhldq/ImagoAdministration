@@ -10,7 +10,13 @@ import {
 
 import Add16 from '@carbon/icons/es/add/16';
 import Filter16 from '@carbon/icons/es/filter/16';
+
 import { SharedModule } from '../../../../../../shared/shared.module';
+import { Store } from '@ngrx/store';
+import { AuthState } from '../../../../../../ngrx/auth/auth.state';
+import { ReportState } from '../../../../../../ngrx/report/report.state';
+import * as ReportActions from '../../../../../../ngrx/report/report.actions';
+import { convertOutputFile } from '@angular-devkit/build-angular/src/tools/esbuild/utils';
 
 @Component({
   selector: 'app-post',
@@ -20,14 +26,88 @@ import { SharedModule } from '../../../../../../shared/shared.module';
   styleUrl: './post.component.scss',
 })
 export class PostComponent implements OnInit {
-  more() {
-    console.log('more');
+  reportList$ = this.store.select((state) => state.report.reportList);
+
+  constructor(
+    protected iconService: IconService,
+    private store: Store<{
+      auth: AuthState;
+      report: ReportState;
+    }>,
+  ) {
+    this.iconService.registerAll([Add16, Filter16]);
+  }
+
+  ngOnInit() {
+    this.store.select('auth').subscribe((auth) => {
+      this.store.dispatch(ReportActions.getAllReports({ token: auth.idToken }));
+    });
+
+    this.reportList$.subscribe((reportList) => {
+      reportList.map((report) => {
+        console.log(report.createdAt);
+      });
+    });
+
+    this.modelPagination.currentPage = 1;
+    if (this.dataResidual === 0) {
+      this.modelPagination.totalDataLength = Math.floor(
+        this.dataLength / this.dataLengthPerPage,
+      );
+    }
+    if (this.dataResidual !== 0) {
+      this.modelPagination.totalDataLength =
+        Math.floor(this.dataLength / this.dataLengthPerPage) + 1;
+      for (let i = 0; i <= this.dataResidual; i++) {
+        this.dataset = [
+          ...this.dataset,
+          [
+            new TableItem({ data: '' }),
+            new TableItem({ data: '' }),
+            new TableItem({ data: '' }),
+            new TableItem({ data: '' }),
+            new TableItem({ data: '' }),
+          ],
+        ];
+      }
+    }
+
+    this.model.header = [
+      new TableHeaderItem({
+        data: 'ID',
+      }),
+      new TableHeaderItem({
+        data: 'Creator',
+      }),
+      new TableHeaderItem({
+        data: 'Date',
+      }),
+      new TableHeaderItem({
+        data: 'Title',
+      }),
+      new TableHeaderItem({
+        data: 'State',
+      }),
+    ];
+    for (let i = 0; i < this.dataLengthPerPage; i++) {
+      this.dataChoose = [...this.dataChoose, this.dataset[i]];
+    }
+
+    this.model.data = this.dataChoose;
+
+    this.model.isRowFiltered = (index: number) => {
+      const userName = this.model.row(index)[1].data;
+      const title = this.model.row(index)[3].data;
+      return (
+        !userName.toLowerCase().includes(this.searchValue.toLowerCase()) ||
+        !this.displayedTitle.includes(title)
+      );
+    };
   }
 
   @Input() modelPagination = new PaginationModel();
   @Input() disabledPagination = false;
   @Input() pageInputDisabled = false;
-
   @Input() size = 'md';
   @Input() showSelectionColumn = false;
   @Input() enableSingleSelect = true;
@@ -194,219 +274,11 @@ export class PostComponent implements OnInit {
       new TableItem({ data: 'Hate Speech' }),
       new TableItem({ data: 'pending' }),
     ],
-    [
-      new TableItem({ data: '21' }),
-      new TableItem({ data: 'Hai Phong' }),
-      new TableItem({ data: '13/03/2024' }),
-      new TableItem({ data: 'Fake Account' }),
-      new TableItem({ data: 'pending' }),
-    ],
-    [
-      new TableItem({ data: '22' }),
-      new TableItem({ data: 'Thu Ha' }),
-      new TableItem({ data: '16/03/2024' }),
-      new TableItem({ data: 'Harassment' }),
-      new TableItem({ data: 'pending' }),
-    ],
-    [
-      new TableItem({ data: '23' }),
-      new TableItem({ data: 'Duc Minh' }),
-      new TableItem({ data: '19/03/2024' }),
-      new TableItem({ data: 'Inappropriate Behavior' }),
-      new TableItem({ data: 'pending' }),
-    ],
-    [
-      new TableItem({ data: '24' }),
-      new TableItem({ data: 'Thi Lan' }),
-      new TableItem({ data: '22/03/2024' }),
-      new TableItem({ data: 'Spamming' }),
-      new TableItem({ data: 'pending' }),
-    ],
-    [
-      new TableItem({ data: '25' }),
-      new TableItem({ data: 'Duy Khanh' }),
-      new TableItem({ data: '25/03/2024' }),
-      new TableItem({ data: 'Spamming' }),
-      new TableItem({ data: 'pending' }),
-    ],
-    [
-      new TableItem({ data: '26' }),
-      new TableItem({ data: 'Thi Mai' }),
-      new TableItem({ data: '28/03/2024' }),
-      new TableItem({ data: 'Suspicious Activity' }),
-      new TableItem({ data: 'pending' }),
-    ],
-    [
-      new TableItem({ data: '27' }),
-      new TableItem({ data: 'Viet Long' }),
-      new TableItem({ data: '31/03/2024' }),
-      new TableItem({ data: 'Harassment' }),
-      new TableItem({ data: 'pending' }),
-    ],
-    [
-      new TableItem({ data: '28' }),
-      new TableItem({ data: 'Kim Anh' }),
-      new TableItem({ data: '03/04/2024' }),
-      new TableItem({ data: 'Inappropriate Behavior' }),
-      new TableItem({ data: 'pending' }),
-    ],
-    [
-      new TableItem({ data: '29' }),
-      new TableItem({ data: 'Tien Dat' }),
-      new TableItem({ data: '06/04/2024' }),
-      new TableItem({ data: 'Spamming' }),
-      new TableItem({ data: 'pending' }),
-    ],
-    [
-      new TableItem({ data: '30' }),
-      new TableItem({ data: 'Ngoc Thuy' }),
-      new TableItem({ data: '09/04/2024' }),
-      new TableItem({ data: 'Harassment' }),
-      new TableItem({ data: 'pending' }),
-    ],
-    [
-      new TableItem({ data: '31' }),
-      new TableItem({ data: 'Hai Dang' }),
-      new TableItem({ data: '12/04/2024' }),
-      new TableItem({ data: 'Fake Account' }),
-      new TableItem({ data: 'pending' }),
-    ],
-    [
-      new TableItem({ data: '32' }),
-      new TableItem({ data: 'Quynh Trang' }),
-      new TableItem({ data: '15/04/2024' }),
-      new TableItem({ data: 'Harassment' }),
-      new TableItem({ data: 'pending' }),
-    ],
-    [
-      new TableItem({ data: '33' }),
-      new TableItem({ data: 'Minh Duc' }),
-      new TableItem({ data: '18/04/2024' }),
-      new TableItem({ data: 'Inappropriate Behavior' }),
-      new TableItem({ data: 'pending' }),
-    ],
-    [
-      new TableItem({ data: '34' }),
-      new TableItem({ data: 'Nga Nguyen' }),
-      new TableItem({ data: '21/04/2024' }),
-      new TableItem({ data: 'Spamming' }),
-      new TableItem({ data: 'pending' }),
-    ],
-    [
-      new TableItem({ data: '35' }),
-      new TableItem({ data: 'Huy Hoang' }),
-      new TableItem({ data: '24/04/2024' }),
-      new TableItem({ data: 'Pretending' }),
-      new TableItem({ data: 'pending' }),
-    ],
-    [
-      new TableItem({ data: '36' }),
-      new TableItem({ data: 'Thi Thao' }),
-      new TableItem({ data: '27/04/2024' }),
-      new TableItem({ data: 'Fake Account' }),
-      new TableItem({ data: 'pending' }),
-    ],
-    [
-      new TableItem({ data: '37' }),
-      new TableItem({ data: 'Duc Huy' }),
-      new TableItem({ data: '30/04/2024' }),
-      new TableItem({ data: 'Pretending' }),
-      new TableItem({ data: 'pending' }),
-    ],
-    [
-      new TableItem({ data: '38' }),
-      new TableItem({ data: 'Mai Phuong' }),
-      new TableItem({ data: '03/05/2024' }),
-      new TableItem({ data: 'Inappropriate Behavior' }),
-      new TableItem({ data: 'pending' }),
-    ],
-    [
-      new TableItem({ data: '39' }),
-      new TableItem({ data: 'Van Thanh' }),
-      new TableItem({ data: '06/05/2024' }),
-      new TableItem({ data: 'Spamming' }),
-      new TableItem({ data: 'pending' }),
-    ],
-    [
-      new TableItem({ data: '40' }),
-      new TableItem({ data: 'Thi Thu' }),
-      new TableItem({ data: '09/05/2024' }),
-      new TableItem({ data: 'Hate Speech' }),
-      new TableItem({ data: 'pending' }),
-    ],
-    [
-      new TableItem({ data: '41' }),
-      new TableItem({ data: 'Trung Kien' }),
-      new TableItem({ data: '12/05/2024' }),
-      new TableItem({ data: 'Fake Account' }),
-      new TableItem({ data: 'pending' }),
-    ],
-    [
-      new TableItem({ data: '42' }),
-      new TableItem({ data: 'Thi Huong' }),
-      new TableItem({ data: '15/05/2024' }),
-      new TableItem({ data: 'Pretending' }),
-      new TableItem({ data: 'pending' }),
-    ],
-    [
-      new TableItem({ data: '43' }),
-      new TableItem({ data: 'Duc Thinh' }),
-      new TableItem({ data: '18/05/2024' }),
-      new TableItem({ data: 'Spamming' }),
-      new TableItem({ data: 'approved' }),
-    ],
-    [
-      new TableItem({ data: '44' }),
-      new TableItem({ data: 'Huyen Trang' }),
-      new TableItem({ data: '21/05/2024' }),
-      new TableItem({ data: 'Harassment' }),
-      new TableItem({ data: 'approved' }),
-    ],
-    [
-      new TableItem({ data: '45' }),
-      new TableItem({ data: 'Van Khanh' }),
-      new TableItem({ data: '24/05/2024' }),
-      new TableItem({ data: 'Harassment' }),
-      new TableItem({ data: 'approved' }),
-    ],
-
-    [
-      new TableItem({ data: '46' }),
-      new TableItem({ data: 'Thi Lan' }),
-      new TableItem({ data: '27/05/2024' }),
-      new TableItem({ data: 'Fake Account' }),
-      new TableItem({ data: 'pending' }),
-    ],
-    [
-      new TableItem({ data: '47' }),
-      new TableItem({ data: 'Thi Lan' }),
-      new TableItem({ data: '27/05/2024' }),
-      new TableItem({ data: 'Fake Account' }),
-      new TableItem({ data: 'pending' }),
-    ],
-    [
-      new TableItem({ data: '48' }),
-      new TableItem({ data: 'Thi Lan' }),
-      new TableItem({ data: '27/05/2024' }),
-      new TableItem({ data: 'Fake Account' }),
-      new TableItem({ data: 'pending' }),
-    ],
-    [
-      new TableItem({ data: '48' }),
-      new TableItem({ data: 'Thi Lan' }),
-      new TableItem({ data: '27/05/2024' }),
-      new TableItem({ data: 'Fake Account' }),
-      new TableItem({ data: 'pending' }),
-    ],
   ];
   dataChoose: TableItem[][] = [];
   dataLength = this.dataset.length;
   dataLengthPerPage = 9;
   dataResidual = this.dataLength % this.dataLengthPerPage;
-
-  constructor(protected iconService: IconService) {
-    this.iconService.registerAll([Add16, Filter16]);
-  }
 
   filterUserNames(searchString: string) {
     this.searchValue = searchString;
@@ -423,64 +295,6 @@ export class PostComponent implements OnInit {
   overflowOnClick = (event: any) => {
     event.stopPropagation();
   };
-
-  ngOnInit() {
-    console.log('Data length:', this.dataLength);
-    this.modelPagination.currentPage = 1;
-    if (this.dataResidual === 0) {
-      this.modelPagination.totalDataLength = Math.floor(
-        this.dataLength / this.dataLengthPerPage,
-      );
-    }
-    if (this.dataResidual !== 0) {
-      this.modelPagination.totalDataLength =
-        Math.floor(this.dataLength / this.dataLengthPerPage) + 1;
-      for (let i = 0; i <= this.dataResidual; i++) {
-        this.dataset = [
-          ...this.dataset,
-          [
-            new TableItem({ data: '' }),
-            new TableItem({ data: '' }),
-            new TableItem({ data: '' }),
-            new TableItem({ data: '' }),
-            new TableItem({ data: '' }),
-          ],
-        ];
-      }
-    }
-
-    this.model.header = [
-      new TableHeaderItem({
-        data: 'ID',
-      }),
-      new TableHeaderItem({
-        data: 'Creator',
-      }),
-      new TableHeaderItem({
-        data: 'Date',
-      }),
-      new TableHeaderItem({
-        data: 'Title',
-      }),
-      new TableHeaderItem({
-        data: 'State',
-      }),
-    ];
-    for (let i = 0; i < this.dataLengthPerPage; i++) {
-      this.dataChoose = [...this.dataChoose, this.dataset[i]];
-    }
-
-    this.model.data = this.dataChoose;
-
-    this.model.isRowFiltered = (index: number) => {
-      const userName = this.model.row(index)[1].data;
-      const title = this.model.row(index)[3].data;
-      return (
-        !userName.toLowerCase().includes(this.searchValue.toLowerCase()) ||
-        !this.displayedTitle.includes(title)
-      );
-    };
-  }
 
   onRowClick(index: number) {
     console.log('Row item selected:', index);

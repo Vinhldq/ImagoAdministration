@@ -1,6 +1,5 @@
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
-
 import { routes } from './app.routes';
 import { provideState, provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
@@ -10,22 +9,38 @@ import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getStorage, provideStorage } from '@angular/fire/storage';
 import { dashboardReducer } from './ngrx/dashboard/dashboard.reducer';
-import {authReducer} from "./ngrx/auth/auth.reducer";
-import {AuthEffects} from "./ngrx/auth/auth.effect";
+import { authReducer } from './ngrx/auth/auth.reducer';
+import { AuthEffects } from './ngrx/auth/auth.effect';
+import { roleReducer } from './ngrx/role/role.reducer';
+import { RoleEffect } from './ngrx/role/role.effect';
+import {provideToastr} from "ngx-toastr";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {ProfileEffect} from "./ngrx/profile/profile.effect";
+import {profileReducer} from "./ngrx/profile/profile.reducer";
+import { postReducer } from './ngrx/post/post.reducer';
+import { categoryReducer } from './ngrx/category/category.reducer';
+import { PostEffects } from './ngrx/post/post.effects';
+import { CategoryEffects } from './ngrx/category/category.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideToastr(),
     provideRouter(routes),
-    provideStore(
-      {
-        auth: authReducer,
-      }
-    ),
+    provideStore({
+      auth: authReducer,
+      role: roleReducer,
+
+    }),
+    importProvidersFrom(BrowserAnimationsModule),
     provideState({ name: 'dashboard', reducer: dashboardReducer }),
+    provideState({ name: 'postManagement', reducer: postReducer }),
+    provideEffects(),
     provideState({ name: 'auth', reducer: authReducer }),
-    provideEffects([
-      AuthEffects,
-    ]),
+    provideState({ name: 'role', reducer: roleReducer }),
+    provideState({ name: 'profile', reducer: profileReducer }),
+    provideState({ name: 'post', reducer: postReducer }),
+    provideState({ name: 'category', reducer: categoryReducer }),
+    provideEffects([AuthEffects, RoleEffect, PostEffects, CategoryEffects,ProfileEffect]),
     provideHttpClient(),
     importProvidersFrom(
       provideFirebaseApp(() =>
@@ -40,6 +55,7 @@ export const appConfig: ApplicationConfig = {
         }),
       ),
     ),
+
     importProvidersFrom(provideAuth(() => getAuth())),
     importProvidersFrom(provideFirestore(() => getFirestore())),
     importProvidersFrom(provideStorage(() => getStorage())),

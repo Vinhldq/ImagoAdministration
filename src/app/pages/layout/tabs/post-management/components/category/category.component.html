@@ -7,9 +7,14 @@
       <cds-table-toolbar-search
         [expandable]="true"
         (valueChange)="filterNodeNames($event)"
-        (clear)="filterNodeNames('')">
+        (clear)="searchValue=''">
+
       </cds-table-toolbar-search>
-      <button #trigger cdsButton="secondary" (click)="openDialog = true">Add new category</button>
+      <button
+        #trigger
+        cdsButton="secondary"
+        (click)="openDialog = true">Add new category
+      </button>
     </cds-table-toolbar-content>
   </cds-table-toolbar>
   <cds-table
