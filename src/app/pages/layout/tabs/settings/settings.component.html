@@ -11,13 +11,15 @@
   <div class="content">
     <div class="left">
       <h2>Account</h2>
-      <div class="account">
-        <img src="../../../../../assets/avatar.png">
-        <div class="info">
-          <h3> Tiến Thịnh</h3>
-          <h4>thinhbui1907gmail.com</h4>
-        </div>
-      </div>
+     @if(this.profileDetail != null){
+       <div class="account">
+         <img [src]="this.profileDetail.photoUrl">
+         <div class="info">
+            <h3>{{this.profileDetail.userName}}</h3>
+           <h4>{{this.profileDetail.email}}</h4>
+         </div>
+       </div>
+     }
       <div class="chat-box-total">
         <div class="chat-box">
           <div class="widchat">

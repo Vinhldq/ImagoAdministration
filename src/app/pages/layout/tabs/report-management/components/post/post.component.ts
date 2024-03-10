@@ -108,7 +108,6 @@ export class PostComponent implements OnInit {
   @Input() modelPagination = new PaginationModel();
   @Input() disabledPagination = false;
   @Input() pageInputDisabled = false;
-
   @Input() size = 'md';
   @Input() showSelectionColumn = false;
   @Input() enableSingleSelect = true;

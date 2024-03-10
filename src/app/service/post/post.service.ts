@@ -14,8 +14,11 @@ export class PostService {
 
   getAllPost(token: string, page: number) {
     const headers = { Authorization: `${token}` };
-    return this.httpClient.get(`http://localhost:3000/v1/post?page=${page}`, {
-      headers: headers,
-    });
+    return this.httpClient.get(
+      `http://localhost:3000/v1/post/all?page=${page}`,
+      {
+        headers: headers,
+      },
+    );
   }
 }

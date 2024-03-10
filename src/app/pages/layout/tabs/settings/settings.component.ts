@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import { SharedModule } from '../../../../shared/shared.module';
 import {AccordionModule, ButtonModule, ListItem, ModalModule, PaginationModel,} from "carbon-components-angular";
 import {set} from "@angular/fire/database";
@@ -8,9 +8,10 @@ import {AuthState} from "../../../../ngrx/auth/auth.state";
 import * as AuthActions from "../../../../ngrx/auth/auth.action";
 import {logout} from "../../../../ngrx/auth/auth.action";
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { ReportState } from '../../../../ngrx/report/report.state';
-import * as ReportActions from '../../../../ngrx/report/report.actions';
+import {Subscription} from "rxjs";
+import {ProfileState} from "../../../../ngrx/profile/profile.state";
+import * as ProfileAction from "../../../../ngrx/profile/profile.action";
+import {ProfileModel} from "../../../../models/profile.model";
 export interface History {
   id: number;
   src: string;
@@ -24,7 +25,7 @@ export interface History {
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.scss',
 })
-export class SettingsComponent implements OnInit{
+export class SettingsComponent implements OnInit, OnDestroy{
   @Input() modelPagination = new PaginationModel();
   @Input() disabledPagination = false;
   @Input() pageInputDisabled = false;
@@ -38,10 +39,10 @@ export class SettingsComponent implements OnInit{
     <ListItem>{content: "Dark", selected: false},
     <ListItem>{content: "Light", selected: false},
   ];
-  subscriptions: Subscription[] = [];
-constructor(private store: Store<{auth: AuthState, report: ReportState}>,  private router: Router,) {
+constructor(private store:
+              Store<{auth: AuthState; profile: ProfileState}>,  private router: Router,) {
 }
-
+  subscriptions: Subscription[] = [];
 signOut(){
   this.store.dispatch(AuthActions.logout());
   this.store.select('auth', 'isLogoutSuccess').subscribe((res) => {
@@ -52,8 +53,11 @@ signOut(){
   });
 
 }
-
-
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((val) => {
+      val.unsubscribe();
+    });
+  }
   selected: ListItem;
   onSelect(ev) {
     this.selected = ev.item;
@@ -194,19 +198,21 @@ signOut(){
   dataLengthPerPage = 7;
   dataResidual = this.dataLength / this.dataLengthPerPage;
 
-
+  profileDetail: ProfileModel;
   ngOnInit() {
-
     this.subscriptions.push(
-      this.store.select('auth', 'idToken').subscribe((idToken) => {
-        if (idToken) {
-          console.log('Token', idToken);
-        }
-        let temp = this.store.dispatch(ReportActions.getReportStatus({ token: idToken, page: 1}));
+      this.store.select('auth', 'idToken').subscribe((val) => {
+         this.store.dispatch(ProfileAction.getMineProfile({
+            idToken: val
+          }));
+         this.store.select('profile', 'profile').subscribe((val) => {
+            this.profileDetail = val;
+            console.log(val);
+         });
       }
-      
       )
     );
+
    console.log('Data length', this.dataLength);
    this.modelPagigation.currentPage = 1;
    this.modelPagigation.totalDataLength =Math.ceil(this.dataLength / this.dataLengthPerPage);
@@ -214,7 +220,6 @@ signOut(){
   }
 
   selectPage(page) {
-    console.log(page);
     console.log('Loading page', page, 'from pagination model');
     let beginGet = (page - 1) * this.dataLengthPerPage;
     let endGet = page * this.dataLengthPerPage ;
@@ -227,4 +232,3 @@ protected openModal = false;
 
   protected readonly logout = logout;
 }
-
