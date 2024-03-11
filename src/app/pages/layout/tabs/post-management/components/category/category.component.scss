@@ -1,16 +1,20 @@
+#content {
+  display: flex;
+  justify-content: space-between;
 
-#cate-table {
-  margin-left: 35px;
+  h1 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    padding: 10px;
+  }
+}
+
+.category {
   width: 45%;
-  display: inline-block;
 }
 
-#hashtag-table {
-  margin-left: 80px;
+.hashtag {
   width: 45%;
-  display: inline-block;
 }
 
-.cds--modal-content {
-  height: 260px;
-}
