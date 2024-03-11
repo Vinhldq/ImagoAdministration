@@ -5,4 +5,6 @@ export interface PostState {
   isGetAllPost: boolean;
   isGetAllPostSuccess: boolean;
   getAllPostErrorMessage: string;
+
+  postCreatorName: any;
 }

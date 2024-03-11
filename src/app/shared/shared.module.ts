@@ -23,7 +23,6 @@ import {
   NotificationService,
 } from 'carbon-components-angular';
 import { NgChartsModule } from 'ng2-charts';
-import { CreatorNamePipe } from '../pages/layout/tabs/post-management/components/post/creator-name.pipe';
 
 export const CarbonModules = [
   UIShellModule,
@@ -55,15 +54,8 @@ export const CarbonModules = [
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-    CreatorNamePipe,
     ...CarbonModules,
   ],
-  exports: [
-    FormsModule,
-    ReactiveFormsModule,
-    RouterModule,
-    ...CarbonModules,
-    CreatorNamePipe,
-  ],
+  exports: [FormsModule, ReactiveFormsModule, RouterModule, ...CarbonModules],
 })
 export class SharedModule {}

@@ -25,7 +25,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { AuthModel } from '../../../../../../models/auth.model';
 import { ProfileModel } from '../../../../../../models/profile.model';
 import { PostModel } from '../../../../../../models/post.model';
-import { CreatorNamePipe } from './creator-name.pipe';
 
 @Component({
   selector: 'app-post',
@@ -43,6 +42,7 @@ import { CreatorNamePipe } from './creator-name.pipe';
 })
 export class PostComponent implements OnInit {
   postList$ = this.store.select((state) => state.post.postList);
+  creatorPost$ = this.store.select((state) => state.post.postCreatorName);
 
   @Input() size = 'md';
   @Input() showSelectionColumn = true;
@@ -104,11 +104,14 @@ export class PostComponent implements OnInit {
   ngOnInit() {
     this.store.select('auth').subscribe((auth) => {
       this.store.dispatch(
-        PostActions.getAllPosts({ page: 1, token: auth.idToken })
+        PostActions.getAllPosts({ token: auth.idToken, page: 1, size: 10 })
       );
+      // this.store.dispatch(PostActions.getCreatorName({ token: auth.idToken }));
     });
 
-    // Declare the variable creatorName from the CreatorNamePipe
+    // this.creatorPost$.subscribe((creatorPost) => {
+    //   console.log('Creator Post:', creatorPost.userName);
+    // });
 
     this.postList$.subscribe((postList) => {
       this.dataset = postList.data.map((post) => [
@@ -121,17 +124,20 @@ export class PostComponent implements OnInit {
         new TableItem({
           data: post.content,
         }),
+
         new TableItem({
-          data: post.reaction,
+          data: post.reaction.length,
         }),
         new TableItem({
-          data: post.comments,
+          data: post.comments.length,
         }),
         new TableItem({
-          data: post.share,
+          data: post.share.length,
         }),
         new TableItem({
-          data: post.createdAt,
+          // data: post.createdAt._seconds,
+          //format date DD/MM/YYYY HH:MM
+          data: new Date(post.createdAt._seconds * 1000).toLocaleString(),
         }),
       ]);
       this.model.data = this.dataset;
@@ -141,6 +147,9 @@ export class PostComponent implements OnInit {
     this.model.header = [
       new TableHeaderItem({
         data: 'Id Post',
+      }),
+      new TableHeaderItem({
+        data: 'CreatorId',
       }),
       new TableHeaderItem({
         data: 'Content',
@@ -158,45 +167,6 @@ export class PostComponent implements OnInit {
         data: 'Date Time',
       }),
     ];
-
-    // console.log('Data length:', this.dataLength);
-    // this.modelPagination.currentPage = 1;
-    // if (this.dataResidual === 0) {
-    //   this.modelPagination.totalDataLength = Math.floor(
-    //     this.dataLength / this.dataLengthPerPage,
-    //   );
-    // }
-    // if (this.dataResidual !== 0) {
-    //   console.log('Residual:', this.dataResidual);
-    //   this.modelPagination.totalDataLength =
-    //     Math.floor(this.dataLength / this.dataLengthPerPage) + 1;
-    //   for (let i = 0; i <= this.dataResidual; i++) {
-    //     this.dataset = [
-    //       ...this.dataset,
-    //       [
-    //         new TableItem({ data: '' }),
-    //         new TableItem({ data: '' }),
-    //         new TableItem({ data: '' }),
-    //         new TableItem({ data: '' }),
-    //         new TableItem({ data: '' }),
-    //       ],
-    //     ];
-    //     console.log(this.dataLength);
-    //   }
-    // }
-    // for (let i: number = 0; i < this.dataLengthPerPage; i++) {
-    //   this.dataChoose = [...this.dataChoose, this.dataset[i]];
-    // }
-    // this.model.data = this.dataChoose;
-
-    // this.model.isRowFiltered = (index: number) => {
-    //   const userName = this.model.row(index)[1].data;
-    //   const title = this.model.row(index)[3].data;
-    //   return (
-    //     !userName.toLowerCase().includes(this.searchValue.toLowerCase()) ||
-    //     !this.displayedTitle.includes(title)
-    //   );
-    // };
   }
 
   selectPage(page) {

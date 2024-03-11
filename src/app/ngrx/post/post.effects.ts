@@ -13,15 +13,40 @@ export class PostEffects {
     this.action$.pipe(
       ofType(PostActions.getAllPosts),
       switchMap((action) => {
-        return this.postService.getAllPost(action.token, action.page).pipe(
-          map((postList: any) => {
-            return PostActions.getAllPostsSuccess({
-              postList: postList,
+        return this.postService
+          .getAllPost(action.token, action.page, action.size)
+          .pipe(
+            map((postList: any) => {
+              return PostActions.getAllPostsSuccess({
+                postList: postList,
+              });
+            }),
+            catchError((error) => {
+              return of(
+                PostActions.getAllPostsFailure({
+                  errorMessage: error,
+                })
+              );
+            })
+          );
+      })
+    )
+  );
+
+  getCreatorName$ = createEffect(() =>
+    this.action$.pipe(
+      ofType(PostActions.getCreatorName),
+      switchMap((action) => {
+        return this.postService.getCreatorName(action.token).pipe(
+          map((postCreatorName: any) => {
+            console.log(postCreatorName);
+            return PostActions.getCreatorNameSuccess({
+              postCreatorName: postCreatorName,
             });
           }),
           catchError((error) => {
             return of(
-              PostActions.getAllPostsFailure({
+              PostActions.getCreatorNameFailure({
                 errorMessage: error,
               })
             );

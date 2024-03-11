@@ -10,12 +10,12 @@ export const initialPostState: PostState = {
   isGetAllPost: false,
   isGetAllPostSuccess: false,
   getAllPostErrorMessage: '',
+  postCreatorName: {},
 };
 
 export const postReducer = createReducer(
   initialPostState,
   on(PostAction.getAllPosts, (state, { type }) => {
-    console.log(type);
     return {
       ...state,
       isGetAllPost: true,
@@ -23,7 +23,6 @@ export const postReducer = createReducer(
     };
   }),
   on(PostAction.getAllPostsSuccess, (state, { type, postList }) => {
-    console.log(type);
     return {
       ...state,
       isGetAllPost: false,
@@ -32,7 +31,6 @@ export const postReducer = createReducer(
     };
   }),
   on(PostAction.getAllPostsFailure, (state, { errorMessage, type }) => {
-    console.log(type);
     return {
       ...state,
       isGetAllPost: false,
@@ -40,4 +38,31 @@ export const postReducer = createReducer(
       getAllPostErrorMessage: errorMessage,
     };
   }),
+
+  on(PostAction.getCreatorName, (state, { type }) => {
+    console.log(type);
+    return {
+      ...state,
+      isGetAllPost: true,
+      isGetAllPostSuccess: false,
+    };
+  }),
+
+  on(PostAction.getCreatorNameSuccess, (state, { type, postCreatorName }) => {
+    return {
+      ...state,
+      isGetAllPost: false,
+      isGetAllPostSuccess: true,
+      postCreatorName: postCreatorName,
+    };
+  }),
+
+  on(PostAction.getCreatorNameFailure, (state, { errorMessage, type }) => {
+    return {
+      ...state,
+      isGetAllPost: false,
+      isGetAllPostSuccess: false,
+      getAllPostErrorMessage: errorMessage,
+    };
+  })
 );
