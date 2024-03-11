@@ -50,11 +50,10 @@ export class AppComponent implements OnInit, OnDestroy {
     });
 }
   protected open = false;
-ngOnDestroy(): void {
-  this.subscriptions.forEach((val) => {
-    val.unsubscribe();
-  });
-}
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
+  }
 ngOnInit(): void {
     this.subscriptions.push(
       combineLatest({
@@ -65,16 +64,20 @@ ngOnInit(): void {
           this.store.dispatch(AuthActions.getAuthById({
             token: res.idToken,
             id: res.uid
-          }))
-          console.log(res.idToken);
+         }))
         }
+        console.log(res.idToken);
+        this.store.dispatch(ProfileAction.getMineProfile({
+          idToken: res.idToken
+        }))
       }),
       this.store.select('auth', 'authDetail').subscribe((val) => {
         if(val.id != undefined && val.id != ''){
-          if(val.role == 'admin'){
-            console.log(val.role);
-                this.router.navigate(['/dashboard']);
+          if (val.role == 'admin') {
+            this.router.navigate(['/dashboard']);
             this.toastr.success('Welcome to Imago Admin')
+            console.log(val.role);
+           
           }else{
             this.store.dispatch(AuthActions.logout());
           this.toastr.error('You are not authorized to access this page',

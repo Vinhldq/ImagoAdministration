@@ -15,7 +15,7 @@ export const initialState : ProfileState= {
 export const profileReducer = createReducer(
   initialState,
   on(ProfileAction.getMineProfile, (state,type) => {
-    console.log(type)
+    // console.log(type)
     return {
       ...state,
       isGetLoading: true,

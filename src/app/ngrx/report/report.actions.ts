@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { ReportModel } from '../../models/report.model';
+import { ReportModel, ReportPagination } from '../../models/report.model';
 
 export const getAllReports = createAction(
   '[Report] Get All Reports',
@@ -23,7 +23,7 @@ export const getReportStatus = createAction(
 
 export const getReportStatusSuccess = createAction(
   '[Report] Get Report Status Success',
-  props<{ reportListStatus: ReportModel[] }>(),
+  props<{ reportListStatus: ReportPagination }>(),
 );
 
 export const getReportStatusFailure = createAction(

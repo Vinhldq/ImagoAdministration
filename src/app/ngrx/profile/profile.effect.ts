@@ -9,27 +9,19 @@ import * as ProfileAction from "./profile.action";
 @Injectable()
 export class ProfileEffect {
   constructor(private actions$: Actions, private profileService: ProfileService) {}
-
-
-  getMineProfile$ = createEffect(() =>{
+  getMineProfile$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(ProfileAction.getMineProfile),
-      switchMap((action) => {
-        let temp = this.profileService.getUserProfile(action.idToken);
-        console.log(temp);
-        return temp;
-      }),
-          map((res)=>{
-            return ProfileAction.getMineProfileSuccess({profile: res});
-          }),
-        catchError((error) => {
-          return of(ProfileAction.getMineProfileFailure({error: error}));
-        })
-    )
-      }
-    )
-
-
-
+      switchMap(async (action) => {
+        try {
+          console.log('action.idToken :', action.idToken);
+          const res = await this.profileService.getMineProfile(action.idToken).toPromise();
+          return ProfileAction.getMineProfileSuccess({ profile: res });
+        } catch (error) {
+          return ProfileAction.getMineProfileFailure({ error: error });
+        }
+      })
+    );
+  });
 }
 

@@ -8,8 +8,8 @@ import {ProfileModel} from "../../models/profile.model";
 export class ProfileService {
   constructor(private httpClient: HttpClient) {}
 
-  // Phương thức để lấy thông tin profile
-  getUserProfile(idToken: string) {
+  
+  getMineProfile(idToken: string) {
     return this.httpClient.get<ProfileModel>(
       environment.local_url + `profile/mine`,
       {

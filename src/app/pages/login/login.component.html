@@ -1,70 +1,14 @@
-
-  <div class="container">
-    <div class="overlay-panel">
-    </div>
-
-    <div class="form-container">
-      <img src="../../../assets/newlogo.jpg" class="img-logo">
-      <h1>Imago Admin</h1>
-      <div class="sigin">
-        <h2>Sign in</h2>
-        <cds-text-label
-          [helperText]=""
-          [invalid]=""
-          [invalidText]=""
-          [warn]=""
-          [disabled]=""
-          [warnText]=""
-
-        >
-          <input class="input"
-            cdsText
-            [size]="'sm'"
-            [invalid]=""
-            [warn]=""
-            [disabled]=""
-            [theme]=""
-            [placeholder]="'Username'"
-            [autocomplete]=""
-            [type]="'email'"
-
-          />
-        </cds-text-label>
-        <cds-text-label
-          [helperText]=""
-          [invalid]=""
-          [invalidText]=""
-          [warn]=""
-          [disabled]=""
-          [warnText]=""
-
-        >
-          <input
-            cdsText
-            [size]="'sm'"
-            [invalid]=""
-            [warn]=""
-            [disabled]=""
-            [theme]=""
-            [placeholder]="'Password'"
-            [autocomplete]=""
-            [type]="'password'"
-
-          />
-        </cds-text-label>
-     <div class="btn">
-       <cds-button-set>
-         <button cdsButton="secondary"  [size]="'sm'" [isExpressive]="true"
-         routerLink="/dashboard" routerLinkActive="active"
-
-         >Sign In</button>
-       </cds-button-set>
-       <cds-button-set>
-         <button cdsButton="secondary" [size]="'sm'" [isExpressive]="true"
-(click)="signWithGoogle()"
-         >Sign In With Google</button>
-       </cds-button-set>
-     </div>
-      </div>
+<div class="container">
+  <div class="overlay-panel">
+  </div>
+  <div class="form-container">
+    <img src="../../../assets/newlogo.jpg" class="img-logo">
+    <h1>Imago Admin</h1>
+    <div class="sigin">
+      <cds-button-set>
+        <button cdsButton="secondary" [size]="'sm'" [isExpressive]="true" (click)="signWithGoogle()">Sign In With
+          Google</button>
+      </cds-button-set>
     </div>
   </div>
+</div>

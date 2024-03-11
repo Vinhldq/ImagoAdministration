@@ -8,6 +8,10 @@ export const initialState: ReportState = {
   isGetAllReport: false,
   isGetAllReportSuccess: false,
   getAllReportErrorMessage: '',
+  reportListPagination: {
+    data: [],
+    endPage: 0,
+  },
 };
 
 export const reportReducer = createReducer(
@@ -52,9 +56,10 @@ export const reportReducer = createReducer(
       ...state,
       isGetAllReport: false,
       isGetAllReportSuccess: true,
-      reportList: reportListStatus,
+      reportListPagination: reportListStatus,
     };
-  }),
+  }
+  ),
   on(ReportActions.getReportStatusFailure, (state, { errorMessage, type }) => {
     console.log(type);
     return {
