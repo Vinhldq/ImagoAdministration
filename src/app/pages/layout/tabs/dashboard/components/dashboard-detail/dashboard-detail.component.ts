@@ -122,7 +122,7 @@ export class DashboardDetailComponent implements OnInit, OnDestroy {
     },
     {
       index: 3,
-      name: 'Unique Visitors',
+      name: 'Unique Registrations',
       url: 'uniqueVisitor',
     },
     {

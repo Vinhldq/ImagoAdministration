@@ -29,7 +29,7 @@ export class AuthService {
           );
           let idToken = await creadential.user.getIdToken();
           resolve(idToken);
-            await this.signUp(idToken).toPromise();
+          await this.signUp(idToken).toPromise();
         } catch {
           reject('Cannot login with Google');
         }
@@ -74,7 +74,7 @@ export class AuthService {
     );
   }
 
-  getAuth(idToken: string) {
+  getAllAuth(idToken: string) {
     return this.httpClient.get<AuthModel[]>(
       environment.local_url + `auth/list`,
       {
