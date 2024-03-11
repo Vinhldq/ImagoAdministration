@@ -1,4 +1,5 @@
-import {ProfileModel} from '../../models/profile.model';
+import { ProfileModel } from '../../models/profile.model';
+
 export interface ProfileState {
   profile: ProfileModel;
   isLoading: boolean;
@@ -7,4 +8,9 @@ export interface ProfileState {
   isGetLoading: boolean;
   isGetSuccessful: boolean;
   getErrorMess: string;
+
+  profileById: ProfileModel;
+  isGetByIdLoading: boolean;
+  isGetByIdSuccessful: boolean;
+  getByIdErrorMess: string;
 }

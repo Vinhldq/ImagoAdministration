@@ -16,7 +16,7 @@ import { Store } from '@ngrx/store';
 import { AuthState } from '../../../../../../ngrx/auth/auth.state';
 import { ReportState } from '../../../../../../ngrx/report/report.state';
 import * as ReportActions from '../../../../../../ngrx/report/report.actions';
-import { convertOutputFile } from '@angular-devkit/build-angular/src/tools/esbuild/utils';
+import { PostModel } from '../../../../../../models/post.model';
 
 @Component({
   selector: 'app-post',
@@ -27,6 +27,7 @@ import { convertOutputFile } from '@angular-devkit/build-angular/src/tools/esbui
 })
 export class PostComponent implements OnInit {
   reportList$ = this.store.select((state) => state.report.reportList);
+  page$ = this.store.select((state) => state.report.reportList.endPage);
 
   constructor(
     protected iconService: IconService,
@@ -39,45 +40,56 @@ export class PostComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.store.select('auth').subscribe((auth) => {
-      this.store.dispatch(ReportActions.getAllReports({ token: auth.idToken }));
-    });
-
-    this.reportList$.subscribe((reportList) => {
-      reportList.map((report) => {
-        console.log(report.createdAt);
-      });
-    });
-
-    this.modelPagination.currentPage = 1;
-    if (this.dataResidual === 0) {
-      this.modelPagination.totalDataLength = Math.floor(
-        this.dataLength / this.dataLengthPerPage,
+    this.store.select('auth').subscribe((data) => {
+      this.store.dispatch(
+        ReportActions.getAllReports({
+          token: data.idToken,
+          page: 1,
+          types: 'post',
+        }),
       );
-    }
-    if (this.dataResidual !== 0) {
-      this.modelPagination.totalDataLength =
-        Math.floor(this.dataLength / this.dataLengthPerPage) + 1;
-      for (let i = 0; i <= this.dataResidual; i++) {
+    });
+    this.modelPagination.currentPage = 1;
+    this.page$.subscribe((data) => {
+      this.modelPagination.totalDataLength = data;
+    });
+    this.modelPagination.currentPage = 1;
+
+    this.reportList$.subscribe((data) => {
+      data.data.forEach((element) => {
+        const post = element.typeInfo as PostModel;
+        const date = new Date(
+          element.createdAt._seconds * 1000 +
+            element.createdAt._nanoseconds / 1000000,
+        );
+        const formattedDate = date.toLocaleString('vi-VN', {
+          weekday: 'long',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+
+          hour12: false,
+        });
         this.dataset = [
           ...this.dataset,
           [
-            new TableItem({ data: '' }),
-            new TableItem({ data: '' }),
-            new TableItem({ data: '' }),
-            new TableItem({ data: '' }),
-            new TableItem({ data: '' }),
+            new TableItem({ data: post.id }),
+            new TableItem({ data: post.content }),
+            new TableItem({ data: formattedDate }),
+            new TableItem({ data: element.reason[0] }),
+            new TableItem({ data: 'pending' }),
           ],
         ];
-      }
-    }
+      });
+    });
+    this.model.data = this.dataset;
 
     this.model.header = [
       new TableHeaderItem({
         data: 'ID',
       }),
       new TableHeaderItem({
-        data: 'Creator',
+        data: 'Content',
       }),
       new TableHeaderItem({
         data: 'Date',
@@ -89,11 +101,6 @@ export class PostComponent implements OnInit {
         data: 'State',
       }),
     ];
-    for (let i = 0; i < this.dataLengthPerPage; i++) {
-      this.dataChoose = [...this.dataChoose, this.dataset[i]];
-    }
-
-    this.model.data = this.dataChoose;
 
     this.model.isRowFiltered = (index: number) => {
       const userName = this.model.row(index)[1].data;
@@ -108,6 +115,7 @@ export class PostComponent implements OnInit {
   @Input() modelPagination = new PaginationModel();
   @Input() disabledPagination = false;
   @Input() pageInputDisabled = false;
+
   @Input() size = 'md';
   @Input() showSelectionColumn = false;
   @Input() enableSingleSelect = true;
@@ -119,166 +127,21 @@ export class PostComponent implements OnInit {
 
   model = new TableModel();
   displayedTitle = [
-    'Fake Account',
-    'Pretending',
-    'Suspicious Activity',
-    'Inappropriate Content',
+    'Hate speech',
     'Harassment',
-    'Spamming',
-    'Hate Speech',
-    'Inappropriate Behavior',
-    '',
+    'Spam',
+    'Fake news',
+    'False information',
+    'Violence',
+    'Terrorism',
+    'Nude',
   ];
   searchValue = '';
 
   disabled = false;
 
-  dataset = [
-    [
-      new TableItem({ data: '1' }),
-      new TableItem({ data: 'Minh Trí' }),
-      new TableItem({ data: '16/01/2024' }),
-      new TableItem({ data: 'Fake Account' }),
-      new TableItem({ data: 'pending' }),
-    ],
-    [
-      new TableItem({ data: '2' }),
-      new TableItem({ data: 'Minh Tan' }),
-      new TableItem({ data: '18/01/2024' }),
-      new TableItem({ data: 'Pretending' }),
-      new TableItem({ data: 'pending' }),
-    ],
-    [
-      new TableItem({ data: '3' }),
-      new TableItem({ data: 'Minh Anh' }),
-      new TableItem({ data: '20/01/2024' }),
-      new TableItem({ data: 'Suspicious Activity' }),
-      new TableItem({ data: 'pending' }),
-    ],
-    [
-      new TableItem({ data: '4' }),
-      new TableItem({ data: 'Huong Giang' }),
-      new TableItem({ data: '22/01/2024' }),
-      new TableItem({ data: 'Inappropriate Content' }),
-      new TableItem({ data: 'pending' }),
-    ],
-    [
-      new TableItem({ data: '5' }),
-      new TableItem({ data: 'Bao Quoc' }),
-      new TableItem({ data: '25/01/2024' }),
-      new TableItem({ data: 'Harassment' }),
-      new TableItem({ data: 'pending' }),
-    ],
-    [
-      new TableItem({ data: '6' }),
-      new TableItem({ data: 'Linh Nga' }),
-      new TableItem({ data: '28/01/2024' }),
-      new TableItem({ data: 'Fake Account' }),
-      new TableItem({ data: 'pending' }),
-    ],
-    [
-      new TableItem({ data: '7' }),
-      new TableItem({ data: 'Khanh Huyen' }),
-      new TableItem({ data: '30/01/2024' }),
-      new TableItem({ data: 'Pretending' }),
-      new TableItem({ data: 'pending' }),
-    ],
-    [
-      new TableItem({ data: '8' }),
-      new TableItem({ data: 'Tuan Anh' }),
-      new TableItem({ data: '02/02/2024' }),
-      new TableItem({ data: 'Spamming' }),
-      new TableItem({ data: 'pending' }),
-    ],
-    [
-      new TableItem({ data: '9' }),
-      new TableItem({ data: 'Phuong Thao' }),
-      new TableItem({ data: '05/02/2024' }),
-      new TableItem({ data: 'Inappropriate Behavior' }),
-      new TableItem({ data: 'pending' }),
-    ],
-    [
-      new TableItem({ data: '10' }),
-      new TableItem({ data: 'Duc Anh' }),
-      new TableItem({ data: '08/02/2024' }),
-      new TableItem({ data: 'Hate Speech' }),
-      new TableItem({ data: 'pending' }),
-    ],
-    [
-      new TableItem({ data: '11' }),
-      new TableItem({ data: 'Hai Yen' }),
-      new TableItem({ data: '12/02/2024' }),
-      new TableItem({ data: 'Fake Account' }),
-      new TableItem({ data: 'pending' }),
-    ],
-    [
-      new TableItem({ data: '12' }),
-      new TableItem({ data: 'Quang Vinh' }),
-      new TableItem({ data: '15/02/2024' }),
-      new TableItem({ data: 'Pretending' }),
-      new TableItem({ data: 'pending' }),
-    ],
-    [
-      new TableItem({ data: '13' }),
-      new TableItem({ data: 'Thi Kim' }),
-      new TableItem({ data: '18/02/2024' }),
-      new TableItem({ data: 'Pretending' }),
-      new TableItem({ data: 'pending' }),
-    ],
-    [
-      new TableItem({ data: '14' }),
-      new TableItem({ data: 'Dinh Hoang' }),
-      new TableItem({ data: '21/02/2024' }),
-      new TableItem({ data: 'Inappropriate Behavior' }),
-      new TableItem({ data: 'pending' }),
-    ],
-    [
-      new TableItem({ data: '15' }),
-      new TableItem({ data: 'Ngoc Linh' }),
-      new TableItem({ data: '24/02/2024' }),
-      new TableItem({ data: 'Suspicious Activity' }),
-      new TableItem({ data: 'pending' }),
-    ],
-    [
-      new TableItem({ data: '16' }),
-      new TableItem({ data: 'Hoang Nam' }),
-      new TableItem({ data: '27/02/2024' }),
-      new TableItem({ data: 'Fake Account' }),
-      new TableItem({ data: 'pending' }),
-    ],
-    [
-      new TableItem({ data: '17' }),
-      new TableItem({ data: 'My Linh' }),
-      new TableItem({ data: '01/03/2024' }),
-      new TableItem({ data: 'Suspicious Activity' }),
-      new TableItem({ data: 'pending' }),
-    ],
-    [
-      new TableItem({ data: '18' }),
-      new TableItem({ data: 'Quoc Anh' }),
-      new TableItem({ data: '04/03/2024' }),
-      new TableItem({ data: 'Inappropriate Behavior' }),
-      new TableItem({ data: 'pending' }),
-    ],
-    [
-      new TableItem({ data: '19' }),
-      new TableItem({ data: 'Thuy Trang' }),
-      new TableItem({ data: '07/03/2024' }),
-      new TableItem({ data: 'Hate Speech' }),
-      new TableItem({ data: 'pending' }),
-    ],
-    [
-      new TableItem({ data: '20' }),
-      new TableItem({ data: 'Minh Tuan' }),
-      new TableItem({ data: '10/03/2024' }),
-      new TableItem({ data: 'Hate Speech' }),
-      new TableItem({ data: 'pending' }),
-    ],
-  ];
-  dataChoose: TableItem[][] = [];
-  dataLength = this.dataset.length;
-  dataLengthPerPage = 9;
-  dataResidual = this.dataLength % this.dataLengthPerPage;
+  dataset = [];
+  dataLengthPerPage = 8;
 
   filterUserNames(searchString: string) {
     this.searchValue = searchString;
@@ -296,20 +159,45 @@ export class PostComponent implements OnInit {
     event.stopPropagation();
   };
 
+  postDetail: PostModel = {
+    id: '',
+    creatorId: '',
+    share: [],
+    photoUrl: [],
+    content: '',
+    hashtag: [],
+    cateId: [],
+    reaction: [],
+    comments: [],
+    mention: [],
+    createdAt: null,
+    updatedAt: null,
+    deletedAt: null,
+  };
+  reportDetail = {
+    reason: [],
+    content: '',
+  };
+
   onRowClick(index: number) {
     console.log('Row item selected:', index);
+    this.reportList$.subscribe((data) => {
+      this.postDetail = data.data[index].typeInfo as PostModel;
+      this.reportDetail.reason = data.data[index].reason;
+      this.reportDetail.content = data.data[index].content;
+    });
   }
 
   selectPage(page) {
     console.log('Loading page', page, 'from pagination model');
-    let beginGet = (page - 1) * this.dataLengthPerPage;
-    let endGet = page * this.dataLengthPerPage - 1;
-    this.modelPagination.currentPage = page;
-    this.dataChoose = [];
-    for (let i = beginGet; i <= endGet; i++) {
-      this.dataChoose = [...this.dataChoose, this.dataset[i]];
-    }
-    this.model.data = this.dataChoose;
+    // let beginGet = (page - 1) * this.dataLengthPerPage;
+    // let endGet = page * this.dataLengthPerPage - 1;
+    // this.modelPagination.currentPage = page;
+    // this.dataChoose = [];
+    // for (let i = beginGet; i <= endGet; i++) {
+    //   this.dataChoose = [...this.dataChoose, this.dataset[i]];
+    // }
+    // this.model.data = this.dataChoose;
   }
 
   selected(e) {

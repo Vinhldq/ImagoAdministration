@@ -9,7 +9,7 @@ export interface PostModel {
   reaction: string[];
   comments: Comment[];
   mention: string[];
-  createdAt: Date;
+  createdAt: PostDate;
   updatedAt: Date;
   deletedAt: Date;
 }
@@ -17,4 +17,9 @@ export interface PostModel {
 export interface AllPostModel {
   data: PostModel[];
   endPage: number;
+}
+
+export interface PostDate {
+  _seconds: number;
+  _nanoseconds: number;
 }

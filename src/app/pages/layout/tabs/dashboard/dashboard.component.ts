@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserChartComponent } from './components/user-chart/user-chart.component';
 import { PostChartComponent } from './components/post-chart/post-chart.component';
 import { CategoryChartComponent } from './components/category-chart/category-chart.component';
@@ -24,6 +24,6 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })
-export class DashboardComponent {
-
+export class DashboardComponent implements OnInit {
+  ngOnInit(): void {}
 }

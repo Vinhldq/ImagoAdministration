@@ -1,106 +1,71 @@
-<cds-table-container id="cate-table">
-  <cds-table-header>
-    <h4 cdsTableHeaderTitle>List Category</h4>
-  </cds-table-header>
-  <cds-table-toolbar>
-    <cds-table-toolbar-content>
-      <cds-table-toolbar-search
-        [expandable]="true"
-        (valueChange)="filterNodeNames($event)"
-        (clear)="searchValue=''">
-
-      </cds-table-toolbar-search>
-      <button
-        #trigger
-        cdsButton="secondary"
-        (click)="openDialog = true">Add new category
-      </button>
-    </cds-table-toolbar-content>
-  </cds-table-toolbar>
-  <cds-table
-    [model]="model"
-    [sortable]="false"
-    size="md"
-    [skeleton]="skeleton"
-    [showSelectionColumn]="false"
-    [enableSingleSelect]="enableSingleSelect"
-    [stickyHeader]="stickyHeader"
-    [striped]="striped"
-    [isDataGrid]="isDataGrid">
-  </cds-table>
-
-  <cds-pagination-nav
-    [model]="modelPagination"
-    [disabled]="disabled"
-    (selectPage)="selectPage($event)"
-    [numOfItemsToShow]="dataLengthPerPage"
-  >
-  </cds-pagination-nav>
-</cds-table-container>
-
-<cds-modal [open]="openDialog" [trigger]="trigger" (overlaySelected)="openDialog = false">
-  <cds-modal-header
-    (closeSelect)="openDialog = false"
-    [showCloseButton]="showCloseButton">
-    <p class="cds--modal-header__label cds--type-delta"></p>
-    <p class="cds--modal-header__heading cds--type-beta">Enter the category you want to add</p>
-  </cds-modal-header>
-  <div class="cds--modal-content">
-    <input class="input" type="text">
+<div id="content">
+  <div class="category">
+    <cds-table-container>
+      <cds-table-toolbar>
+        <cds-table-toolbar-content>
+          <h1>Category</h1>
+          <cds-table-toolbar-search
+            [expandable]="true"
+            (valueChange)="filterCate($event)"
+            (clear)="searchValue = ''"
+          >
+          </cds-table-toolbar-search>
+        </cds-table-toolbar-content>
+      </cds-table-toolbar>
+      <cds-table
+        [model]="model1"
+        [sortable]="false"
+        (rowClick)="onRowClick($event)"
+        size="md"
+        [skeleton]="skeleton"
+        [showSelectionColumn]="showSelectionColumn"
+        [enableSingleSelect]="enableSingleSelect"
+        [stickyHeader]="stickyHeader"
+        [striped]="striped"
+        [isDataGrid]="isDataGrid"
+      >
+      </cds-table>
+      <cds-pagination-nav
+        [model]="model1Pagination"
+        [disabled]="disabled"
+        (selectPage)="selectPage($event)"
+      >
+      </cds-pagination-nav>
+    </cds-table-container>
   </div>
-  <cds-modal-footer>
-    <ng-container>
-      <button
-        class="btn-close"
-        cdsButton="secondary"
-        (click)="openDialog = false"
-        [attr.modal-primary-focus]="true">Close
-      </button>
-      <button
-        class="btn-add"
-        cdsButton="secondary"
-        (click)="openDialog = false"
-        [attr.modal-primary-focus]="true">Add
-      </button>
-    </ng-container>
-  </cds-modal-footer>
-</cds-modal>
-
-
-<!--//////////////////////////////////////////////////////////////-->
-
-<cds-table-container id="hashtag-table">
-  <cds-table-header>
-    <h4 cdsTableHeaderTitle>Hashtag List</h4>
-  </cds-table-header>
-  <cds-table-toolbar>
-    <cds-table-toolbar-content>
-      <cds-table-toolbar-search
-        [expandable]="true"
-        (valueChange)="filterSearchName($event)"
-        (clear)="filterSearchName('')">
-      </cds-table-toolbar-search>
-    </cds-table-toolbar-content>
-  </cds-table-toolbar>
-  <cds-table
-    [model]="modelright"
-    [sortable]="false"
-    size="md"
-    [skeleton]="skeleton"
-    [showSelectionColumn]="false"
-    [enableSingleSelect]="enableSingleSelect"
-    [stickyHeader]="stickyHeader"
-    [striped]="striped"
-    [isDataGrid]="isDataGrid">
-  </cds-table>
-  <cds-pagination-nav
-    [model]="modelPagination"
-    [disabled]="disabled"
-    (selectPage)="selectPage($event)"
-    [numOfItemsToShow]="dataLengthPerPage"
-  >
-  </cds-pagination-nav>
-</cds-table-container>
-
-
-
+  <!--  /////////////////////////////////////////////////////////////////////-->
+  <div class="hashtag">
+    <cds-table-container>
+      <cds-table-toolbar>
+        <cds-table-toolbar-content>
+          <h1>Hashtag</h1>
+          <cds-table-toolbar-search
+            [expandable]="true"
+            (valueChange)="filterHashtag($event)"
+            (clear)="searchValue = ''"
+          >
+          </cds-table-toolbar-search>
+        </cds-table-toolbar-content>
+      </cds-table-toolbar>
+      <cds-table
+        [model]="model2"
+        [sortable]="false"
+        (rowClick)="onRowClick($event)"
+        size="md"
+        [skeleton]="skeleton"
+        [showSelectionColumn]="showSelectionColumn"
+        [enableSingleSelect]="enableSingleSelect"
+        [stickyHeader]="stickyHeader"
+        [striped]="striped"
+        [isDataGrid]="isDataGrid"
+      >
+      </cds-table>
+      <cds-pagination-nav
+        [model]="model2Pagination"
+        [disabled]="disabled"
+        (selectPage)="selectPage($event)"
+      >
+      </cds-pagination-nav>
+    </cds-table-container>
+  </div>
+</div>
