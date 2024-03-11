@@ -10,10 +10,8 @@ import {
   BreadcrumbModule,
   ButtonModule,
   ToggleModule,
-
   TabsModule,
   ThemeModule,
-
   TableModule,
   DialogModule,
   CheckboxModule,
@@ -25,6 +23,7 @@ import {
   NotificationService,
 } from 'carbon-components-angular';
 import { NgChartsModule } from 'ng2-charts';
+import { CreatorNamePipe } from '../pages/layout/tabs/post-management/components/post/creator-name.pipe';
 
 export const CarbonModules = [
   UIShellModule,
@@ -56,7 +55,7 @@ export const CarbonModules = [
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-
+    CreatorNamePipe,
     ...CarbonModules,
   ],
   exports: [
@@ -64,7 +63,7 @@ export const CarbonModules = [
     ReactiveFormsModule,
     RouterModule,
     ...CarbonModules,
+    CreatorNamePipe,
   ],
-
 })
 export class SharedModule {}

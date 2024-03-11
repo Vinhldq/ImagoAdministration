@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Directive, Input, OnInit } from '@angular/core';
 import {
   CheckboxModule,
   DialogModule,
@@ -21,6 +21,11 @@ import { Store } from '@ngrx/store';
 import { AuthState } from '../../../../../../ngrx/auth/auth.state';
 import * as PostActions from '../../../../../../ngrx/post/post.actions';
 import { PostState } from '../../../../../../ngrx/post/post.state';
+import { Pipe, PipeTransform } from '@angular/core';
+import { AuthModel } from '../../../../../../models/auth.model';
+import { ProfileModel } from '../../../../../../models/profile.model';
+import { PostModel } from '../../../../../../models/post.model';
+import { CreatorNamePipe } from './creator-name.pipe';
 
 @Component({
   selector: 'app-post',
@@ -74,7 +79,7 @@ export class PostComponent implements OnInit {
     private store: Store<{
       auth: AuthState;
       post: PostState;
-    }>,
+    }>
   ) {
     this.iconService.registerAll([
       Sendalt20,
@@ -88,7 +93,7 @@ export class PostComponent implements OnInit {
   filterUserNames(searchString: string) {
     // this.searchValue = searchString;
     this.model.data = this.dataset.filter((row: TableItem[]) =>
-      row[1].data.toLowerCase().includes(searchString.toLowerCase()),
+      row[1].data.toLowerCase().includes(searchString.toLowerCase())
     );
   }
 
@@ -115,13 +120,19 @@ export class PostComponent implements OnInit {
   ngOnInit() {
     this.store.select('auth').subscribe((auth) => {
       this.store.dispatch(
-        PostActions.getAllPosts({ page: 1, token: auth.idToken }),
+        PostActions.getAllPosts({ page: 1, token: auth.idToken })
       );
     });
+
+    // Declare the variable creatorName from the CreatorNamePipe
+
     this.postList$.subscribe((postList) => {
       this.dataset = postList.data.map((post) => [
         new TableItem({
           data: post.id,
+        }),
+        new TableItem({
+          data: post.creatorId,
         }),
         new TableItem({
           data: post.content,
@@ -129,6 +140,7 @@ export class PostComponent implements OnInit {
       ]);
       this.model.data = this.dataset;
     });
+    console.log('Data:', this.dataset);
 
     // console.log('Data length:', this.dataLength);
     // this.modelPagination.currentPage = 1;
