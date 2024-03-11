@@ -71,6 +71,12 @@
           <cds-overflow-menu-option>
             Admin
           </cds-overflow-menu-option>
+          <cds-overflow-menu-option>
+            Block
+          </cds-overflow-menu-option>
+          <cds-overflow-menu-option>
+            UnBlock
+          </cds-overflow-menu-option>
         </cds-overflow-menu>
       </ng-template>
 
@@ -87,7 +93,7 @@
 
 <ng-template #templateRef>
   <div style="padding: 0 1rem" (click)="overflowOnClick($event)">
-    <div style="padding-top: 0.5rem; color: grey;">Countries shown</div>
+    <div style="padding-top: 0.5rem; color: grey;">Role Management</div>
     <cds-checkbox
       [checked]="displayedCountries.includes('UserName')"
       (checkedChange)="filterCountries('UserName', $event)">
@@ -97,11 +103,6 @@
       [checked]="displayedCountries.includes('NickName')"
       (checkedChange)="filterCountries('NickName', $event)">
       NickName
-    </cds-checkbox>
-    <cds-checkbox
-      [checked]="displayedCountries.includes('Argentina')"
-      (checkedChange)="filterCountries('Argentina', $event)">
-      Argentina
     </cds-checkbox>
     <cds-checkbox
       [checked]="displayedCountries.includes('NamePost')"

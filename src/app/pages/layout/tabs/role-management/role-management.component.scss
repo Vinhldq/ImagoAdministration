@@ -105,15 +105,17 @@ select {
   flex-direction: row;
   justify-content: space-between;
   font-size: 14px;
-  
+
 
 }
 
 #textarea {
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   padding-left: 15px;
   padding-top: 10px;
+  padding-bottom: 122px;
+  outline: none;
 }
 
 #es {
@@ -148,6 +150,19 @@ select {
 
 ::ng-deep .cds--pagination-nav__page:not(.cds--pagination-nav__page--direction)::after {
   background-color: var(--cds-border-interactive, #161616);
+}
+
+::ng-deep .cds--text-input--invalid {
+  outline: none;
+  box-shadow: none;
+}
+
+::ng-deep .cds--text-area--invalid {
+  box-shadow: none;
+}
+
+::ng-deep .cds--btn:first-of-type:not(:focus) {
+  margin-top: 2px;
 }
 
 

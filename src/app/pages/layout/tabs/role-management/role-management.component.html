@@ -22,10 +22,10 @@
           <button cdsButton="ghost" size="lg" class="categoryrole" (click)="deleteData()">
             Delete
           </button>
-          <button cdsButton="secondary" size="lg">
-            Filter
-            <svg cdsIcon="filter" size="20" class="cds--btn__icon"></svg>
-          </button>
+          <!--          <button cdsButton="secondary" size="lg">-->
+          <!--            Filter-->
+          <!--            <svg cdsIcon="filter" size="20" class="cds&#45;&#45;btn__icon"></svg>-->
+          <!--          </button>-->
         </cds-table-toolbar-content>
       </cds-table-toolbar>
 
@@ -48,7 +48,7 @@
           [model]="modelPagination"
           [disabled]="disabled"
           (selectPage)="selectPage($event)"
-          [numOfItemsToShow]="dataLengthPerPage"
+          [numOfItemsToShow]="page"
         >
         </cds-pagination-nav>
       </div>
