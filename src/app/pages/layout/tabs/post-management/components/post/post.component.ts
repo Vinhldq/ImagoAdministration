@@ -135,7 +135,7 @@ export class PostComponent implements OnInit {
           data: post.share.length,
         }),
         new TableItem({
-          // data: post.createdAt._seconds,
+          // data: post.createdAt._seconds * 1000,
           //format date DD/MM/YYYY HH:MM
           data: new Date(post.createdAt._seconds * 1000).toLocaleString(),
         }),

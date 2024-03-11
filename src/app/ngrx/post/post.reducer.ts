@@ -10,7 +10,7 @@ export const initialPostState: PostState = {
   isGetAllPost: false,
   isGetAllPostSuccess: false,
   getAllPostErrorMessage: '',
-  postCreatorName: {},
+  postCreatorName: '',
 };
 
 export const postReducer = createReducer(

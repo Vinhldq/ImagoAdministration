@@ -23,7 +23,7 @@ export const getCreatorName = createAction(
 
 export const getCreatorNameSuccess = createAction(
   '[Post] Get Creator Name Success',
-  props<{ postCreatorName: any }>()
+  props<{ postCreatorName: string }>()
 );
 
 export const getCreatorNameFailure = createAction(
