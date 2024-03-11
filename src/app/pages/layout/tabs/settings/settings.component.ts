@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { SharedModule } from '../../../../shared/shared.module';
 import { AccordionModule, ButtonModule, ListItem, ModalModule, PaginationModel, } from "carbon-components-angular";
 import { set } from "@angular/fire/database";
@@ -46,23 +46,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
       auth: AuthState; profile: ProfileState;
       report: ReportState;
 
-    }>, private router: Router,) {
+    }>, private router: Router,private cdr: ChangeDetectorRef) {
   }
 
 
-  signOut() {
-    this.store.dispatch(AuthActions.logout());
-    this.store.select('auth', 'isLogoutSuccess').subscribe((res) => {
-      if (res) {
-        this.router.navigate(['/login']);
-        console.log('Logout success!!!');
-      }
-    });
-
-  }
-  ngOnDestroy(): void {
-    this.subscriptions.forEach(subscription => subscription.unsubscribe());
-  }
+ 
   selected: ListItem;
   onSelect(ev) {
     this.selected = ev.item;
@@ -76,42 +64,79 @@ export class SettingsComponent implements OnInit, OnDestroy {
   @Input() disabledPagigation = false;
 
   // @ts-ignore
-  @Input() pageInputDisabled = false;
-  dataChoose: ReportModel[];
+
+
+  @Input() disabledPagigation = false;
+  dataChoose: ReportModel[] = [];
   profileDetail: ProfileModel;
   ngOnInit() {
+    // Initialize currentPage to 1
+    this.modelPagigation.currentPage = 1;
+  
     this.subscriptions.push(
       this.store.select('auth', 'idToken').subscribe((val) => {
-        this.store.dispatch(ReportAction.getReportStatus({
-          token: val,
-          page: 1,
-        }));
+        this.store.dispatch(ReportAction.getReportStatus({ token: val, page: 1 }));
       }),
       this.store.select('profile', 'profile').subscribe((val) => {
         this.profileDetail = val;
-        console.log(val);
       }),
       this.report$.subscribe((val) => {
         this.dataset = val.data;
+        this.dataset = this.dataset.map((element) => {
+          const date = new Date(
+            element.createdAt._seconds * 1000 +
+            element.createdAt._nanoseconds / 1000000,
+          );
+          const formattedDate = date.toLocaleString('vi-VN', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour12: false,
+          });
+          return {
+            ...element,
+            updatedAt: formattedDate,
+          };
+        });
+        console.log(this.dataset);
         this.dataChoose = this.dataset;
-      }),
+        // Update the totalDataLength
+        this.modelPagigation.totalDataLength = val.endPage;
+        // Trigger change detection
+        this.cdr.detectChanges();
+      })
     );
-    this.dataChoose = this.dataset;
   }
-
-
-  selectPage(page) {
-    // Dispatch the action with the selected page
-      this.store.select('auth', 'idToken').subscribe((val) => {
-        this.store.dispatch(ReportAction.getReportStatus({
-          token: val,
-          page: page,
-        }));
-      });
-    
+  
+  selectPage(page: any) {
+    this.modelPagigation.currentPage = page;
+    console.log(page);
+    this.store.select('auth', 'idToken').subscribe((val) => {
+      this.store.dispatch(ReportAction.getReportStatus({ token: val, page: page }));
+    });
+    // Trigger change detection
+    this.cdr.detectChanges();
   }
   protected openModal = false;
 
 
   protected readonly logout = logout;
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
+  }
+
+  signOut() {
+    this.profileDetail = null;
+    this.store.dispatch(ProfileAction.clearState());
+    this.store.dispatch(AuthActions.logout());
+    this.store.select('auth', 'isLogoutSuccess').subscribe((val) => {
+      if (val) {
+        console.log(val);
+        this.router.navigate(['/login']);
+      }
+    }
+    );
+  }
 }

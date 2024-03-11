@@ -1,7 +1,7 @@
 <div class="container">
 
   <div class='top'>
-    <h1>Setting</h1>
+    <h1>SETTING</h1>
     <cds-button-set>
       <button #trigger cdsButton="secondary" [size]="'sm'" [isExpressive]="true" (click)="open = true"
         class="btn-signout">Sign Out</button>
@@ -70,10 +70,11 @@
         <p>Finished processing {{item.id}} report on {{item.updatedAt}}</p>
       </div>
       }
-      <cds-pagination-nav class="pagi" [model]="modelPagigation" [disabled]="disabled"
+      <cds-pagination-nav class="pagi" [model]="modelPagigation" [disabled]="disabledPagigation"
         (selectPage)="selectPage($event)">
       </cds-pagination-nav>
     </div>
+
   </div>
 </div>
 

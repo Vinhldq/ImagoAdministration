@@ -1,7 +1,13 @@
-export interface AuthModel{
+export interface AuthModel {
   id: string;
   email: string;
   role: string;
   isBanned: boolean;
-  createdAt: Date;
+  status: string;
+  createdAt: AuthDate;
+}
+
+export interface AuthDate {
+  _seconds: number;
+  _nanoseconds: number;
 }

@@ -1,6 +1,6 @@
 import { AuthModel } from '../../models/auth.model';
 
-export interface AuthState{
+export interface AuthState {
   idToken: string;
   isLoading: boolean;
   isSuccessful: boolean;
@@ -10,5 +10,8 @@ export interface AuthState{
   logoutErrorMessage: string;
   authDetail: AuthModel;
   isGetSuccess: boolean;
-}
 
+  getAllAuth: AuthModel[];
+  isGetAllSuccess: boolean;
+  getAllErrorMessage: string;
+}

@@ -1,9 +1,8 @@
 import { createReducer, on } from '@ngrx/store';
-import * as LoginActions from './auth.action';
-import {AuthState} from "./auth.state";
-import {AuthModel} from "../../models/auth.model";
-import {AuthModule} from "@angular/fire/auth";
-
+import * as AuthAction from './auth.action';
+import { AuthState } from './auth.state';
+import { AuthModel } from '../../models/auth.model';
+import { AuthModule } from '@angular/fire/auth';
 
 export const initialState: AuthState = {
   idToken: '',
@@ -15,11 +14,15 @@ export const initialState: AuthState = {
   logoutErrorMessage: '',
   authDetail: <AuthModel>{},
   isGetSuccess: false,
+
+  getAllAuth: [],
+  isGetAllSuccess: false,
+  getAllErrorMessage: '',
 };
 
 export const authReducer = createReducer(
   initialState,
-  on(LoginActions.login, (state, action) => {
+  on(AuthAction.login, (state, action) => {
     return {
       ...state,
       isLoading: true,
@@ -27,7 +30,7 @@ export const authReducer = createReducer(
       errorMessage: '',
     };
   }),
-  on(LoginActions.loginSuccess, (state, action) => {
+  on(AuthAction.loginSuccess, (state, action) => {
     return {
       ...state,
       isLoading: false,
@@ -35,7 +38,7 @@ export const authReducer = createReducer(
       errorMessage: '',
     };
   }),
-  on(LoginActions.loginFailure, (state, { errorMessage, type }) => {
+  on(AuthAction.loginFailure, (state, { errorMessage, type }) => {
     return {
       ...state,
       isLoading: false,
@@ -43,15 +46,16 @@ export const authReducer = createReducer(
       errorMessage,
     };
   }),
-  on(LoginActions.logout, (state, action) => {
+  on(AuthAction.logout, (state, action,) => {
+    console.log(action.type);
     return {
       ...state,
       isLogoutSuccess: false,
       logoutErrorMessage: '',
     };
   }),
-  on(LoginActions.logoutSuccess, (state, action) => {
-    console.log(action)
+  on(AuthAction.logoutSuccess, (state, action) => {
+    console.log(action.type);
     return {
       ...state,
       isLogoutSuccess: true,
@@ -60,26 +64,27 @@ export const authReducer = createReducer(
       uid: '',
     };
   }),
-  on(LoginActions.logoutFailure, (state, { errorMessage, type }) => {
+  on(AuthAction.logoutFailure, (state, { errorMessage, type }) => {
+    console.log(type);
     return {
       ...state,
       isLogoutSuccess: false,
       logoutErrorMessage: errorMessage,
     };
   }),
-  on(LoginActions.storedIdToken, (state, { idToken, type }) => {
+  on(AuthAction.storedIdToken, (state, { idToken, type }) => {
     return {
       ...state,
       idToken,
     };
   }),
-  on(LoginActions.storedUserUid, (state, action) => {
+  on(AuthAction.storedUserUid, (state, action) => {
     return {
       ...state,
       uid: action.uid,
     };
   }),
-  on(LoginActions.getAuthById, (state, action) => {
+  on(AuthAction.getAuthById, (state, action) => {
     return {
       ...state,
       isSuccess: false,
@@ -87,18 +92,37 @@ export const authReducer = createReducer(
       auth: <AuthModel>{},
     };
   }),
-  on(LoginActions.getAuthByIdSuccess, (state, action) => {
+  on(AuthAction.getAuthByIdSuccess, (state, action) => {
     return {
       ...state,
       isSuccess: true,
       authDetail: action.auth,
     };
   }),
-  on(LoginActions.getAuthByIdFailure, (state, { errorMessage, type }) => {
+  on(AuthAction.getAuthByIdFailure, (state, { errorMessage, type }) => {
     return {
       ...state,
       errorMessage,
     };
-  })
+  }),
 
+  on(AuthAction.getAllAuth, (state, action) => {
+    return {
+      ...state,
+    };
+  }),
+  on(AuthAction.getAllAuthSuccess, (state, action) => {
+    return {
+      ...state,
+      isGetAllSuccess: true,
+      getAllAuth: action.auth,
+    };
+  }),
+  on(AuthAction.getAllAuthFailure, (state, { errorMessage, type }) => {
+    return {
+      ...state,
+      getAllErrorMessage: errorMessage,
+    };
+  }),
+  
 );

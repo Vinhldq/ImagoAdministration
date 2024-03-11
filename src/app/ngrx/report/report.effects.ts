@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, mergeMap, of, switchMap } from 'rxjs';
 import * as ReportActions from './report.actions';
 import { ReportService } from '../../service/report/report.service';
-import { error } from '@angular/compiler-cli/src/transformers/util';
+import { AllReportModel } from '../../models/report.model';
 
 @Injectable()
 export class ReportEffects {
@@ -16,16 +16,34 @@ export class ReportEffects {
     this.action$.pipe(
       ofType(ReportActions.getAllReports),
       switchMap((action) => {
-        return this.reportService.getAllReport(action.token,).pipe(
-          map((reportList: any) => {
-            return ReportActions.getAllReportsSuccess({
-              reportList: reportList,
-            });
+        return this.reportService
+          .getAllReportStatusPending(action.token, action.page, action.types)
+          .pipe(
+            map((reportList: any) => {
+              return ReportActions.getAllReportsSuccess({
+                reportList: reportList,
+              });
+            }),
+            catchError((error) => {
+              return of(
+                ReportActions.getAllReportsFailure({ errorMessage: error }),
+              );
+            }),
+          );
+      }),
+    ),
+  );
+
+  allReport$ = createEffect(() =>
+    this.action$.pipe(
+      ofType(ReportActions.allReport),
+      switchMap((action) => {
+        return this.reportService.getAllReport(action.token).pipe(
+          map((allReport: any) => {
+            return ReportActions.allReportSuccess({ allReport: allReport });
           }),
           catchError((error) => {
-            return of(
-              ReportActions.getAllReportsFailure({ errorMessage: error }),
-            );
+            return of(ReportActions.allReportFailure({ errorMessage: error }));
           }),
         );
       }),
@@ -36,7 +54,7 @@ export class ReportEffects {
     this.action$.pipe(
       ofType(ReportActions.getReportStatus),
       switchMap((action) => {
-        return this.reportService.getReportStatus(action.token, action.page).pipe(
+        return this.reportService.getReportStatusCompleted(action.token, action.page).pipe(
           map((reportStatus: any) => {
             return ReportActions.getReportStatusSuccess({
               reportListStatus: reportStatus,
