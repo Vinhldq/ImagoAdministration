@@ -60,8 +60,8 @@ export const appConfig: ApplicationConfig = {
           authDomain: 'itss-imago-0000.firebaseapp.com',
           messagingSenderId: '1098187958856',
           measurementId: 'G-7TVCQGP8RS',
-        }),
-      ),
+        })
+      )
     ),
 
     importProvidersFrom(provideAuth(() => getAuth())),

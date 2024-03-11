@@ -98,20 +98,21 @@ export class PostComponent implements OnInit {
   // };
 
   onRowClick(index: number) {
-    console.log('Row item selected:', index);
+    // console.log('Row item selected:', index);
   }
 
   ngOnInit() {
+    let creatorUserName: any;
+
+    this.creatorPost$.subscribe((creatorPost) => {
+      creatorUserName = creatorPost.userName;
+    });
+
     this.store.select('auth').subscribe((auth) => {
       this.store.dispatch(
         PostActions.getAllPosts({ token: auth.idToken, page: 1, size: 10 })
       );
-      // this.store.dispatch(PostActions.getCreatorName({ token: auth.idToken }));
     });
-
-    // this.creatorPost$.subscribe((creatorPost) => {
-    //   console.log('Creator Post:', creatorPost.userName);
-    // });
 
     this.postList$.subscribe((postList) => {
       this.dataset = postList.data.map((post) => [
@@ -119,7 +120,7 @@ export class PostComponent implements OnInit {
           data: post.id,
         }),
         new TableItem({
-          data: post.creatorId,
+          data: creatorUserName || post.creatorId,
         }),
         new TableItem({
           data: post.content,
@@ -142,7 +143,7 @@ export class PostComponent implements OnInit {
       ]);
       this.model.data = this.dataset;
     });
-    console.log('Data:', this.dataset);
+    // console.log('Data:', this.dataset);
 
     this.model.header = [
       new TableHeaderItem({
@@ -170,7 +171,7 @@ export class PostComponent implements OnInit {
   }
 
   selectPage(page) {
-    console.log('Loading page', page, 'from pagination model');
+    // console.log('Loading page', page, 'from pagination model');
     // let beginGet = (page - 1) * this.dataLengthPerPage;
     // let endGet = page * this.dataLengthPerPage - 1;
     // this.modelPagination.currentPage = page;
