@@ -52,22 +52,10 @@ export class PostComponent implements OnInit {
   @Input() pageInputDisabled = false;
   @Input() nowrap = false;
   model = new TableModel();
-  displayedTitle = ['US', 'France', 'Argentina', 'Japan'];
+  // displayedTitle = ['US', 'France', 'Argentina', 'Japan'];
   searchValue = '';
   disabled = false;
-  dataset = [
-    [
-      new TableItem({
-        data: '1',
-      }),
-      new TableItem({
-        data: "I'm rich because took a lot of money from the team",
-      }),
-      new TableItem({ data: 'Store' }),
-      new TableItem({ data: 'thief' }),
-      new TableItem({ data: 'Quy The Accountant' }),
-    ],
-  ];
+  dataset = [];
 
   constructor(
     protected iconService: IconService,
@@ -92,25 +80,21 @@ export class PostComponent implements OnInit {
     );
   }
 
-  filterTitle(titleName: string, checked: boolean) {
-    if (checked) {
-      this.displayedTitle.push(titleName);
-    } else {
-      this.displayedTitle.splice(this.displayedTitle.indexOf(titleName), 1);
-    }
-  }
+  // filterTitle(titleName: string, checked: boolean) {
+  //   if (checked) {
+  //     this.displayedTitle.push(titleName);
+  //   } else {
+  //     this.displayedTitle.splice(this.displayedTitle.indexOf(titleName), 1);
+  //   }
+  // }
 
-  overflowOnClick = (event: any) => {
-    event.stopPropagation();
-  };
+  // overflowOnClick = (event: any) => {
+  //   event.stopPropagation();
+  // };
 
   onRowClick(index: number) {
     console.log('Row item selected:', index);
   }
-
-  openDialog: boolean;
-  showCloseButton = true;
-  openDialogShare: boolean;
 
   ngOnInit() {
     this.store.select('auth').subscribe((auth) => {
