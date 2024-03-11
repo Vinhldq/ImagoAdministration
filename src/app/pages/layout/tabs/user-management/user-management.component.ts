@@ -19,16 +19,13 @@ export class UserManagementComponent implements OnInit, OnChanges, AfterViewInit
             data: {id: "1"},
             template: this.overflowMenuItemTemplateImg,
           }),
+          new TableItem({data: "1"}),
           new TableItem({data: "Hoang Gia Khuong"}),
           new TableItem({data: "Khuong Gia Gia"}),
           new TableItem({data: "1"}),
           new TableItem({data: "User"}),
           new TableItem({data: "476k"}),
           new TableItem({data: "5"}),
-          new TableItem({
-            data: {id: "1"},
-            template: this.overflowMenuItemTemplateBlock,
-          }),
           new TableItem({
             data: {id: "1"},
             template: this.overflowMenuItemTemplateChoose,
@@ -39,6 +36,7 @@ export class UserManagementComponent implements OnInit, OnChanges, AfterViewInit
             data: {id: "2"},
             template: this.overflowMenuItemTemplateImg,
           }),
+          new TableItem({data: "2"}),
           new TableItem({data: "Tran Van Hao"}),
           new TableItem({data: "Hao Dac Vu"}),
           new TableItem({data: "2"}),
@@ -47,10 +45,6 @@ export class UserManagementComponent implements OnInit, OnChanges, AfterViewInit
           new TableItem({data: "5"}),
           new TableItem({
             data: {id: "2"},
-            template: this.overflowMenuItemTemplateBlock,
-          }),
-          new TableItem({
-            data: {id: "2"},
             template: this.overflowMenuItemTemplateChoose,
           }),
         ],
@@ -59,6 +53,7 @@ export class UserManagementComponent implements OnInit, OnChanges, AfterViewInit
             data: {id: "3"},
             template: this.overflowMenuItemTemplateImg,
           }),
+          new TableItem({data: "3"}),
           new TableItem({data: "Bui Tien Thinh"}),
           new TableItem({data: "Thinh Suy"}),
           new TableItem({data: "3"}),
@@ -67,11 +62,6 @@ export class UserManagementComponent implements OnInit, OnChanges, AfterViewInit
           new TableItem({data: "5"}),
           new TableItem({
             data: {id: "3"},
-            template: this.overflowMenuItemTemplateBlock,
-          }),
-
-          new TableItem({
-            data: {id: "3"},
             template: this.overflowMenuItemTemplateChoose,
           }),
         ],
@@ -80,6 +70,7 @@ export class UserManagementComponent implements OnInit, OnChanges, AfterViewInit
             data: {id: "4"},
             template: this.overflowMenuItemTemplateImg,
           }),
+          new TableItem({data: "4"}),
           new TableItem({data: "Vo Minh Tri"}),
           new TableItem({data: "Tri Chuot"}),
           new TableItem({data: "4"}),
@@ -88,10 +79,6 @@ export class UserManagementComponent implements OnInit, OnChanges, AfterViewInit
           new TableItem({data: "5"}),
           new TableItem({
             data: {id: "4"},
-            template: this.overflowMenuItemTemplateBlock,
-          }),
-          new TableItem({
-            data: {id: "4"},
             template: this.overflowMenuItemTemplateChoose,
           }),
         ],
@@ -100,6 +87,7 @@ export class UserManagementComponent implements OnInit, OnChanges, AfterViewInit
             data: {id: "5"},
             template: this.overflowMenuItemTemplateImg,
           }),
+          new TableItem({data: "5"}),
           new TableItem({data: "Huynh Duc Dat"}),
           new TableItem({data: "Duc Do"}),
           new TableItem({data: "1"}),
@@ -108,10 +96,6 @@ export class UserManagementComponent implements OnInit, OnChanges, AfterViewInit
           new TableItem({data: "5"}),
           new TableItem({
             data: {id: "5"},
-            template: this.overflowMenuItemTemplateBlock,
-          }),
-          new TableItem({
-            data: {id: "5"},
             template: this.overflowMenuItemTemplateChoose,
           }),
         ],
@@ -120,16 +104,13 @@ export class UserManagementComponent implements OnInit, OnChanges, AfterViewInit
             data: {id: "6"},
             template: this.overflowMenuItemTemplateImg,
           }),
+          new TableItem({data: "6"}),
           new TableItem({data: "Mai Le Thanh Thine"}),
           new TableItem({data: "Thien Thieu Thieu"}),
           new TableItem({data: "1"}),
           new TableItem({data: "User"}),
           new TableItem({data: "476k"}),
           new TableItem({data: "5"}),
-          new TableItem({
-            data: {id: "6"},
-            template: this.overflowMenuItemTemplateBlock,
-          }),
           new TableItem({
             data: {id: "6"},
             template: this.overflowMenuItemTemplateChoose,
@@ -140,6 +121,7 @@ export class UserManagementComponent implements OnInit, OnChanges, AfterViewInit
             data: {id: "1"},
             template: this.overflowMenuItemTemplateImg,
           }),
+          new TableItem({data: "7"}),
           new TableItem({data: "Hoang Gia Khuong"}),
           new TableItem({data: "Khuong Gia Gia"}),
           new TableItem({data: "1"}),
@@ -148,10 +130,6 @@ export class UserManagementComponent implements OnInit, OnChanges, AfterViewInit
           new TableItem({data: "5"}),
           new TableItem({
             data: {id: "1"},
-            template: this.overflowMenuItemTemplateBlock,
-          }),
-          new TableItem({
-            data: {id: "1"},
             template: this.overflowMenuItemTemplateChoose,
           }),
         ],
@@ -160,6 +138,7 @@ export class UserManagementComponent implements OnInit, OnChanges, AfterViewInit
             data: {id: "2"},
             template: this.overflowMenuItemTemplateImg,
           }),
+          new TableItem({data: "8"}),
           new TableItem({data: "Tran Van Hao"}),
           new TableItem({data: "Hao Dac Vu"}),
           new TableItem({data: "1"}),
@@ -168,10 +147,6 @@ export class UserManagementComponent implements OnInit, OnChanges, AfterViewInit
           new TableItem({data: "5"}),
           new TableItem({
             data: {id: "2"},
-            template: this.overflowMenuItemTemplateBlock,
-          }),
-          new TableItem({
-            data: {id: "2"},
             template: this.overflowMenuItemTemplateChoose,
           }),
         ],
@@ -180,6 +155,7 @@ export class UserManagementComponent implements OnInit, OnChanges, AfterViewInit
             data: {id: "3"},
             template: this.overflowMenuItemTemplateImg,
           }),
+          new TableItem({data: "9"}),
           new TableItem({data: "Bui Tien Thinh"}),
           new TableItem({data: "Thinh Suy"}),
           new TableItem({data: "1"}),
@@ -188,11 +164,6 @@ export class UserManagementComponent implements OnInit, OnChanges, AfterViewInit
           new TableItem({data: "5"}),
           new TableItem({
             data: {id: "3"},
-            template: this.overflowMenuItemTemplateBlock,
-          }),
-
-          new TableItem({
-            data: {id: "3"},
             template: this.overflowMenuItemTemplateChoose,
           }),
         ],
@@ -201,6 +172,7 @@ export class UserManagementComponent implements OnInit, OnChanges, AfterViewInit
             data: {id: "4"},
             template: this.overflowMenuItemTemplateImg,
           }),
+          new TableItem({data: "10"}),
           new TableItem({data: "Vo Minh Tri"}),
           new TableItem({data: "Tri Chuot"}),
           new TableItem({data: "1"}),
@@ -209,10 +181,6 @@ export class UserManagementComponent implements OnInit, OnChanges, AfterViewInit
           new TableItem({data: "5"}),
           new TableItem({
             data: {id: "4"},
-            template: this.overflowMenuItemTemplateBlock,
-          }),
-          new TableItem({
-            data: {id: "4"},
             template: this.overflowMenuItemTemplateChoose,
           }),
         ],
@@ -221,6 +189,7 @@ export class UserManagementComponent implements OnInit, OnChanges, AfterViewInit
             data: {id: "5"},
             template: this.overflowMenuItemTemplateImg,
           }),
+          new TableItem({data: "11"}),
           new TableItem({data: "Huynh Duc Dat"}),
           new TableItem({data: "Duc Do"}),
           new TableItem({data: "1"}),
@@ -229,10 +198,6 @@ export class UserManagementComponent implements OnInit, OnChanges, AfterViewInit
           new TableItem({data: "5"}),
           new TableItem({
             data: {id: "5"},
-            template: this.overflowMenuItemTemplateBlock,
-          }),
-          new TableItem({
-            data: {id: "5"},
             template: this.overflowMenuItemTemplateChoose,
           }),
         ],
@@ -241,16 +206,13 @@ export class UserManagementComponent implements OnInit, OnChanges, AfterViewInit
             data: {id: "6"},
             template: this.overflowMenuItemTemplateImg,
           }),
+          new TableItem({data: "12"}),
           new TableItem({data: "Mai Le Thanh Thine"}),
           new TableItem({data: "Thien Thieu Thieu"}),
           new TableItem({data: "1"}),
           new TableItem({data: "User"}),
           new TableItem({data: "476k"}),
           new TableItem({data: "5"}),
-          new TableItem({
-            data: {id: "6"},
-            template: this.overflowMenuItemTemplateBlock,
-          }),
           new TableItem({
             data: {id: "6"},
             template: this.overflowMenuItemTemplateChoose,
@@ -260,14 +222,14 @@ export class UserManagementComponent implements OnInit, OnChanges, AfterViewInit
       this.model.data = this.dataset;
 
       this.model.header = [
-        new TableHeaderItem({data: "Image"}),
+        new TableHeaderItem({data: "Avatar"}),
+        new TableHeaderItem({data: "ID"}),
         new TableHeaderItem({data: "UserName"}),
-        new TableHeaderItem({data: "NickName"}),
+        new TableHeaderItem({data: "Bio"}),
         new TableHeaderItem({data: "NumberPost"}),
         new TableHeaderItem({data: "Role"}),
         new TableHeaderItem({data: "Followers"}),
         new TableHeaderItem({data: "Following"}),
-        new TableHeaderItem({data: "Block || Unblock"}),
         new TableHeaderItem({data: "Choose"}),
       ];
 

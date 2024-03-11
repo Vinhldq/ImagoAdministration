@@ -7,10 +7,7 @@ import { PostModel } from '../../models/post.model';
 
 @Injectable()
 export class PostEffects {
-  constructor(
-    private action$: Actions,
-    private postService: PostService,
-  ) {}
+  constructor(private action$: Actions, private postService: PostService) {}
 
   getAllPost$ = createEffect(() =>
     this.action$.pipe(
@@ -26,11 +23,11 @@ export class PostEffects {
             return of(
               PostActions.getAllPostsFailure({
                 errorMessage: error,
-              }),
+              })
             );
-          }),
+          })
         );
-      }),
-    ),
+      })
+    )
   );
 }

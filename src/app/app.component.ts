@@ -9,9 +9,10 @@ import * as AuthActions from './ngrx/auth/auth.action';
 import { LoadingComponent } from './pages/loading/loading.component';
 import { Subscription, combineLatest } from 'rxjs';
 import { NotificationService } from 'carbon-components-angular';
-import { ToastrService } from 'ngx-toastr';
 import * as ProfileAction from './ngrx/profile/profile.action';
 import { ProfileState } from './ngrx/profile/profile.state';
+import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -48,7 +49,9 @@ export class AppComponent implements OnInit, OnDestroy {
       }
     });
   }
+
   protected open = false;
+
   ngOnDestroy(): void {
     this.subscriptions.forEach((val) => {
       val.unsubscribe();
