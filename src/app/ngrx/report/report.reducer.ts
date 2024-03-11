@@ -4,16 +4,23 @@ import * as ReportActions from './report.actions';
 import { createReducer, on } from '@ngrx/store';
 
 export const initialState: ReportState = {
-  reportList: [],
+  reportList: {
+    data: [],
+    endPage: 0,
+  },
   isGetAllReport: false,
   isGetAllReportSuccess: false,
   getAllReportErrorMessage: '',
+
+  allReport: [],
+  isAllReport: false,
+  isAllReportSuccess: false,
+  allReportErrorMessage: '',
 };
 
 export const reportReducer = createReducer(
   initialState,
   on(ReportActions.getAllReports, (state, { type }) => {
-    console.log(type);
     return {
       ...state,
       isGetAllReport: true,
@@ -21,7 +28,6 @@ export const reportReducer = createReducer(
     };
   }),
   on(ReportActions.getAllReportsSuccess, (state, { type, reportList }) => {
-    console.log(type);
     return {
       ...state,
       isGetAllReport: false,
@@ -30,12 +36,35 @@ export const reportReducer = createReducer(
     };
   }),
   on(ReportActions.getAllReportsFailure, (state, { errorMessage, type }) => {
-    console.log(type);
     return {
       ...state,
       isGetAllReport: false,
       isGetAllReportSuccess: false,
       getAllReportErrorMessage: errorMessage,
+    };
+  }),
+
+  on(ReportActions.allReport, (state, { type }) => {
+    return {
+      ...state,
+      isAllReport: true,
+      isAllReportSuccess: false,
+    };
+  }),
+  on(ReportActions.allReportSuccess, (state, { type, allReport }) => {
+    return {
+      ...state,
+      isAllReport: false,
+      isAllReportSuccess: true,
+      allReport: allReport,
+    };
+  }),
+  on(ReportActions.allReportFailure, (state, { errorMessage, type }) => {
+    return {
+      ...state,
+      isAllReport: false,
+      isAllReportSuccess: false,
+      allReportErrorMessage: errorMessage,
     };
   }),
 );

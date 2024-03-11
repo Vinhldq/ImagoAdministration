@@ -110,15 +110,14 @@
       <div class="info">
         <div class="image">
           <img
-            src="./assets/img/confident-asian-woman-face-portrait-smiling_53876-144815.webp"
+            [src]="postDetail.photoUrl[0]"
             alt=""
           />
         </div>
 
         <div class="text">
-          <p class="name">Jane Cooper</p>
-          <p class="email">janecooper&#64;gmail.com</p>
-          <p class="phone_number">+994987654321</p>
+          <p class="name">{{ postDetail.content }}</p>
+
         </div>
       </div>
       <div class="icon">
@@ -130,7 +129,7 @@
         >
           <cds-overflow-menu-option>More info</cds-overflow-menu-option>
           <cds-overflow-menu-option (click)="open = true"
-            >Action
+          >Action
           </cds-overflow-menu-option>
           <cds-overflow-menu-option>Reject</cds-overflow-menu-option>
         </cds-overflow-menu>
@@ -140,16 +139,15 @@
 
     <div class="reason">
       <h2>Report</h2>
-      <p>Pretending to be someone</p>
+      <p>{{ reportDetail.reason }}</p>
     </div>
 
     <div class="desc">
       <h2>Describe Report</h2>
       <p>
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nesciunt id
-        placeat nemo, totam doloribus dolorem excepturi autem aliquam
-        voluptates, eveniet nostrum vitae velit incidunt distinctio voluptas
-        libero accusantium? Ad, quis!
+        {{
+          reportDetail.content
+        }}
       </p>
     </div>
 

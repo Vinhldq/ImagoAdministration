@@ -5,6 +5,7 @@ import { catchError, map, mergeMap, of, switchMap } from 'rxjs';
 
 import { Store } from '@ngrx/store';
 import { AuthService } from '../../service/auth/auth.service';
+import * as ReportActions from '../report/report.actions';
 
 @Injectable()
 export class AuthEffects {
@@ -57,4 +58,22 @@ export class AuthEffects {
       }),
     );
   });
+
+  getAllAuth$ = createEffect(() =>
+    this.action$.pipe(
+      ofType(AuthActions.getAllAuth),
+      switchMap((action) => {
+        return this.authService.getAllAuth(action.token).pipe(
+          map((auth: any) => {
+            return AuthActions.getAllAuthSuccess({
+              auth: auth,
+            });
+          }),
+          catchError((error) => {
+            return of(AuthActions.getAllAuthFailure({ errorMessage: error }));
+          }),
+        );
+      }),
+    ),
+  );
 }
