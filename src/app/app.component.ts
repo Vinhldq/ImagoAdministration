@@ -95,7 +95,6 @@ export class AppComponent implements OnInit, OnDestroy {
               progressAnimation: 'increasing',
             });
           } else {
-            // this.store.dispatch(ProfileAction.clearState());
             this.toastr.error(
               ' You have no profile. Go to the Imago app to create a profile',
               'Profile Not Found',
