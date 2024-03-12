@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { AllPostModel } from '../../models/post.model';
+import { AllPostModel, AllPostProfile } from '../../models/post.model';
 
 export const getAllPosts = createAction(
   '[Post] Get All Posts',
@@ -18,12 +18,12 @@ export const getAllPostsFailure = createAction(
 
 export const getCreatorName = createAction(
   '[Post] Get Creator Name',
-  props<{ token: string }>()
+  props<{ token: string; page: number; size: number }>()
 );
 
 export const getCreatorNameSuccess = createAction(
   '[Post] Get Creator Name Success',
-  props<{ postCreatorName: any }>()
+  props<{ postCreatorName: AllPostProfile }>()
 );
 
 export const getCreatorNameFailure = createAction(

@@ -20,11 +20,14 @@ import { SharedModule } from '../../../../../../shared/shared.module';
 import { Store } from '@ngrx/store';
 import { AuthState } from '../../../../../../ngrx/auth/auth.state';
 import * as PostActions from '../../../../../../ngrx/post/post.actions';
+import * as ProfileActions from '../../../../../../ngrx/profile/profile.action';
 import { PostState } from '../../../../../../ngrx/post/post.state';
 import { Pipe, PipeTransform } from '@angular/core';
 import { AuthModel } from '../../../../../../models/auth.model';
 import { ProfileModel } from '../../../../../../models/profile.model';
 import { PostModel } from '../../../../../../models/post.model';
+import { Subscription } from 'rxjs';
+import { ProfileState } from '../../../../../../ngrx/profile/profile.state';
 
 @Component({
   selector: 'app-post',
@@ -43,7 +46,8 @@ import { PostModel } from '../../../../../../models/post.model';
 export class PostComponent implements OnInit {
   postList$ = this.store.select((state) => state.post.postList);
   creatorPost$ = this.store.select((state) => state.post.postCreatorName);
-
+  page$ = this.store.select((state) => state.post.postList.endPage);
+  subscription: Subscription[] = [];
   @Input() size = 'md';
   @Input() showSelectionColumn = true;
   @Input() enableSingleSelect = true;
@@ -67,6 +71,7 @@ export class PostComponent implements OnInit {
     private store: Store<{
       auth: AuthState;
       post: PostState;
+      profile: ProfileState;
     }>
   ) {
     this.iconService.registerAll([
@@ -101,59 +106,61 @@ export class PostComponent implements OnInit {
     // console.log('Row item selected:', index);
   }
 
+  dataLengthPerPage = 10;
+
   ngOnInit() {
-    let creatorUserName: any;
+    this.subscription.push(
+      this.store.select('auth').subscribe((auth) => {
+        if (auth.idToken != '') {
+          this.store.dispatch(
+            PostActions.getAllPosts({ token: auth.idToken, page: 1, size: 10 })
+          );
+          this.store.dispatch(
+            PostActions.getCreatorName({
+              token: auth.idToken,
+              page: 1,
+              size: 10,
+            })
+          );
+        }
+      })
+    );
+    // this.modelPagination.currentPage = 1;
+    // this.page$.subscribe((page) => {
+    //   this.modelPagination.totalDataLength = page;
+    // });
 
     this.creatorPost$.subscribe((creatorPost) => {
-      creatorUserName = creatorPost.userName;
-    });
-
-    this.store.select('auth').subscribe((auth) => {
-      this.store.dispatch(
-        PostActions.getAllPosts({ token: auth.idToken, page: 1, size: 10 })
-      );
-    });
-
-    this.postList$.subscribe((postList) => {
-      this.dataset = postList.data.map((post) => [
-        new TableItem({
-          data: post.id,
-        }),
-        new TableItem({
-          data: creatorUserName || post.creatorId,
-        }),
-        new TableItem({
-          data: post.content,
-        }),
-
-        new TableItem({
-          data: post.reaction.length,
-        }),
-        new TableItem({
-          data: post.comments.length,
-        }),
-        new TableItem({
-          data: post.share.length,
-        }),
-        new TableItem({
-          // data: post.createdAt._seconds * 1000,
-          //format date DD/MM/YYYY HH:MM
-          data: new Date(post.createdAt._seconds * 1000).toLocaleString(),
-        }),
-      ]);
+      this.dataset = creatorPost.data.map((post) => {
+        return [
+          new TableItem({ data: post.id }),
+          new TableItem({ data: post.profile.userName }),
+          new TableItem({ data: post.content }),
+          new TableItem({ data: post.photoUrl.length }),
+          new TableItem({ data: post.reaction.length }),
+          new TableItem({ data: post.comments.length }),
+          new TableItem({ data: post.share.length }),
+          new TableItem({
+            data: new Date(post.createdAt._seconds * 1000).toLocaleString(),
+          }),
+        ];
+      });
       this.model.data = this.dataset;
     });
-    // console.log('Data:', this.dataset);
 
     this.model.header = [
       new TableHeaderItem({
         data: 'Id Post',
       }),
       new TableHeaderItem({
-        data: 'CreatorId',
+        data: 'Creator Name',
       }),
+
       new TableHeaderItem({
         data: 'Content',
+      }),
+      new TableHeaderItem({
+        data: 'Photo Url',
       }),
       new TableHeaderItem({
         data: 'reaction',

@@ -23,3 +23,8 @@ export interface PostDate {
   _seconds: number;
   _nanoseconds: number;
 }
+
+export interface AllPostProfile {
+  data: any[];
+  endPage: number;
+}

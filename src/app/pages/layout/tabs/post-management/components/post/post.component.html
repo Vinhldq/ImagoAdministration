@@ -1,5 +1,5 @@
 <div class="content">
-  <div class="post">
+  <div class="all">
     <cds-table-container>
       <cds-table-toolbar>
         <cds-table-toolbar-content>
@@ -12,7 +12,7 @@
         </cds-table-toolbar-content>
       </cds-table-toolbar>
 
-      <div class="left-content">
+      <div class="table">
         <cds-table
           [model]="model"
           [sortable]="false"
@@ -30,6 +30,7 @@
           [model]="modelPagination"
           [disabled]="disabled"
           (selectPage)="selectPage($event)"
+          [numOfItemsToShow]="dataLengthPerPage"
         >
         </cds-pagination-nav>
       </div>

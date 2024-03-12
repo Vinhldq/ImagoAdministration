@@ -10,7 +10,10 @@ export const initialPostState: PostState = {
   isGetAllPost: false,
   isGetAllPostSuccess: false,
   getAllPostErrorMessage: '',
-  postCreatorName: {},
+  postCreatorName: {
+    data: [],
+    endPage: 0,
+  },
 };
 
 export const postReducer = createReducer(
@@ -49,6 +52,8 @@ export const postReducer = createReducer(
   }),
 
   on(PostAction.getCreatorNameSuccess, (state, { type, postCreatorName }) => {
+    console.log(type);
+
     return {
       ...state,
       isGetAllPost: false,

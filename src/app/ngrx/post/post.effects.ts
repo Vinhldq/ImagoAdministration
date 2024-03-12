@@ -37,21 +37,23 @@ export class PostEffects {
     this.action$.pipe(
       ofType(PostActions.getCreatorName),
       switchMap((action) => {
-        return this.postService.getCreatorName(action.token).pipe(
-          map((postCreatorName: any) => {
-            console.log(postCreatorName);
-            return PostActions.getCreatorNameSuccess({
-              postCreatorName: postCreatorName,
-            });
-          }),
-          catchError((error) => {
-            return of(
-              PostActions.getCreatorNameFailure({
-                errorMessage: error,
-              })
-            );
-          })
-        );
+        return this.postService
+          .getCreatorName(action.token, action.page, action.size)
+          .pipe(
+            map((postCreatorName: any) => {
+              console.log(postCreatorName);
+              return PostActions.getCreatorNameSuccess({
+                postCreatorName: postCreatorName,
+              });
+            }),
+            catchError((error) => {
+              return of(
+                PostActions.getCreatorNameFailure({
+                  errorMessage: error,
+                })
+              );
+            })
+          );
       })
     )
   );

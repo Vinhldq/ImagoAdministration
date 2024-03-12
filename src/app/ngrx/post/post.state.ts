@@ -1,4 +1,4 @@
-import { AllPostModel } from '../../models/post.model';
+import { AllPostModel, AllPostProfile } from '../../models/post.model';
 
 export interface PostState {
   postList: AllPostModel;
@@ -6,5 +6,5 @@ export interface PostState {
   isGetAllPostSuccess: boolean;
   getAllPostErrorMessage: string;
 
-  postCreatorName: any;
+  postCreatorName: AllPostProfile;
 }

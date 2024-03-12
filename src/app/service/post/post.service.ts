@@ -24,10 +24,13 @@ export class PostService {
     );
   }
 
-  getCreatorName(token: string) {
+  getCreatorName(token: string, page: number, size: number) {
     const headers = { Authorization: `${token}` };
-    return this.httpClient.get(`http://localhost:3000/v1/post/creatorPost`, {
-      headers: headers,
-    });
+    return this.httpClient.get(
+      `http://localhost:3000/v1/post/creatorpost?page=${page}&size=${size}`,
+      {
+        headers: headers,
+      }
+    );
   }
 }

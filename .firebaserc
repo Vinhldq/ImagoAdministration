@@ -6,9 +6,16 @@
           "itss-imago-0000"
         ]
       }
+    },
+    "testimago": {
+      "hosting": {
+        "imagoadministration": [
+          "testimago"
+        ]
+      }
     }
   },
   "projects": {
-    "default": "itss-imago-0000"
+    "default": "testimago"
   }
 }
