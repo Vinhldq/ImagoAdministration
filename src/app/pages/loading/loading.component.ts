@@ -36,10 +36,19 @@ export class LoadingComponent implements OnInit, OnDestroy{
         this.store.dispatch(ProfileAction.getMineProfile({ idToken: res }));
         this.store.select('profile', 'profile').subscribe((res) => {
           if (res.id !== null && res.id !== undefined) {
+            console.log('Profile', res.id);
            this.router.navigate(['/dashboard']);
           }
           else {
-            this.store.dispatch(ProfileAction.clearState());
+            this.toastr.error('You do not have Profile, Please contact Admin to create Profile for you', 'Error',
+              {
+                positionClass: 'toast-top-right',
+                timeOut: 3000,
+                closeButton: true,
+                progressBar: true,
+                progressAnimation: 'increasing'
+              });
+            // this.store.dispatch(ProfileAction.clearState());
             this.store.dispatch(AuthActions.logout());
             this.router.navigate(['/login']);
           }

@@ -84,22 +84,26 @@ export class SettingsComponent implements OnInit, OnDestroy {
         this.dataset = val.data;
         this.dataset = this.dataset.map((element) => {
           const date = new Date(
-            element.createdAt._seconds * 1000 +
-            element.createdAt._nanoseconds / 1000000,
+            element.updatedAt._seconds * 1000 +
+            element.updatedAt._nanoseconds / 1000000,
           );
-          const formattedDate = date.toLocaleString('vi-VN', {
+          const formattedDate = date.toLocaleString('en-GB', {
             weekday: 'long',
             year: 'numeric',
             month: 'long',
             day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
             hour12: true,
-          });
+          }).replace(',', ' at').replace(' ', ', ' );
           return {
             ...element,
             updatedAt: formattedDate,
+            // formattedUpdatedAt: formattedDate,
           };
+        }).sort((a, b) => {
+          return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime();
         });
-        console.log(this.dataset);
         this.dataChoose = this.dataset;
         // Update the totalDataLength
         this.modelPagigation.totalDataLength = val.endPage;
@@ -111,7 +115,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
   
   selectPage(page: any) {
     this.modelPagigation.currentPage = page;
-    console.log(page);
     this.store.select('auth', 'idToken').subscribe((val) => {
       this.store.dispatch(ReportAction.getReportStatus({ token: val, page: page }));
     });
@@ -121,20 +124,17 @@ export class SettingsComponent implements OnInit, OnDestroy {
   protected openModal = false;
   protected readonly logout = logout;
 
-  ngOnDestroy(): void {
-    this.subscriptions.forEach(subscription => subscription.unsubscribe());
-  }
+  
 
   signOut() {
-    this.profileDetail = null;
     this.store.dispatch(ProfileAction.clearState());
     this.store.dispatch(AuthActions.logout());
-    this.store.select('auth', 'isLogoutSuccess').subscribe((val) => {
-      if (val) {
-        console.log(val);
-        this.router.navigate(['/login']);
-      }
-    }
-    );
+    this.router.navigate(['/login']);
+  }
+  ngOnDestroy(): void {
+   
+    this.subscriptions.forEach((val) => {
+      val.unsubscribe();
+    });
   }
 }

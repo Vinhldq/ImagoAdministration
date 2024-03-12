@@ -83,6 +83,7 @@ export const profileReducer = createReducer(
       isUpdating: false,
       isUpdateSuccess: false,
       updateErrorMessage: '',
+      profile: null
     };
   }),
 );

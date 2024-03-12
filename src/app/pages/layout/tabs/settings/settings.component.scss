@@ -9,8 +9,8 @@
 
 .container {
   padding-top: 40px;
-  padding-right: 150px;
-  padding-left: 150px;
+  // padding-right: 150px;
+  // padding-left: 150px;
 
 }
 
@@ -116,21 +116,11 @@ cds-dropdown-list:focus , cds-dropdown-list:active {
   outline: none;
 
 }
-//button:hover {
-//  background-color: black;
-//  border: none;
-//  transform: scale(0.95);
-//}
 
 button:focus {
   outline: none;
 }
-//button:active {
-//  border: 1px solid black;
-//  outline: none;
-//  background-color: black;
-//  transform: scale(0.95);
-//}
+
 .btn-save {
   width: 132px;
 }
@@ -176,8 +166,8 @@ h4 {
 
 @media (min-width: 1024px) {
   .container {
-    padding-right: 200px;
-    padding-left: 200px;
+    padding-right: 100px;
+    padding-left: 100px;
   }
   .picture{
     display: flex;
