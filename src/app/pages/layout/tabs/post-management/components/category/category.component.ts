@@ -21,6 +21,8 @@ import { Store } from '@ngrx/store';
 import { AuthState } from '../../../../../../ngrx/auth/auth.state';
 import { CategoryState } from '../../../../../../ngrx/category/category.state';
 import * as CategoryAction from '../../../../../../ngrx/category/category.actions';
+import { FormControl, FormGroup } from '@angular/forms';
+import * as RoleActions from '../../../../../../ngrx/role/role.action';
 
 @Component({
   selector: 'app-category',
@@ -49,17 +51,14 @@ export class CategoryComponent implements OnInit {
   @Input() noData = false;
   @Input() stickyHeader = false;
   @Input() skeleton = false;
-  @Input() model1Pagination = new PaginationModel();
-  @Input() model2Pagination = new PaginationModel();
+  @Input() modelPagination = new PaginationModel();
   @Input() disablePagination = false;
   @Input() pageInputDisabled = false;
   @Input() nowrap = false;
-  model1 = new TableModel();
-  model2 = new TableModel();
+  model = new TableModel();
   searchValue = '';
   disabled = false;
   dataset = [];
-  dataset1 = [];
   dataLengthPerPage = 10;
 
   constructor(
@@ -74,20 +73,71 @@ export class CategoryComponent implements OnInit {
 
   filterCate(searchString: string) {
     // this.searchValue = searchString;
-    this.model1.data = this.dataset.filter((row: TableItem[]) =>
+    this.model.data = this.dataset.filter((row: TableItem[]) =>
       row[1].data.toLowerCase().includes(searchString.toLowerCase()),
-    );
-  }
-
-  filterHashtag(hashtagName: string) {
-    this.model2.data = this.dataset1.filter((row: TableItem[]) =>
-      row[1].data.toLowerCase().includes(hashtagName.toLowerCase()),
     );
   }
 
   onRowClick(index: number) {
     console.log('Row item selected:', index);
   }
+
+  ActiveOpenCUD = false;
+  currentOpenCate = 1;
+  selectedId: string = '';
+  selectedRowData: string = '';
+  numberIdCate: number = 23;
+
+  openCUD(cate: number) {
+    this.currentOpenCate = cate;
+    this.ActiveOpenCUD = true;
+    if (cate == 3) {
+      let dataUpdate = {
+        id: this.selectedId,
+        name: this.dataset.find((cate) => cate[0].data == this.selectedId)[1]
+          .data,
+        photoUrl: this.dataset.find(
+          (cate) => cate[0].data == this.selectedId,
+        )[2].data,
+      };
+      console.log(dataUpdate);
+    }
+  }
+
+  closeCUD() {
+    this.ActiveOpenCUD = false;
+  }
+
+  onRowSelected(event: any) {
+    if (event.selectedRowIndex !== undefined && event.selectedRowIndex > 0) {
+      this.selectedId = this.selectedRowData;
+    } else {
+      console.log('No row selected');
+    }
+  }
+
+  addForm = new FormGroup({
+    id: new FormControl({ value: '', disabled: true }),
+    name: new FormControl(''),
+    photoUrl: new FormControl(''),
+  });
+
+  onSumitAdd() {
+    let additem: TableItem[] = [
+      new TableItem({ data: this.addForm.value.id }),
+      new TableItem({ data: this.addForm.value.name }),
+      new TableItem({ data: this.addForm.value.photoUrl }),
+    ];
+    this.dataset.push(additem);
+    this.addForm.reset();
+    this.ActiveOpenCUD = false;
+  }
+
+  editForm = new FormGroup({
+    id: new FormControl({ value: '', disabled: true }),
+    name: new FormControl(''),
+    photoUrl: new FormControl(''),
+  });
 
   ngOnInit() {
     this.store.select('auth').subscribe((auth) => {
@@ -107,10 +157,10 @@ export class CategoryComponent implements OnInit {
           data: cate.photoUrl,
         }),
       ]);
-      this.model1.data = this.dataset;
+      this.model.data = this.dataset;
     });
 
-    this.model1.header = [
+    this.model.header = [
       new TableHeaderItem({
         data: 'Id Category',
       }),
@@ -146,6 +196,5 @@ export class CategoryComponent implements OnInit {
       selected: false,
     },
   ];
-  // showCloseButton: boolean;
   showCloseButton = true;
 }
