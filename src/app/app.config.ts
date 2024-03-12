@@ -52,39 +52,39 @@ export const appConfig: ApplicationConfig = {
       ReportEffects,
     ]),
     provideHttpClient(),
-    // importProvidersFrom(
-    //   provideFirebaseApp(() =>
-    //     initializeApp({
-    //       projectId: 'itss-imago-0000',
-    //       appId: '1:1098187958856:web:931b5d503852e1c9a1867d',
-    //       storageBucket: 'itss-imago-0000.appspot.com',
-    //       apiKey: 'AIzaSyAJ93BuFGs7gOJe9kudLYvAn4-Fp6Q936M',
-    //       authDomain: 'itss-imago-0000.firebaseapp.com',
-    //       messagingSenderId: '1098187958856',
-    //       measurementId: 'G-7TVCQGP8RS',
-    //     })
-    //   )
-    // ),
+    importProvidersFrom(
+      provideFirebaseApp(() =>
+        initializeApp({
+          projectId: 'itss-imago-0000',
+          appId: '1:1098187958856:web:931b5d503852e1c9a1867d',
+          storageBucket: 'itss-imago-0000.appspot.com',
+          apiKey: 'AIzaSyAJ93BuFGs7gOJe9kudLYvAn4-Fp6Q936M',
+          authDomain: 'itss-imago-0000.firebaseapp.com',
+          messagingSenderId: '1098187958856',
+          measurementId: 'G-7TVCQGP8RS',
+        })
+      )
+    ),
 
     importProvidersFrom(provideAuth(() => getAuth())),
     importProvidersFrom(provideFirestore(() => getFirestore())),
     importProvidersFrom(provideStorage(() => getStorage())),
-    importProvidersFrom(
-      provideFirebaseApp(() =>
-        initializeApp({
-          projectId: 'testimago',
-          appId: '1:22393128172:web:7fe01bd638c0018afdd1c9',
-          storageBucket: 'testimago.appspot.com',
-          apiKey: 'AIzaSyABAq8yi2ppYemJuATKUGKAF6foqS5q2eY',
-          authDomain: 'testimago.firebaseapp.com',
-          messagingSenderId: '22393128172',
-        })
-      )
-    ),
-    importProvidersFrom(provideAuth(() => getAuth())),
-    importProvidersFrom(provideFirestore(() => getFirestore())),
-    importProvidersFrom(provideDatabase(() => getDatabase())),
-    importProvidersFrom(provideMessaging(() => getMessaging())),
-    importProvidersFrom(provideStorage(() => getStorage())),
+    // importProvidersFrom(
+    //   provideFirebaseApp(() =>
+    //     initializeApp({
+    //       projectId: 'testimago',
+    //       appId: '1:22393128172:web:7fe01bd638c0018afdd1c9',
+    //       storageBucket: 'testimago.appspot.com',
+    //       apiKey: 'AIzaSyABAq8yi2ppYemJuATKUGKAF6foqS5q2eY',
+    //       authDomain: 'testimago.firebaseapp.com',
+    //       messagingSenderId: '22393128172',
+    //     })
+    //   )
+    // ),
+    // importProvidersFrom(provideAuth(() => getAuth())),
+    // importProvidersFrom(provideFirestore(() => getFirestore())),
+    // importProvidersFrom(provideDatabase(() => getDatabase())),
+    // importProvidersFrom(provideMessaging(() => getMessaging())),
+    // importProvidersFrom(provideStorage(() => getStorage())),
   ],
 };
