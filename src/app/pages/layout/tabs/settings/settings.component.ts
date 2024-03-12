@@ -61,9 +61,9 @@ export class SettingsComponent implements OnInit, OnDestroy {
   dataset = [];
   report$ = this.store.select('report', 'reportListPagination');
   @Input() modelPagigation = new PaginationModel();
-  @Input() disabledPagigation = false;
+  // @Input() disabledPagigation = false;
 
-  // @ts-ignore
+
 
 
   @Input() disabledPagigation = false;
@@ -119,8 +119,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
     this.cdr.detectChanges();
   }
   protected openModal = false;
-
-
   protected readonly logout = logout;
 
   ngOnDestroy(): void {

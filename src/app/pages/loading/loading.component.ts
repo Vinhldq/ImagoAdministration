@@ -34,20 +34,17 @@ export class LoadingComponent implements OnInit, OnDestroy{
     this.subscriptions.push(
       this.store.select('auth', 'idToken').subscribe((res) => {
         this.store.dispatch(ProfileAction.getMineProfile({ idToken: res }));
-        
         this.store.select('profile', 'profile').subscribe((res) => {
-        
           if (res.id !== null && res.id !== undefined) {
            this.router.navigate(['/dashboard']);
           }
           else {
-            console.log('res', res.id);
+            this.store.dispatch(ProfileAction.clearState());
             this.store.dispatch(AuthActions.logout());
             this.router.navigate(['/login']);
           }
         })
       }
-     
       )
     );
   }
