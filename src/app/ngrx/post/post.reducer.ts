@@ -1,19 +1,17 @@
 import { PostState } from './post.state';
 import { createReducer, on } from '@ngrx/store';
 import * as PostAction from './post.actions';
+import { ProfileModel } from '../../models/profile.model';
 
 export const initialPostState: PostState = {
   postList: {
     data: [],
     endPage: 0,
   },
+  detailProfile: [] as ProfileModel[],
   isGetAllPost: false,
   isGetAllPostSuccess: false,
   getAllPostErrorMessage: '',
-  postCreatorName: {
-    data: [],
-    endPage: 0,
-  },
 };
 
 export const postReducer = createReducer(
@@ -41,33 +39,21 @@ export const postReducer = createReducer(
       getAllPostErrorMessage: errorMessage,
     };
   }),
-
-  on(PostAction.getCreatorName, (state, { type }) => {
-    console.log(type);
-    return {
-      ...state,
-      isGetAllPost: true,
-      isGetAllPostSuccess: false,
-    };
-  }),
-
-  on(PostAction.getCreatorNameSuccess, (state, { type, postCreatorName }) => {
-    console.log(type);
-
-    return {
-      ...state,
-      isGetAllPost: false,
-      isGetAllPostSuccess: true,
-      postCreatorName: postCreatorName,
-    };
-  }),
-
-  on(PostAction.getCreatorNameFailure, (state, { errorMessage, type }) => {
-    return {
-      ...state,
-      isGetAllPost: false,
-      isGetAllPostSuccess: false,
-      getAllPostErrorMessage: errorMessage,
-    };
-  })
+  on(PostAction.getPostDetail, (state) => ({
+    ...state,
+    isGetAllPost: true,
+    isGetAllPostSuccess: false,
+  })),
+  on(PostAction.getPostDetailSuccess, (state, { detailProfile }) => ({
+    ...state,
+    detailProfile: detailProfile,
+    isGetAllPost: false,
+    isGetAllPostSuccess: true,
+  })),
+  on(PostAction.getPostDetailFailure, (state, { errorMessage }) => ({
+    ...state,
+    isGetAllPost: false,
+    isGetAllPostSuccess: false,
+    getAllPostErrorMessage: errorMessage,
+  }))
 );

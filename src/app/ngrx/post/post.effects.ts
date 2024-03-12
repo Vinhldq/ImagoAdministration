@@ -33,27 +33,25 @@ export class PostEffects {
     )
   );
 
-  getCreatorName$ = createEffect(() =>
+  // check post.creatorId === profile.uid => using mergeMap to getPostDetail
+  getPostDetail$ = createEffect(() =>
     this.action$.pipe(
-      ofType(PostActions.getCreatorName),
-      switchMap((action) => {
-        return this.postService
-          .getCreatorName(action.token, action.page, action.size)
-          .pipe(
-            map((postCreatorName: any) => {
-              console.log(postCreatorName);
-              return PostActions.getCreatorNameSuccess({
-                postCreatorName: postCreatorName,
-              });
-            }),
-            catchError((error) => {
-              return of(
-                PostActions.getCreatorNameFailure({
-                  errorMessage: error,
-                })
-              );
-            })
-          );
+      ofType(PostActions.getPostDetail),
+      mergeMap((action) => {
+        return this.postService.getPostDetail(action.token, action.id).pipe(
+          map((detailProfile: any, index: number) => {
+            return PostActions.getPostDetailSuccess({
+              ...detailProfile,
+            });
+          }),
+          catchError((error) => {
+            return of(
+              PostActions.getPostDetailFailure({
+                errorMessage: error,
+              })
+            );
+          })
+        );
       })
     )
   );

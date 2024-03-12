@@ -45,8 +45,8 @@ import { ProfileState } from '../../../../../../ngrx/profile/profile.state';
 })
 export class PostComponent implements OnInit {
   postList$ = this.store.select((state) => state.post.postList);
-  creatorPost$ = this.store.select((state) => state.post.postCreatorName);
   page$ = this.store.select((state) => state.post.postList.endPage);
+  postDetail$ = this.store.select((state) => state.post.detailProfile);
   subscription: Subscription[] = [];
   @Input() size = 'md';
   @Input() showSelectionColumn = true;
@@ -106,8 +106,6 @@ export class PostComponent implements OnInit {
     // console.log('Row item selected:', index);
   }
 
-  dataLengthPerPage = 10;
-
   ngOnInit() {
     this.subscription.push(
       this.store.select('auth').subscribe((auth) => {
@@ -115,26 +113,21 @@ export class PostComponent implements OnInit {
           this.store.dispatch(
             PostActions.getAllPosts({ token: auth.idToken, page: 1, size: 10 })
           );
-          this.store.dispatch(
-            PostActions.getCreatorName({
-              token: auth.idToken,
-              page: 1,
-              size: 10,
-            })
-          );
         }
       })
     );
-    // this.modelPagination.currentPage = 1;
-    // this.page$.subscribe((page) => {
-    //   this.modelPagination.totalDataLength = page;
-    // });
 
-    this.creatorPost$.subscribe((creatorPost) => {
+    let postDetail = this.postDetail$.subscribe((detailProfile) => {
+      console.log('detailProfile', detailProfile);
+    });
+
+    this.postList$.subscribe((creatorPost) => {
+      console.log('creatorPost', creatorPost.data);
+
       this.dataset = creatorPost.data.map((post) => {
         return [
           new TableItem({ data: post.id }),
-          new TableItem({ data: post.profile.userName }),
+          new TableItem({ data: post.creatorId }), // Use post.creator.userName here
           new TableItem({ data: post.content }),
           new TableItem({ data: post.photoUrl.length }),
           new TableItem({ data: post.reaction.length }),

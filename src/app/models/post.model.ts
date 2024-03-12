@@ -1,3 +1,5 @@
+import { ProfileModel } from './profile.model';
+
 export interface PostModel {
   id: string;
   creatorId: string;
@@ -22,9 +24,4 @@ export interface AllPostModel {
 export interface PostDate {
   _seconds: number;
   _nanoseconds: number;
-}
-
-export interface AllPostProfile {
-  data: any[];
-  endPage: number;
 }
