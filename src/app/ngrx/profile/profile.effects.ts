@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { catchError, map, of, switchMap } from 'rxjs';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ProfileService } from '../../service/profile/profile.service';
-import * as ProfileAction from './profile.action';
+import * as ProfileAction from './profile.actions';
 import * as ReportActions from '../report/report.actions';
 import { ProfileModel } from '../../models/profile.model';
 
@@ -10,7 +10,7 @@ import { ProfileModel } from '../../models/profile.model';
 export class ProfileEffect {
   constructor(
     private actions$: Actions,
-    private profileService: ProfileService,
+    private profileService: ProfileService
   ) {}
 
   getMineProfile$ = createEffect(() =>
@@ -25,10 +25,10 @@ export class ProfileEffect {
           }),
           catchError((error) => {
             return of(ProfileAction.getMineProfileFailure({ error: error }));
-          }),
+          })
         );
-      }),
-    ),
+      })
+    )
   );
 
   getProfileById$ = createEffect(() =>
@@ -44,11 +44,11 @@ export class ProfileEffect {
           }),
           catchError((error) => {
             return of(
-              ProfileAction.getProfileByIdFailure({ errorMessage: error }),
+              ProfileAction.getProfileByIdFailure({ errorMessage: error })
             );
-          }),
+          })
         );
-      }),
-    ),
+      })
+    )
   );
 }

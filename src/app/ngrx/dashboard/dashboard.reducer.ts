@@ -1,6 +1,6 @@
 import { DashboardState } from './dashboard.state';
 import { createReducer, on } from '@ngrx/store';
-import * as DashboardActions from './dashboard.action';
+import * as DashboardActions from './dashboard.actions';
 
 const initialState: DashboardState = {
   chart: '',
@@ -32,5 +32,5 @@ export const dashboardReducer = createReducer(
       isLoading: false,
       error: error,
     };
-  }),
+  })
 );

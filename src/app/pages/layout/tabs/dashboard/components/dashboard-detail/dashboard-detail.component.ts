@@ -16,7 +16,7 @@ import { NgClass, NgIf } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { DashboardState } from '../../../../../../ngrx/dashboard/dashboard.state';
 import { ActivatedRoute, Router } from '@angular/router';
-import * as DashboardActions from '../../../../../../ngrx/dashboard/dashboard.action';
+import * as DashboardActions from '../../../../../../ngrx/dashboard/dashboard.actions';
 import { SharedModule } from '../../../../../../shared/shared.module';
 
 @Component({
@@ -47,14 +47,14 @@ export class DashboardDetailComponent implements OnInit, OnDestroy {
 
   constructor(
     private store: Store<{ dashboard: DashboardState }>,
-    private router: Router,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     let chartName = this.router.url.split('/').pop();
     this.store.dispatch(DashboardActions.getChart({ chart: chartName }));
     let chartIndex = this.chartItems.findIndex(
-      (item) => item.url === chartName,
+      (item) => item.url === chartName
     );
     this.setActiveChart(chartName, chartIndex);
 
@@ -71,7 +71,7 @@ export class DashboardDetailComponent implements OnInit, OnDestroy {
 
     this.model.rowsSelectedChange.subscribe((event) => console.log(event));
     this.model.selectAllChange.subscribe((event) =>
-      console.log(event ? 'All rows selected!' : 'All rows deselected!'),
+      console.log(event ? 'All rows selected!' : 'All rows deselected!')
     );
 
     if (!this.noData && !this.skeleton) {

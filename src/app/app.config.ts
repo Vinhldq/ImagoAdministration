@@ -10,12 +10,12 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getStorage, provideStorage } from '@angular/fire/storage';
 import { dashboardReducer } from './ngrx/dashboard/dashboard.reducer';
 import { authReducer } from './ngrx/auth/auth.reducer';
-import { AuthEffects } from './ngrx/auth/auth.effect';
+import { AuthEffects } from './ngrx/auth/auth.effects';
 import { roleReducer } from './ngrx/role/role.reducer';
-import { RoleEffect } from './ngrx/role/role.effect';
+import { RoleEffect } from './ngrx/role/role.effects';
 import { provideToastr } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ProfileEffect } from './ngrx/profile/profile.effect';
+import { ProfileEffect } from './ngrx/profile/profile.effects';
 import { profileReducer } from './ngrx/profile/profile.reducer';
 import { postReducer } from './ngrx/post/post.reducer';
 import { categoryReducer } from './ngrx/category/category.reducer';
@@ -34,7 +34,7 @@ export const appConfig: ApplicationConfig = {
     }),
     importProvidersFrom(BrowserAnimationsModule),
     provideState({ name: 'dashboard', reducer: dashboardReducer }),
-    provideState({name: 'report', reducer: reportReducer}),
+    provideState({ name: 'report', reducer: reportReducer }),
     provideState({ name: 'postManagement', reducer: postReducer }),
     provideEffects(),
     provideState({ name: 'auth', reducer: authReducer }),
@@ -42,7 +42,14 @@ export const appConfig: ApplicationConfig = {
     provideState({ name: 'profile', reducer: profileReducer }),
     provideState({ name: 'post', reducer: postReducer }),
     provideState({ name: 'category', reducer: categoryReducer }),
-    provideEffects([AuthEffects, RoleEffect, PostEffects, CategoryEffects,ProfileEffect, ReportEffects]),
+    provideEffects([
+      AuthEffects,
+      RoleEffect,
+      PostEffects,
+      CategoryEffects,
+      ProfileEffect,
+      ReportEffects,
+    ]),
     provideState({ name: 'report', reducer: reportReducer }),
     provideHttpClient(),
     // importProvidersFrom(
@@ -62,16 +69,21 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(provideAuth(() => getAuth())),
     importProvidersFrom(provideFirestore(() => getFirestore())),
     importProvidersFrom(provideStorage(() => getStorage())),
-    importProvidersFrom(provideFirebaseApp(() =>
-      initializeApp({
-        "projectId": "imago-backup",
-        "appId": "1:696714901988:web:bf1a18143a4e8e59d5aff1",
-        "storageBucket": "imago-backup.appspot.com",
-        // "locationId": "asia-east1",
-        "apiKey": "AIzaSyCD0zl34Cf5BLILWPaDu4CK-ilHIlEMww8",
-        "authDomain": "imago-backup.firebaseapp.com",
-        "messagingSenderId": "696714901988"
-      }))),
-    importProvidersFrom(provideAuth(() => getAuth())), importProvidersFrom(provideFirestore(() => getFirestore())), importProvidersFrom(provideStorage(() => getStorage())),
+    importProvidersFrom(
+      provideFirebaseApp(() =>
+        initializeApp({
+          projectId: 'imago-backup',
+          appId: '1:696714901988:web:bf1a18143a4e8e59d5aff1',
+          storageBucket: 'imago-backup.appspot.com',
+          // "locationId": "asia-east1",
+          apiKey: 'AIzaSyCD0zl34Cf5BLILWPaDu4CK-ilHIlEMww8',
+          authDomain: 'imago-backup.firebaseapp.com',
+          messagingSenderId: '696714901988',
+        })
+      )
+    ),
+    importProvidersFrom(provideAuth(() => getAuth())),
+    importProvidersFrom(provideFirestore(() => getFirestore())),
+    importProvidersFrom(provideStorage(() => getStorage())),
   ],
 };
