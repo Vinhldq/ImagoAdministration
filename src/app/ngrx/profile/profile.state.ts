@@ -8,7 +8,6 @@ export interface ProfileState {
   isGetLoading: boolean;
   isGetSuccessful: boolean;
   getErrorMess: string;
-
   profileById: ProfileModel;
   isGetByIdLoading: boolean;
   isGetByIdSuccessful: boolean;

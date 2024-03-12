@@ -71,4 +71,19 @@ export const profileReducer = createReducer(
       getByIdErrorMess: errorMessage,
     };
   }),
+  on(ProfileAction.clearState, (state, action) => {
+    return {
+      ...state,
+      isLoading: false,
+      isSuccess: false,
+      errorMessage: '',
+      isGetLoading: false,
+      isGetSuccess: false,
+      getErrorMessage: '',
+      isUpdating: false,
+      isUpdateSuccess: false,
+      updateErrorMessage: '',
+      profile: null
+    };
+  }),
 );

@@ -67,7 +67,6 @@ export class PostComponent implements OnInit {
           year: 'numeric',
           month: 'long',
           day: 'numeric',
-
           hour12: false,
         });
         this.dataset = [
