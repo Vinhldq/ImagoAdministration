@@ -92,7 +92,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
             year: 'numeric',
             month: 'long',
             day: 'numeric',
-            hour12: false,
+            hour12: true,
           });
           return {
             ...element,
