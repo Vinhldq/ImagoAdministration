@@ -13,13 +13,13 @@ import {
   TableModel,
   TableModule,
 } from 'carbon-components-angular';
+// import { getAllCategories } from '../../../../../../ngrx/category/category.actions';
 import Add16 from '@carbon/icons/es/add/16';
 import Filter16 from '@carbon/icons/es/filter/16';
 import { SharedModule } from '../../../../../../shared/shared.module';
 import { Store } from '@ngrx/store';
 import { AuthState } from '../../../../../../ngrx/auth/auth.state';
 import { CategoryState } from '../../../../../../ngrx/category/category.state';
-import { getAllCategories } from '../../../../../../ngrx/category/category.actions';
 import * as CategoryAction from '../../../../../../ngrx/category/category.actions';
 
 @Component({
@@ -56,11 +56,11 @@ export class CategoryComponent implements OnInit {
   @Input() nowrap = false;
   model1 = new TableModel();
   model2 = new TableModel();
-  // displayedTitle = ['US', 'France', 'Argentina', 'Japan'];
   searchValue = '';
   disabled = false;
   dataset = [];
   dataset1 = [];
+  dataLengthPerPage = 10;
 
   constructor(
     protected iconService: IconService,
@@ -85,10 +85,6 @@ export class CategoryComponent implements OnInit {
     );
   }
 
-  // overflowOnClick = (event: any) => {
-  //   event.stopPropagation();
-  // };
-
   onRowClick(index: number) {
     console.log('Row item selected:', index);
   }
@@ -107,6 +103,9 @@ export class CategoryComponent implements OnInit {
         new TableItem({
           data: cate.name,
         }),
+        new TableItem({
+          data: cate.photoUrl,
+        }),
       ]);
       this.model1.data = this.dataset;
     });
@@ -118,19 +117,14 @@ export class CategoryComponent implements OnInit {
       new TableHeaderItem({
         data: 'Category Name',
       }),
+      new TableHeaderItem({
+        data: 'photoUrl',
+      }),
     ];
   }
 
   selectPage(page) {
     console.log('Loading page', page, 'from pagination model');
-    // let beginGet = (page - 1) * this.dataLengthPerPage;
-    // let endGet = page * this.dataLengthPerPage - 1;
-    // this.modelPagination.currentPage = page;
-    // this.dataChoose = [];
-    // for (let i = beginGet; i <= endGet; i++) {
-    //   this.dataChoose = [...this.dataChoose, this.dataset[i]];
-    // }
-    // this.model.data = this.dataChoose;
   }
 
   protected open = false;
@@ -152,4 +146,6 @@ export class CategoryComponent implements OnInit {
       selected: false,
     },
   ];
+  // showCloseButton: boolean;
+  showCloseButton = true;
 }

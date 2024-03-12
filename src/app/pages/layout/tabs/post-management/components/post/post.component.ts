@@ -56,6 +56,7 @@ export class PostComponent implements OnInit {
   searchValue = '';
   disabled = false;
   dataset = [];
+  dataLengthPerPage = 10;
 
   constructor(
     protected iconService: IconService,
@@ -87,10 +88,6 @@ export class PostComponent implements OnInit {
   //     this.displayedTitle.splice(this.displayedTitle.indexOf(titleName), 1);
   //   }
   // }
-
-  // overflowOnClick = (event: any) => {
-  //   event.stopPropagation();
-  // };
 
   onRowClick(index: number) {
     console.log('Row item selected:', index);
@@ -146,45 +143,6 @@ export class PostComponent implements OnInit {
         data: 'Date Time',
       }),
     ];
-
-    // console.log('Data length:', this.dataLength);
-    // this.modelPagination.currentPage = 1;
-    // if (this.dataResidual === 0) {
-    //   this.modelPagination.totalDataLength = Math.floor(
-    //     this.dataLength / this.dataLengthPerPage,
-    //   );
-    // }
-    // if (this.dataResidual !== 0) {
-    //   console.log('Residual:', this.dataResidual);
-    //   this.modelPagination.totalDataLength =
-    //     Math.floor(this.dataLength / this.dataLengthPerPage) + 1;
-    //   for (let i = 0; i <= this.dataResidual; i++) {
-    //     this.dataset = [
-    //       ...this.dataset,
-    //       [
-    //         new TableItem({ data: '' }),
-    //         new TableItem({ data: '' }),
-    //         new TableItem({ data: '' }),
-    //         new TableItem({ data: '' }),
-    //         new TableItem({ data: '' }),
-    //       ],
-    //     ];
-    //     console.log(this.dataLength);
-    //   }
-    // }
-    // for (let i: number = 0; i < this.dataLengthPerPage; i++) {
-    //   this.dataChoose = [...this.dataChoose, this.dataset[i]];
-    // }
-    // this.model.data = this.dataChoose;
-
-    // this.model.isRowFiltered = (index: number) => {
-    //   const userName = this.model.row(index)[1].data;
-    //   const title = this.model.row(index)[3].data;
-    //   return (
-    //     !userName.toLowerCase().includes(this.searchValue.toLowerCase()) ||
-    //     !this.displayedTitle.includes(title)
-    //   );
-    // };
   }
 
   selectPage(page) {

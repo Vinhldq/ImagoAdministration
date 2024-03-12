@@ -10,6 +10,9 @@
             (clear)="searchValue = ''"
           >
           </cds-table-toolbar-search>
+          <div class="btn-add">
+            <button #trigger cdsButton="secondary" (click)="open = true">ADD</button>
+          </div>
         </cds-table-toolbar-content>
       </cds-table-toolbar>
       <cds-table
@@ -29,11 +32,12 @@
         [model]="model1Pagination"
         [disabled]="disabled"
         (selectPage)="selectPage($event)"
+        [numOfItemsToShow]="dataLengthPerPage"
       >
       </cds-pagination-nav>
     </cds-table-container>
   </div>
-  <!--  /////////////////////////////////////////////////////////////////////-->
+
   <div class="hashtag">
     <cds-table-container>
       <cds-table-toolbar>
@@ -69,3 +73,34 @@
     </cds-table-container>
   </div>
 </div>
+<cds-modal [open]="open" [trigger]="trigger" (overlaySelected)="open = false">
+  <cds-modal-header (closeSelect)="open = false" [showCloseButton]="showCloseButton">
+    <p class="cds--modal-header__label cds--type-delta">Add new category</p>
+  </cds-modal-header>
+  <div class="cds--modal-content">
+    <input
+      type="text"
+      placeholder="Category name"
+    />
+  </div>
+  <cds-modal-footer>
+    <ng-container>
+      <button
+        cdsButton="secondary"
+        (click)="open = false"
+        [attr.modal-primary-focus]="true">
+        Close
+      </button>
+      <button
+        cdsButton="primary"
+        (click)="open = false"
+        [attr.modal-primary-focus]="true">
+        ADD
+      </button>
+    </ng-container>
+  </cds-modal-footer>
+</cds-modal>
+
+
+
+

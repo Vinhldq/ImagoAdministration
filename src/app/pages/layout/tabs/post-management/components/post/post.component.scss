@@ -4,7 +4,7 @@
   inline-size: 1.5rem;
 }
 
-.left {
+.post {
   width: 100%;
 }
 
@@ -13,7 +13,7 @@
   display: flex;
 }
 
-.left-content {
+.post-content {
   width: 100%;
   display: flex;
   align-items: center;
@@ -26,6 +26,13 @@ cds-table {
 
 .cds--form-item {
   align-items: unset;
+}
+
+cds-pagination-nav {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .cds--modal-content {

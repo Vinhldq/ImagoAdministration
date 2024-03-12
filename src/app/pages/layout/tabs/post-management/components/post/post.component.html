@@ -1,5 +1,5 @@
 <div class="content">
-  <div class="left">
+  <div class="post">
 
     <cds-table-container>
       <cds-table-toolbar>
@@ -10,20 +10,6 @@
             (clear)="searchValue = ''"
           >
           </cds-table-toolbar-search>
-          <!--          <button-->
-          <!--            cdsButton="ghost"-->
-          <!--            class="toolbar-action"-->
-          <!--            [cdsOverflowMenu]="templateRef"-->
-          <!--            placement="bottom"-->
-          <!--            [flip]="true"-->
-          <!--            [offset]="{ x: 3, y: 0 }"-->
-          <!--          >-->
-          <!--            <svg-->
-          <!--              cdsIcon="filter"-->
-          <!--              size="16"-->
-          <!--              class="cds&#45;&#45;toolbar-action__icon"-->
-          <!--            ></svg>-->
-          <!--          </button>-->
         </cds-table-toolbar-content>
       </cds-table-toolbar>
 
@@ -45,64 +31,11 @@
           [model]="modelPagination"
           [disabled]="disabled"
           (selectPage)="selectPage($event)"
+          [numOfItemsToShow]="dataLengthPerPage"
         >
         </cds-pagination-nav>
       </div>
     </cds-table-container>
-
-    <!--    <ng-template #templateRef>-->
-    <!--      <div style="padding: 0 1rem" (click)="overflowOnClick($event)">-->
-    <!--        <div style="padding-top: 0.5rem; color: grey">Title shown</div>-->
-    <!--        <cds-checkbox-->
-    <!--          [checked]="displayedTitle.includes('Fake Account')"-->
-    <!--          (checkedChange)="filterTitle('Fake Account', $event)"-->
-    <!--        >-->
-    <!--          Fake Account-->
-    <!--        </cds-checkbox>-->
-    <!--        <cds-checkbox-->
-    <!--          [checked]="displayedTitle.includes('Pretending')"-->
-    <!--          (checkedChange)="filterTitle('Pretending', $event)"-->
-    <!--        >-->
-    <!--          Pretending-->
-    <!--        </cds-checkbox>-->
-    <!--        <cds-checkbox-->
-    <!--          [checked]="displayedTitle.includes('Suspicious Activity')"-->
-    <!--          (checkedChange)="filterTitle('Suspicious Activity', $event)"-->
-    <!--        >-->
-    <!--          Suspicious Activity-->
-    <!--        </cds-checkbox>-->
-    <!--        <cds-checkbox-->
-    <!--          [checked]="displayedTitle.includes('Harassment')"-->
-    <!--          (checkedChange)="filterTitle('Harassment', $event)"-->
-    <!--        >-->
-    <!--          Harassment-->
-    <!--        </cds-checkbox>-->
-    <!--        <cds-checkbox-->
-    <!--          [checked]="displayedTitle.includes('Inappropriate Content')"-->
-    <!--          (checkedChange)="filterTitle('Inappropriate Content', $event)"-->
-    <!--        >-->
-    <!--          Inappropriate Content-->
-    <!--        </cds-checkbox>-->
-    <!--        <cds-checkbox-->
-    <!--          [checked]="displayedTitle.includes('Spamming')"-->
-    <!--          (checkedChange)="filterTitle('Spamming', $event)"-->
-    <!--        >-->
-    <!--          Spamming-->
-    <!--        </cds-checkbox>-->
-    <!--        <cds-checkbox-->
-    <!--          [checked]="displayedTitle.includes('Hate Speech')"-->
-    <!--          (checkedChange)="filterTitle('Hate Speech', $event)"-->
-    <!--        >-->
-    <!--          Hate Speech-->
-    <!--        </cds-checkbox>-->
-    <!--        <cds-checkbox-->
-    <!--          [checked]="displayedTitle.includes('Inappropriate Behavior')"-->
-    <!--          (checkedChange)="filterTitle('Inappropriate Behavior', $event)"-->
-    <!--        >-->
-    <!--          Inappropriate Behavior-->
-    <!--        </cds-checkbox>-->
-    <!--      </div>-->
-    <!--    </ng-template>-->
   </div>
 </div>
 

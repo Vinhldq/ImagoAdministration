@@ -11,10 +11,40 @@
 }
 
 .category {
-  width: 45%;
+  .add-cate {
+    cursor: pointer;
+    background-color: #161616;
+    color: #fff;
+    width: 100px;
+  }
+}
+
+.category {
+  width: 60%;
 }
 
 .hashtag {
-  width: 45%;
+  width: 35%;
 }
 
+cds-pagination-nav {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+#content .category {
+  p {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    padding: 10px;
+  }
+}
