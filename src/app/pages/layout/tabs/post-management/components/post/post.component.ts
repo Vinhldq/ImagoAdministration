@@ -105,40 +105,74 @@ export class PostComponent implements OnInit {
   onRowClick(index: number) {
     // console.log('Row item selected:', index);
   }
+  dataLength = this.dataset.length;
+  dataLengthPerPage = 10;
+  dataResidual = this.dataLength % this.dataLengthPerPage;
 
   ngOnInit() {
-    this.subscription.push(
-      this.store.select('auth').subscribe((auth) => {
-        if (auth.idToken != '') {
-          this.store.dispatch(
-            PostActions.getAllPosts({ token: auth.idToken, page: 1, size: 10 })
-          );
-        }
-      })
-    );
+    var page = 1;
 
-    let postDetail = this.postDetail$.subscribe((detailProfile) => {
-      console.log('detailProfile', detailProfile);
+    this.modelPagination.currentPage = 1;
+
+    this.page$.subscribe((data) => {
+      this.modelPagination.totalDataLength = data;
+    });
+
+    //this.store.dispatch(PostActions.getAllPosts({ token: '', page: 1, size: 10 }));
+    this.postList$.subscribe((data) => {
+      data.data.forEach((element) => {
+        //fix array
+        this.store.select('auth').subscribe((auth) => {
+          if (auth.idToken != '') {
+            this.store.dispatch(
+              PostActions.getPostDetail({ token: auth.idToken, id: element.id })
+            );
+          }
+        });
+      });
+    });
+
+    //foreach postDetail$ to get detail of post
+    this.postDetail$.subscribe((detail) => {
+      console.log('detail::: :', detail);
     });
 
     this.postList$.subscribe((creatorPost) => {
-      console.log('creatorPost', creatorPost.data);
-
-      this.dataset = creatorPost.data.map((post) => {
-        return [
-          new TableItem({ data: post.id }),
-          new TableItem({ data: post.creatorId }), // Use post.creator.userName here
-          new TableItem({ data: post.content }),
-          new TableItem({ data: post.photoUrl.length }),
-          new TableItem({ data: post.reaction.length }),
-          new TableItem({ data: post.comments.length }),
-          new TableItem({ data: post.share.length }),
-          new TableItem({
-            data: new Date(post.createdAt._seconds * 1000).toLocaleString(),
-          }),
-        ];
+      // th.postDetail$.subscribe((detail) => {
+      console.log('creator::: :', creatorPost);
+      this.postDetail$.subscribe((detail) => {
+        // this.dataset = creatorPost.data.map((post) => {
+        //   return [
+        //     new TableItem({ data: post.id }),
+        //     new TableItem({ data: }),
+        //     new TableItem({ data: post.content }),
+        //     new TableItem({ data: post.photoUrl.length }),
+        //     new TableItem({ data: post.reaction.length }),
+        //     new TableItem({ data: post.comments.length }),
+        //     new TableItem({ data: post.share.length }),
+        //     new TableItem({
+        //       data: new Date(post.createdAt._seconds * 1000).toLocaleString(),
+        //     }),
+        //   ];
+        // });
+        //map postList and detail to dataset
+        this.dataset = creatorPost.data.map((post) => {
+          let postDetail = detail.find((detail) => detail.id == post.creatorId);
+          return [
+            new TableItem({ data: post.id }),
+            new TableItem({ data: postDetail.userName }),
+            new TableItem({ data: post.content }),
+            new TableItem({ data: post.photoUrl.length }),
+            new TableItem({ data: post.reaction.length }),
+            new TableItem({ data: post.comments.length }),
+            new TableItem({ data: post.share.length }),
+            new TableItem({
+              data: new Date(post.createdAt._seconds * 1000).toLocaleString(),
+            }),
+          ];
+        });
+        this.model.data = this.dataset;
       });
-      this.model.data = this.dataset;
     });
 
     this.model.header = [
@@ -146,7 +180,7 @@ export class PostComponent implements OnInit {
         data: 'Id Post',
       }),
       new TableHeaderItem({
-        data: 'Creator Name',
+        data: 'Creator Id',
       }),
 
       new TableHeaderItem({
@@ -171,15 +205,23 @@ export class PostComponent implements OnInit {
   }
 
   selectPage(page) {
-    // console.log('Loading page', page, 'from pagination model');
-    // let beginGet = (page - 1) * this.dataLengthPerPage;
-    // let endGet = page * this.dataLengthPerPage - 1;
-    // this.modelPagination.currentPage = page;
-    // this.dataChoose = [];
-    // for (let i = beginGet; i <= endGet; i++) {
-    //   this.dataChoose = [...this.dataChoose, this.dataset[i]];
-    // }
-    // this.model.data = this.dataChoose;
+    console.log('Loading page', page, 'from pagination model');
+    this.subscription.push(
+      this.store.select('auth').subscribe((auth) => {
+        if (auth.idToken != '') {
+          this.store.dispatch(
+            PostActions.getAllPosts({
+              token: auth.idToken,
+              page: page,
+              size: 10,
+            })
+          );
+        }
+      })
+    );
+    let beginGet = (page - 1) * this.dataLengthPerPage;
+    let endGet = page * this.dataLengthPerPage - 1;
+    this.modelPagination.currentPage = page;
   }
 
   protected open = false;

@@ -39,9 +39,10 @@ export class PostEffects {
       ofType(PostActions.getPostDetail),
       mergeMap((action) => {
         return this.postService.getPostDetail(action.token, action.id).pipe(
-          map((detailProfile: any, index: number) => {
+          map((detailProfile: any) => {
             return PostActions.getPostDetailSuccess({
               ...detailProfile,
+              detailProfile: [detailProfile],
             });
           }),
           catchError((error) => {

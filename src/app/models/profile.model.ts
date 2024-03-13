@@ -1,6 +1,6 @@
 import { PostModel } from './post.model';
 export interface ProfileModel {
-  id: string;
+  id: string | PostModel['creatorId'];
   userName: string;
   firstName: string;
   lastName: string;

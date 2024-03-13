@@ -7,10 +7,10 @@
         ]
       }
     },
-    "testimago": {
+    "imago-backup": {
       "hosting": {
         "imagoadministration": [
-          "testimago"
+          "imago-backup"
         ]
       }
     }

@@ -1,117 +1,62 @@
 <div class="container">
 
   <div class='top'>
-    <h1>Setting</h1>
+    <h1>SETTING</h1>
     <cds-button-set>
-      <button #trigger  cdsButton="secondary" [size]="'sm'" [isExpressive]="true"
-                (click)="open = true"   class="btn-signout"
-      >Sign Out</button>
+      <button #trigger cdsButton="secondary" [size]="'sm'" [isExpressive]="true" (click)="open = true"
+        class="btn-signout">Sign Out</button>
     </cds-button-set>
   </div>
   <div class="content">
     <div class="left">
       <h2>Account</h2>
-     @if(this.profileDetail != null){
-       <div class="account">
-         <img [src]="this.profileDetail.photoUrl">
-         <div class="info">
-            <h3>{{this.profileDetail.userName}}</h3>
-           <h4>{{this.profileDetail.email}}</h4>
-         </div>
-       </div>
-     }
+      @if(this.profileDetail != null){
+      <div class="account">
+        <img [src]="this.profileDetail.photoUrl">
+        <div class="info">
+          <h3>{{this.profileDetail.userName}}</h3>
+          <h4>{{this.profileDetail.email}}</h4>
+        </div>
+      </div>
+      }
       <div class="chat-box-total">
         <div class="chat-box">
           <div class="widchat">
             <h4>Chat Configuration</h4>
             <p>Change your chat preferences base your favourite if you want,make sure you read it clearly </p>
           </div>
-          <cds-toggle
-            [skeleton]=""
-            [label]=""
-            [hideLabel]=""
-            [onText]="'On'"
-            [offText]="'Off'"
-            [disabled]=""
-            [checked]=""
-            (checkedChange)="($event)"
-            [size]="'md'"
-          ></cds-toggle>
+          <cds-toggle [skeleton]="" [label]="" [hideLabel]="" [onText]="'On'" [offText]="'Off'" [disabled]=""
+            [checked]="" (checkedChange)="($event)" [size]="'md'"></cds-toggle>
         </div>
         <div class="chat-box">
           <div class="widchat">
             <h4>Accept Chat From Customer</h4>
             <p>Turn on to allow Customer to start a chat with you via Dashboard</p>
           </div>
-          <cds-toggle
-            [skeleton]=""
-            [label]=""
-            [hideLabel]=""
-            [onText]="'On'"
-            [offText]="'Off'"
-            [disabled]=""
-            [checked]=""
-            (checkedChange)="($event)"
-            [size]="'md'"
-          ></cds-toggle>
+          <cds-toggle [skeleton]="" [label]="" [hideLabel]="" [onText]="'On'" [offText]="'Off'" [disabled]=""
+            [checked]="" (checkedChange)="($event)" [size]="'md'"></cds-toggle>
         </div>
         <div class="chat-box">
           <div class="widchat">
             <h4>Send Auto-Reply in Chat</h4>
             <p>Enable to send self-defined reply message to Customers when they chat with you</p>
           </div>
-          <cds-toggle
-            [skeleton]=""
-            [label]=""
-            [hideLabel]=""
-            [onText]="'On'"
-            [offText]="'Off'"
-            [disabled]=""
-            [checked]=""
-            (checkedChange)="($event)"
-            [size]="'md'"
-          ></cds-toggle>
+          <cds-toggle [skeleton]="" [label]="" [hideLabel]="" [onText]="'On'" [offText]="'Off'" [disabled]=""
+            [checked]="" (checkedChange)="($event)" [size]="'md'"></cds-toggle>
 
         </div>
-        <cds-dropdown
-          [label]=""
-          [skeleton]=""
-          [helperText]=""
-          [size]="'lg'"
-          [dropUp]="false"
-          [invalid]=""
-          [invalidText]=""
-          [warn]=""
-          [warnText]=""
-          [theme]=""
-          placeholder="Languages"
-          [disabled]=""
-          (selected)="($event)"
-          (onClose)="($event)"
-        >
+        <cds-dropdown [label]="" [skeleton]="" [helperText]="" [size]="'lg'" [dropUp]="false" [invalid]=""
+          [invalidText]="" [warn]="" [warnText]="" [theme]="" placeholder="Languages" [disabled]=""
+          (selected)="($event)" (onClose)="($event)">
           <cds-dropdown-list [items]="items"></cds-dropdown-list>
         </cds-dropdown>
-        <cds-dropdown
-          [label]=""
-          [skeleton]=""
-          [helperText]=""
-          [size]="'lg'"
-          [dropUp]="false"
-          [invalid]=""
-          [invalidText]=""
-          [warn]=""
-          [warnText]=""
-          [theme]=""
-          placeholder="Themes"
-          [disabled]=""
-          (selected)="($event)"
-          (onClose)="($event)"
-        >
+        <cds-dropdown [label]="" [skeleton]="" [helperText]="" [size]="'lg'" [dropUp]="false" [invalid]=""
+          [invalidText]="" [warn]="" [warnText]="" [theme]="" placeholder="Themes" [disabled]="" (selected)="($event)"
+          (onClose)="($event)">
           <cds-dropdown-list [items]="themes"></cds-dropdown-list>
         </cds-dropdown>
         <cds-button-set class="btn-save">
-          <button cdsButton="secondary" [size]="'sm'" [isExpressive]="true"
-          >Save</button>
+          <button cdsButton="secondary" [size]="'sm'" [isExpressive]="true">Save</button>
         </cds-button-set>
       </div>
     </div>
@@ -120,53 +65,35 @@
       <h3>
         Activity History
       </h3>
-      @for(item of this.dataChoose| slice :0 : dataLengthPerPage;track item.id){
-        <div class = "myDiv">
-          <p>{{item.id}}</p>
-          <img class="img-mini-avatar" src="{{item.src}}" alt= "Italian Truli">
-          <p>{{item.cap}}</p>
-             </div>
+      @for(item of this.dataChoose;track item.id){
+      <div class="myDiv">
+        <p>Finished processing {{item.id}} report on {{item.updatedAt}}</p>
+      </div>
       }
-      <cds-pagination-nav
-        class="pagi"
-        [model]="modelPagigation"
-        [disabled]="disabled"
-        [numOfItemsToShow]="dataLengthPerPage"
-        (selectPage)="selectPage($event)"
-      >
+      <cds-pagination-nav class="pagi" [model]="modelPagigation" [disabled]="disabledPagigation"
+        (selectPage)="selectPage($event)">
       </cds-pagination-nav>
     </div>
-    </div>
+
   </div>
+</div>
 
 
 <!--<button #trigger cdsButton="primary">Open</button>-->
 <cds-modal [open]="open" [trigger]="trigger" (overlaySelected)="open = false">
-  <cds-modal-header
-    (closeSelect)="open = false"
-    [showCloseButton]="false"
-  >
+  <cds-modal-header [showCloseButton]="false">
 
   </cds-modal-header>
   <div class="cds--modal-content">
     <h3>Are you sure to log out</h3>
   </div>
   <cds-modal-footer>
-    <ng-container  >
-      <button class="btnCancel"
-        cdsButton="secondary"
-        (click)="open = false"
-        [attr.modal-primary-focus]="true"
-
-      >
+    <ng-container>
+      <button class="btnCancel" cdsButton="secondary" (click)="open = false" [attr.modal-primary-focus]="true">
         Cancel
       </button>
-      <button
-        cdsButton="primary"
-        [attr.modal-primary-focus]="true"
-        routerLink="/login" routerLinkActive="active"
-        (click)="signOut()"
-      >
+      <button cdsButton="primary" [attr.modal-primary-focus]="true" routerLink="/login" routerLinkActive="active"
+        (click)="signOut()">
         Ok
       </button>
 

@@ -36,13 +36,14 @@ export const appConfig: ApplicationConfig = {
     }),
     importProvidersFrom(BrowserAnimationsModule),
     provideState({ name: 'dashboard', reducer: dashboardReducer }),
+    provideState({ name: 'report', reducer: reportReducer }),
+    provideState({ name: 'postManagement', reducer: postReducer }),
+    provideEffects(),
     provideState({ name: 'auth', reducer: authReducer }),
     provideState({ name: 'role', reducer: roleReducer }),
     provideState({ name: 'profile', reducer: profileReducer }),
     provideState({ name: 'post', reducer: postReducer }),
     provideState({ name: 'category', reducer: categoryReducer }),
-    provideState({ name: 'report', reducer: reportReducer }),
-
     provideEffects([
       AuthEffects,
       RoleEffect,
@@ -51,6 +52,7 @@ export const appConfig: ApplicationConfig = {
       ProfileEffect,
       ReportEffects,
     ]),
+    provideState({ name: 'report', reducer: reportReducer }),
     provideHttpClient(),
     importProvidersFrom(
       provideFirebaseApp(() =>
@@ -72,19 +74,18 @@ export const appConfig: ApplicationConfig = {
     // importProvidersFrom(
     //   provideFirebaseApp(() =>
     //     initializeApp({
-    //       projectId: 'testimago',
-    //       appId: '1:22393128172:web:7fe01bd638c0018afdd1c9',
-    //       storageBucket: 'testimago.appspot.com',
-    //       apiKey: 'AIzaSyABAq8yi2ppYemJuATKUGKAF6foqS5q2eY',
-    //       authDomain: 'testimago.firebaseapp.com',
-    //       messagingSenderId: '22393128172',
+    //       projectId: 'imago-backup',
+    //       appId: '1:696714901988:web:bf1a18143a4e8e59d5aff1',
+    //       storageBucket: 'imago-backup.appspot.com',
+    //       // "locationId": "asia-east1",
+    //       apiKey: 'AIzaSyCD0zl34Cf5BLILWPaDu4CK-ilHIlEMww8',
+    //       authDomain: 'imago-backup.firebaseapp.com',
+    //       messagingSenderId: '696714901988',
     //     })
     //   )
     // ),
     // importProvidersFrom(provideAuth(() => getAuth())),
     // importProvidersFrom(provideFirestore(() => getFirestore())),
-    // importProvidersFrom(provideDatabase(() => getDatabase())),
-    // importProvidersFrom(provideMessaging(() => getMessaging())),
     // importProvidersFrom(provideStorage(() => getStorage())),
   ],
 };

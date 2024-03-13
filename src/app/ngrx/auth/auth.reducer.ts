@@ -46,7 +46,8 @@ export const authReducer = createReducer(
       errorMessage,
     };
   }),
-  on(AuthAction.logout, (state, action) => {
+  on(AuthAction.logout, (state, action,) => {
+    console.log(action.type);
     return {
       ...state,
       isLogoutSuccess: false,
@@ -54,7 +55,7 @@ export const authReducer = createReducer(
     };
   }),
   on(AuthAction.logoutSuccess, (state, action) => {
-    console.log(action);
+    console.log(action.type);
     return {
       ...state,
       isLogoutSuccess: true,
@@ -64,6 +65,7 @@ export const authReducer = createReducer(
     };
   }),
   on(AuthAction.logoutFailure, (state, { errorMessage, type }) => {
+    console.log(type);
     return {
       ...state,
       isLogoutSuccess: false,
@@ -122,4 +124,5 @@ export const authReducer = createReducer(
       getAllErrorMessage: errorMessage,
     };
   }),
+  
 );

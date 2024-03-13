@@ -4,30 +4,33 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ProfileService } from '../../service/profile/profile.service';
 import * as ProfileAction from './profile.action';
 import * as ReportActions from '../report/report.actions';
+import { ProfileModel } from '../../models/profile.model';
 
 @Injectable()
 export class ProfileEffect {
   constructor(
     private actions$: Actions,
-    private profileService: ProfileService,
+    private profileService: ProfileService
   ) {}
 
-  getMineProfile$ = createEffect(() => {
-    return this.actions$.pipe(
+  getMineProfile$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(ProfileAction.getMineProfile),
       switchMap((action) => {
-        let temp = this.profileService.getUserProfile(action.idToken);
-        console.log(temp);
-        return temp;
-      }),
-      map((res) => {
-        return ProfileAction.getMineProfileSuccess({ profile: res });
-      }),
-      catchError((error) => {
-        return of(ProfileAction.getMineProfileFailure({ error: error }));
-      }),
-    );
-  });
+        return this.profileService.getMineProfile(action.idToken).pipe(
+          map((profile: ProfileModel) => {
+            return ProfileAction.getMineProfileSuccess({
+              ...profile,
+              profile: profile,
+            });
+          }),
+          catchError((error) => {
+            return of(ProfileAction.getMineProfileFailure({ error: error }));
+          })
+        );
+      })
+    )
+  );
 
   getProfileById$ = createEffect(() =>
     this.actions$.pipe(
@@ -42,11 +45,11 @@ export class ProfileEffect {
           }),
           catchError((error) => {
             return of(
-              ProfileAction.getProfileByIdFailure({ errorMessage: error }),
+              ProfileAction.getProfileByIdFailure({ errorMessage: error })
             );
-          }),
+          })
         );
-      }),
-    ),
+      })
+    )
   );
 }

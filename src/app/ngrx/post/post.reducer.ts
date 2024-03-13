@@ -46,7 +46,7 @@ export const postReducer = createReducer(
   })),
   on(PostAction.getPostDetailSuccess, (state, { detailProfile }) => ({
     ...state,
-    detailProfile: detailProfile,
+    detailProfile: [...state.detailProfile],
     isGetAllPost: false,
     isGetAllPostSuccess: true,
   })),
