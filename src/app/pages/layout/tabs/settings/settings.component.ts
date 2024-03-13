@@ -46,7 +46,7 @@ export interface History {
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.scss',
 })
-export class SettingsComponent implements OnInit {
+export class SettingsComponent implements OnInit, OnDestroy {
   translations: any;
   items = [
     <ListItem>{ content: 'Vienamese', selected: false },
