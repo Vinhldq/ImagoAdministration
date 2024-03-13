@@ -128,6 +128,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   signOut() {
     this.store.dispatch(ProfileAction.clearState());
+    this.store.dispatch(AuthActions.clearAuth());
     this.store.dispatch(AuthActions.logout());
     this.router.navigate(['/login']);
   }

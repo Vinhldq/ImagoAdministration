@@ -42,11 +42,10 @@ export class AppComponent implements OnInit, OnDestroy {
         let idToken = await user!.getIdToken(true);
         this.store.dispatch(AuthActions.storedIdToken({ idToken }));
         this.store.dispatch(AuthActions.storedUserUid({ uid: user.uid }));
+        console.log(idToken);
         // console.log(idToken);
         // this.router.navigateByUrl('/loading');
       } else {
-      
-        // console.log('User is signed out');
         this.router.navigateByUrl('/login');
       }
     });
@@ -105,13 +104,14 @@ export class AppComponent implements OnInit, OnDestroy {
                   progressBar: true,
                   progressAnimation: 'increasing',
                 });
-                 
+                this.store.dispatch(AuthActions.clearAuth());
               this.store.dispatch(AuthActions.logout());
               this.router.navigate(['/login']);
             }
         }
         if (val.role == 'user') {
-            console.log(val.role);
+          // console.log(val.role);
+          this.store.dispatch(AuthActions.clearAuth());
             this.toastr.error(
               'You are not authorized to access this page.'+' You have no profile. Go to the Imago app to create a profile '+' Plase contact the administrator to change Role.',
               'Unauthorized Access',

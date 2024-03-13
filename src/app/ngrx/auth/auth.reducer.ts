@@ -124,5 +124,23 @@ export const authReducer = createReducer(
       getAllErrorMessage: errorMessage,
     };
   }),
+  on(AuthAction.clearAuth, (state, action) => {
+    return {
+      // ...state,
+      authDetail: null,
+      idToken: '',
+      isLoading: false,
+      isSuccessful: false,
+      errorMessage: '',
+      uid: '',
+      isLogoutSuccess: false,
+      logoutErrorMessage: '',
+     
+      isGetSuccess: false,
+      getAllAuth: [],
+      isGetAllSuccess: false,
+      getAllErrorMessage: '',
+    };
+  }),
   
 );
