@@ -28,15 +28,9 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideToastr(),
     provideRouter(routes),
-    provideStore({
-      auth: authReducer,
-      role: roleReducer,
-    }),
     importProvidersFrom(BrowserAnimationsModule),
     provideState({ name: 'dashboard', reducer: dashboardReducer }),
     provideState({ name: 'report', reducer: reportReducer }),
-    provideState({ name: 'postManagement', reducer: postReducer }),
-    provideEffects(),
     provideState({ name: 'auth', reducer: authReducer }),
     provideState({ name: 'role', reducer: roleReducer }),
     provideState({ name: 'profile', reducer: profileReducer }),
