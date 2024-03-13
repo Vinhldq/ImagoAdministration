@@ -55,3 +55,5 @@ export const getAllAuthFailure = createAction(
   '[Auth] Get All Auth Failure',
   props<{ errorMessage: string }>(),
 );
+
+export const clearAuth = createAction('[Auth] Clear Auth');
