@@ -1,0 +1,101 @@
+@if (loading$|async) {
+  <cds-loading
+    [isActive]="isActive"
+    [size]="'normal'"
+    [overlay]="overlay"
+  ></cds-loading>
+} @else {
+  @if (error$|async) {
+    <h2>Error</h2>
+    <p>{{ (error$|async) }}</p>
+  } @else {
+    <cds-table-container>
+      <cds-table-toolbar>
+        <cds-table-toolbar-content>
+          <cds-table-toolbar-search
+            (clear)="filterNodeNames('')"
+            (valueChange)="filterNodeNames($event)"
+            [expandable]="true"
+          >
+          </cds-table-toolbar-search>
+          <button
+            cdsButton="secondary"
+            size="md"
+            class="toolbar-action"
+            placement="bottom"
+          >
+            Filter
+            <svg cdsIcon="filter" class="cds--btn__icon" size="20"></svg>
+          </button>
+        </cds-table-toolbar-content>
+      </cds-table-toolbar>
+      <div class="table">
+        <ng-template #overflowMenuItemTemplateImg let-data="data">
+          <img id="img"
+               src="https://i.pinimg.com/564x/1a/74/04/1a7404e4d590f8dd0a32563b9217697a.jpg">
+        </ng-template>
+        <cds-table
+          [enableSingleSelect]="enableSingleSelect"
+          [isDataGrid]="isDataGrid"
+          [model]="model"
+          [showSelectionColumn]="showSelectionColumn"
+          [size]="'md'"
+          [skeleton]="skeleton"
+          [sortable]="sortable"
+          [stickyHeader]="stickyHeader"
+          [striped]="striped"
+          (rowClick)="onRowSelected($event)"
+        >
+        </cds-table>
+
+        <cds-pagination-nav
+          [model]="modelPagination"
+          [disabled]="disabled"
+          (selectPage)="selectPage($event)"
+        >
+        </cds-pagination-nav>
+      </div>
+    </cds-table-container>
+  }
+}
+
+<ng-template #overflowMenuItemTemplateChoose let-data="data">
+  <cds-overflow-menu>
+    @if (role === 'admin') {
+      <cds-overflow-menu-option (click)="changeRole('user')" [disabled]="false">
+        User
+      </cds-overflow-menu-option>
+    } @else {
+      <cds-overflow-menu-option (click)="changeRole('user')" [disabled]="true">
+        User
+      </cds-overflow-menu-option>
+    }
+    @if (role === 'user') {
+      <cds-overflow-menu-option (click)="changeRole('admin')" [disabled]="false">
+        Admin
+      </cds-overflow-menu-option>
+    } @else {
+      <cds-overflow-menu-option (click)="changeRole('admin')" [disabled]="true">
+        Admin
+      </cds-overflow-menu-option>
+    }
+    @if (block === true) {
+      <cds-overflow-menu-option (click)="changeStatusBlock('block')" [disabled]="true">
+        Block
+      </cds-overflow-menu-option>
+    } @else {
+      <cds-overflow-menu-option (click)="changeStatusBlock('block')" [disabled]="false">
+        Block
+      </cds-overflow-menu-option>
+    }
+    @if (block === false) {
+      <cds-overflow-menu-option (click)="changeStatusBlock('unblock')" [disabled]="true">
+        Unblock
+      </cds-overflow-menu-option>
+    } @else {
+      <cds-overflow-menu-option (click)="changeStatusBlock('unblock')" [disabled]="false">
+        Unblock
+      </cds-overflow-menu-option>
+    }
+  </cds-overflow-menu>
+</ng-template>

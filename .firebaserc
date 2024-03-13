@@ -20,9 +20,16 @@
           "imago-backup2"
         ]
       }
+    },
+    "testtokenimago": {
+      "hosting": {
+        "imagoadministration": [
+          "testtokenimago"
+        ]
+      }
     }
   },
   "projects": {
-    "default": "imago-backup2"
+    "default": "testtokenimago"
   }
 }

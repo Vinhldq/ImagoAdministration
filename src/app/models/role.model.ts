@@ -8,3 +8,8 @@ export interface RolePagination {
   data: RoleModel[];
   endPage: number;
 }
+
+export interface ListAdminRolePagination {
+  data: any[];
+  endPage: number;
+}
