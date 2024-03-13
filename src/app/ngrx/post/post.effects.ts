@@ -7,30 +7,53 @@ import { PostModel } from '../../models/post.model';
 
 @Injectable()
 export class PostEffects {
-  constructor(
-    private action$: Actions,
-    private postService: PostService,
-  ) {}
+  constructor(private action$: Actions, private postService: PostService) {}
 
   getAllPost$ = createEffect(() =>
     this.action$.pipe(
       ofType(PostActions.getAllPosts),
       switchMap((action) => {
-        return this.postService.getAllPost(action.token, action.page).pipe(
-          map((postList: any) => {
-            return PostActions.getAllPostsSuccess({
-              postList: postList,
+        return this.postService
+          .getAllPost(action.token, action.page, action.size)
+          .pipe(
+            map((postList: any) => {
+              return PostActions.getAllPostsSuccess({
+                postList: postList,
+              });
+            }),
+            catchError((error) => {
+              return of(
+                PostActions.getAllPostsFailure({
+                  errorMessage: error,
+                })
+              );
+            })
+          );
+      })
+    )
+  );
+
+  // check post.creatorId === profile.uid => using mergeMap to getPostDetail
+  getPostDetail$ = createEffect(() =>
+    this.action$.pipe(
+      ofType(PostActions.getPostDetail),
+      mergeMap((action) => {
+        return this.postService.getPostDetail(action.token, action.id).pipe(
+          map((detailProfile: any) => {
+            return PostActions.getPostDetailSuccess({
+              ...detailProfile,
+              detailProfile: [detailProfile],
             });
           }),
           catchError((error) => {
             return of(
-              PostActions.getAllPostsFailure({
+              PostActions.getPostDetailFailure({
                 errorMessage: error,
-              }),
+              })
             );
-          }),
+          })
         );
-      }),
-    ),
+      })
+    )
   );
 }

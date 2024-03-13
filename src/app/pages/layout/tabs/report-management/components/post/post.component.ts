@@ -34,7 +34,7 @@ export class PostComponent implements OnInit {
     private store: Store<{
       auth: AuthState;
       report: ReportState;
-    }>,
+    }>
   ) {
     this.iconService.registerAll([Add16, Filter16]);
   }
@@ -46,7 +46,7 @@ export class PostComponent implements OnInit {
           token: data.idToken,
           page: 1,
           types: 'post',
-        }),
+        })
       );
     });
     this.modelPagination.currentPage = 1;
@@ -60,13 +60,14 @@ export class PostComponent implements OnInit {
         const post = element.typeInfo as PostModel;
         const date = new Date(
           element.createdAt._seconds * 1000 +
-            element.createdAt._nanoseconds / 1000000,
+            element.createdAt._nanoseconds / 1000000
         );
         const formattedDate = date.toLocaleString('vi-VN', {
           weekday: 'long',
           year: 'numeric',
           month: 'long',
           day: 'numeric',
+
           hour12: false,
         });
         this.dataset = [

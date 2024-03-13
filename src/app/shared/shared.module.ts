@@ -10,10 +10,8 @@ import {
   BreadcrumbModule,
   ButtonModule,
   ToggleModule,
-
   TabsModule,
   ThemeModule,
-
   TableModule,
   DialogModule,
   CheckboxModule,
@@ -56,15 +54,8 @@ export const CarbonModules = [
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-
     ...CarbonModules,
   ],
-  exports: [
-    FormsModule,
-    ReactiveFormsModule,
-    RouterModule,
-    ...CarbonModules,
-  ],
-
+  exports: [FormsModule, ReactiveFormsModule, RouterModule, ...CarbonModules],
 })
 export class SharedModule {}

@@ -42,7 +42,7 @@ export class AppComponent implements OnInit, OnDestroy {
         let idToken = await user!.getIdToken(true);
         this.store.dispatch(AuthActions.storedIdToken({ idToken }));
         this.store.dispatch(AuthActions.storedUserUid({ uid: user.uid }));
-        // console.log(idToken);
+        console.log(idToken);
         // this.router.navigateByUrl('/loading');
       } else {
         // console.log('User is signed out');

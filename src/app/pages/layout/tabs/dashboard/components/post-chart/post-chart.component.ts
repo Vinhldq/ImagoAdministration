@@ -43,7 +43,7 @@ export class PostChartComponent implements OnInit {
         if (data !== '') {
           for (let i = 1; i <= 1; i++) {
             this.store.dispatch(
-              PostActions.getAllPosts({ token: data, page: 1 })
+              PostActions.getAllPosts({ token: data, page: 1, size: 10 })
             );
             this.postList$.subscribe((data) => {
               this.postList = [];
