@@ -20,12 +20,9 @@
 }
 
 .category {
-  width: 60%;
+  width: 45%;
 }
 
-.hashtag {
-  width: 35%;
-}
 
 cds-pagination-nav {
   display: flex;
@@ -41,6 +38,15 @@ input {
 }
 
 #content .category {
+  p {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    padding: 10px;
+  }
+}
+
+cds-modal .input {
   p {
     font-size: 24px;
     font-weight: 700;

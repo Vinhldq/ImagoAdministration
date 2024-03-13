@@ -26,7 +26,7 @@ export class PostManagementComponent implements OnInit {
       route: 'postDetails',
     },
     {
-      name: 'Category & Hashtag',
+      name: 'Category',
       route: 'category',
     },
   ];

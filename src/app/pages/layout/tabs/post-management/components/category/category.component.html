@@ -10,9 +10,6 @@
             (clear)="searchValue = ''"
           >
           </cds-table-toolbar-search>
-          <div class="btn-add">
-            <button cdsButton="secondary" (click)="openCUD(1)">ADD</button>
-          </div>
         </cds-table-toolbar-content>
       </cds-table-toolbar>
       <cds-table
@@ -39,33 +36,6 @@
   </div>
 </div>
 
-<!--<cds-modal [open]="open" [trigger]="trigger" (overlaySelected)="open = false">-->
-<!--  <cds-modal-header (closeSelect)="open = false" [showCloseButton]="showCloseButton">-->
-<!--    <p class="cds&#45;&#45;modal-header__label cds&#45;&#45;type-delta">Add new category</p>-->
-<!--  </cds-modal-header>-->
-<!--  <div class="cds&#45;&#45;modal-content">-->
-<!--    <input-->
-<!--      type="text"-->
-<!--      placeholder="Category name"-->
-<!--    />-->
-<!--  </div>-->
-<!--  <cds-modal-footer>-->
-<!--    <ng-container>-->
-<!--      <button-->
-<!--        cdsButton="secondary"-->
-<!--        (click)="open = false"-->
-<!--        [attr.modal-primary-focus]="true">-->
-<!--        Close-->
-<!--      </button>-->
-<!--      <button-->
-<!--        cdsButton="primary"-->
-<!--        (click)="open = false"-->
-<!--        [attr.modal-primary-focus]="true">-->
-<!--        ADD-->
-<!--      </button>-->
-<!--    </ng-container>-->
-<!--  </cds-modal-footer>-->
-<!--</cds-modal>-->
 
 
 
