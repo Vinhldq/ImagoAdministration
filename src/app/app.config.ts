@@ -23,6 +23,8 @@ import { PostEffects } from './ngrx/post/post.effects';
 import { CategoryEffects } from './ngrx/category/category.effects';
 import { reportReducer } from './ngrx/report/report.reducer';
 import { ReportEffects } from './ngrx/report/report.effects';
+import { getDatabase, provideDatabase } from '@angular/fire/database';
+import { getMessaging, provideMessaging } from '@angular/fire/messaging';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -30,7 +32,6 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     importProvidersFrom(BrowserAnimationsModule),
     provideStore({}),
-
     provideState({ name: 'dashboard', reducer: dashboardReducer }),
     provideState({ name: 'report', reducer: reportReducer }),
     provideState({ name: 'auth', reducer: authReducer }),
@@ -74,6 +75,7 @@ export const appConfig: ApplicationConfig = {
     //     })
     //   )
     // ),
+
     importProvidersFrom(
       provideFirebaseApp(() =>
         initializeApp({

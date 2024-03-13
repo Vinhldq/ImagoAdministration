@@ -67,7 +67,7 @@ export class CategoryComponent implements OnInit {
     private store: Store<{
       auth: AuthState;
       cate: CategoryState;
-    }>,
+    }>
   ) {
     this.iconService.registerAll([Add16, Filter16]);
   }
@@ -75,13 +75,13 @@ export class CategoryComponent implements OnInit {
   filterCate(searchString: string) {
     // this.searchValue = searchString;
     this.model1.data = this.dataset.filter((row: TableItem[]) =>
-      row[1].data.toLowerCase().includes(searchString.toLowerCase()),
+      row[1].data.toLowerCase().includes(searchString.toLowerCase())
     );
   }
 
   filterHashtag(hashtagName: string) {
     this.model2.data = this.dataset1.filter((row: TableItem[]) =>
-      row[1].data.toLowerCase().includes(hashtagName.toLowerCase()),
+      row[1].data.toLowerCase().includes(hashtagName.toLowerCase())
     );
   }
 
@@ -96,7 +96,7 @@ export class CategoryComponent implements OnInit {
   ngOnInit() {
     this.store.select('auth').subscribe((auth) => {
       this.store.dispatch(
-        CategoryAction.getAllCategories({ page: 1, token: auth.idToken }),
+        CategoryAction.getAllCategories({ page: 1, token: auth.idToken })
       );
     });
     this.$categoryList.subscribe((categoryList) => {
@@ -122,7 +122,7 @@ export class CategoryComponent implements OnInit {
   }
 
   selectPage(page) {
-    console.log('Loading page', page, 'from pagination model');
+    // console.log('Loading page', page, 'from pagination model');
     // let beginGet = (page - 1) * this.dataLengthPerPage;
     // let endGet = page * this.dataLengthPerPage - 1;
     // this.modelPagination.currentPage = page;

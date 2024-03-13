@@ -20,6 +20,7 @@ export class ProfileEffect {
         return this.profileService.getMineProfile(action.idToken).pipe(
           map((profile: ProfileModel) => {
             return ProfileAction.getMineProfileSuccess({
+              ...profile,
               profile: profile,
             });
           }),
