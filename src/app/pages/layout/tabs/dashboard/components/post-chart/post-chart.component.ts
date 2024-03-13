@@ -6,7 +6,7 @@ import { valueOrDefault } from 'chart.js/helpers';
 import { Store } from '@ngrx/store';
 import { DashboardState } from '../../../../../../ngrx/dashboard/dashboard.state';
 import { AuthState } from '../../../../../../ngrx/auth/auth.state';
-import * as AuthActions from '../../../../../../ngrx/auth/auth.action';
+import * as AuthActions from '../../../../../../ngrx/auth/auth.actions';
 import { PostState } from '../../../../../../ngrx/post/post.state';
 import * as PostActions from '../../../../../../ngrx/post/post.actions';
 import { PostModel } from '../../../../../../models/post.model';

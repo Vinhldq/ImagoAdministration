@@ -10,12 +10,12 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getStorage, provideStorage } from '@angular/fire/storage';
 import { dashboardReducer } from './ngrx/dashboard/dashboard.reducer';
 import { authReducer } from './ngrx/auth/auth.reducer';
-import { AuthEffects } from './ngrx/auth/auth.effect';
+import { AuthEffects } from './ngrx/auth/auth.effects';
 import { roleReducer } from './ngrx/role/role.reducer';
-import { RoleEffect } from './ngrx/role/role.effect';
+import { RoleEffect } from './ngrx/role/role.effects';
 import { provideToastr } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ProfileEffect } from './ngrx/profile/profile.effect';
+import { ProfileEffect } from './ngrx/profile/profile.effects';
 import { profileReducer } from './ngrx/profile/profile.reducer';
 import { postReducer } from './ngrx/post/post.reducer';
 import { categoryReducer } from './ngrx/category/category.reducer';
@@ -30,15 +30,10 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideToastr(),
     provideRouter(routes),
-    provideStore({
-      auth: authReducer,
-      role: roleReducer,
-    }),
     importProvidersFrom(BrowserAnimationsModule),
+    provideStore({}),
     provideState({ name: 'dashboard', reducer: dashboardReducer }),
     provideState({ name: 'report', reducer: reportReducer }),
-    provideState({ name: 'postManagement', reducer: postReducer }),
-    provideEffects(),
     provideState({ name: 'auth', reducer: authReducer }),
     provideState({ name: 'role', reducer: roleReducer }),
     provideState({ name: 'profile', reducer: profileReducer }),
@@ -54,23 +49,19 @@ export const appConfig: ApplicationConfig = {
     ]),
     provideState({ name: 'report', reducer: reportReducer }),
     provideHttpClient(),
-    importProvidersFrom(
-      provideFirebaseApp(() =>
-        initializeApp({
-          projectId: 'itss-imago-0000',
-          appId: '1:1098187958856:web:931b5d503852e1c9a1867d',
-          storageBucket: 'itss-imago-0000.appspot.com',
-          apiKey: 'AIzaSyAJ93BuFGs7gOJe9kudLYvAn4-Fp6Q936M',
-          authDomain: 'itss-imago-0000.firebaseapp.com',
-          messagingSenderId: '1098187958856',
-          measurementId: 'G-7TVCQGP8RS',
-        })
-      )
-    ),
-
-    importProvidersFrom(provideAuth(() => getAuth())),
-    importProvidersFrom(provideFirestore(() => getFirestore())),
-    importProvidersFrom(provideStorage(() => getStorage())),
+    // importProvidersFrom(
+    //   provideFirebaseApp(() =>
+    //     initializeApp({
+    //       projectId: 'itss-imago-0000',
+    //       appId: '1:1098187958856:web:931b5d503852e1c9a1867d',
+    //       storageBucket: 'itss-imago-0000.appspot.com',
+    //       apiKey: 'AIzaSyAJ93BuFGs7gOJe9kudLYvAn4-Fp6Q936M',
+    //       authDomain: 'itss-imago-0000.firebaseapp.com',
+    //       messagingSenderId: '1098187958856',
+    //       measurementId: 'G-7TVCQGP8RS',
+    //     }),
+    //   ),
+    // ),
     // importProvidersFrom(
     //   provideFirebaseApp(() =>
     //     initializeApp({
@@ -84,8 +75,22 @@ export const appConfig: ApplicationConfig = {
     //     })
     //   )
     // ),
-    // importProvidersFrom(provideAuth(() => getAuth())),
-    // importProvidersFrom(provideFirestore(() => getFirestore())),
-    // importProvidersFrom(provideStorage(() => getStorage())),
+
+    importProvidersFrom(
+      provideFirebaseApp(() =>
+        initializeApp({
+          projectId: 'imago-backup2',
+          appId: '1:307613940415:web:590dc59592b2b83788240a',
+          storageBucket: 'imago-backup2.appspot.com',
+          // locationId: 'asia-east1',
+          apiKey: 'AIzaSyDvKdVzEJmlsJtk4ugeFc_yY-hEQ1RK6-o',
+          authDomain: 'imago-backup2.firebaseapp.com',
+          messagingSenderId: '307613940415',
+        })
+      )
+    ),
+    importProvidersFrom(provideAuth(() => getAuth())),
+    importProvidersFrom(provideFirestore(() => getFirestore())),
+    importProvidersFrom(provideStorage(() => getStorage())),
   ],
 };

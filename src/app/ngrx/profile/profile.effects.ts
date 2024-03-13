@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { catchError, map, of, switchMap } from 'rxjs';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ProfileService } from '../../service/profile/profile.service';
-import * as ProfileAction from './profile.action';
+import * as ProfileAction from './profile.actions';
 import * as ReportActions from '../report/report.actions';
 import { ProfileModel } from '../../models/profile.model';
 

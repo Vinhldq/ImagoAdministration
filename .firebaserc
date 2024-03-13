@@ -13,9 +13,16 @@
           "imago-backup"
         ]
       }
+    },
+    "imago-backup2": {
+      "hosting": {
+        "imagoadministration": [
+          "imago-backup2"
+        ]
+      }
     }
   },
   "projects": {
-    "default": "itss-imago-0000"
+    "default": "imago-backup2"
   }
 }

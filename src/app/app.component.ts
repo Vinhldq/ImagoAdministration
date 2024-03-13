@@ -5,11 +5,11 @@ import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AuthState } from './ngrx/auth/auth.state';
-import * as AuthActions from './ngrx/auth/auth.action';
+import * as AuthActions from './ngrx/auth/auth.actions';
 import { LoadingComponent } from './pages/loading/loading.component';
 import { Subscription, combineLatest } from 'rxjs';
 import { NotificationService } from 'carbon-components-angular';
-import * as ProfileAction from './ngrx/profile/profile.action';
+import * as ProfileAction from './ngrx/profile/profile.actions';
 import { ProfileState } from './ngrx/profile/profile.state';
 import { ToastrService } from 'ngx-toastr';
 import { ProfileModel } from './models/profile.model';
@@ -42,7 +42,7 @@ export class AppComponent implements OnInit, OnDestroy {
         let idToken = await user!.getIdToken(true);
         this.store.dispatch(AuthActions.storedIdToken({ idToken }));
         this.store.dispatch(AuthActions.storedUserUid({ uid: user.uid }));
-        // console.log(idToken);
+        console.log(idToken);
         // this.router.navigateByUrl('/loading');
       } else {
         // console.log('User is signed out');

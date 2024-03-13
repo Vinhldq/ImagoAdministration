@@ -20,7 +20,6 @@ import { SharedModule } from '../../../../../../shared/shared.module';
 import { Store } from '@ngrx/store';
 import { AuthState } from '../../../../../../ngrx/auth/auth.state';
 import * as PostActions from '../../../../../../ngrx/post/post.actions';
-import * as ProfileActions from '../../../../../../ngrx/profile/profile.action';
 import { PostState } from '../../../../../../ngrx/post/post.state';
 import { Pipe, PipeTransform } from '@angular/core';
 import { AuthModel } from '../../../../../../models/auth.model';
@@ -118,49 +117,14 @@ export class PostComponent implements OnInit {
       this.modelPagination.totalDataLength = data;
     });
 
-    //this.store.dispatch(PostActions.getAllPosts({ token: '', page: 1, size: 10 }));
-    this.postList$.subscribe((data) => {
-      data.data.forEach((element) => {
-        //fix array
-        this.store.select('auth').subscribe((auth) => {
-          if (auth.idToken != '') {
-            this.store.dispatch(
-              PostActions.getPostDetail({ token: auth.idToken, id: element.id })
-            );
-          }
-        });
-      });
-    });
-
-    //foreach postDetail$ to get detail of post
-    this.postDetail$.subscribe((detail) => {
-      console.log('detail::: :', detail);
-    });
-
     this.postList$.subscribe((creatorPost) => {
       // th.postDetail$.subscribe((detail) => {
       console.log('creator::: :', creatorPost);
       this.postDetail$.subscribe((detail) => {
-        // this.dataset = creatorPost.data.map((post) => {
-        //   return [
-        //     new TableItem({ data: post.id }),
-        //     new TableItem({ data: }),
-        //     new TableItem({ data: post.content }),
-        //     new TableItem({ data: post.photoUrl.length }),
-        //     new TableItem({ data: post.reaction.length }),
-        //     new TableItem({ data: post.comments.length }),
-        //     new TableItem({ data: post.share.length }),
-        //     new TableItem({
-        //       data: new Date(post.createdAt._seconds * 1000).toLocaleString(),
-        //     }),
-        //   ];
-        // });
-        //map postList and detail to dataset
         this.dataset = creatorPost.data.map((post) => {
-          let postDetail = detail.find((detail) => detail.id == post.creatorId);
           return [
             new TableItem({ data: post.id }),
-            new TableItem({ data: postDetail.userName }),
+            new TableItem({ data: post.creatorId }),
             new TableItem({ data: post.content }),
             new TableItem({ data: post.photoUrl.length }),
             new TableItem({ data: post.reaction.length }),
@@ -171,6 +135,7 @@ export class PostComponent implements OnInit {
             }),
           ];
         });
+
         this.model.data = this.dataset;
       });
     });

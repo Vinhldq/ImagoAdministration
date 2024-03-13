@@ -5,7 +5,7 @@ import { AuthService } from '../../service/auth/auth.service';
 import { Store } from '@ngrx/store';
 import { AuthState } from '../../ngrx/auth/auth.state';
 import { Subscription } from 'rxjs';
-import * as AuthActions from '../../ngrx/auth/auth.action';
+import * as AuthActions from '../../ngrx/auth/auth.actions';
 import { Router } from '@angular/router'; // Import Router
 
 @Component({
@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(
     private auth: AuthService,
     private store: Store<{ auth: AuthState }>,
-    private router: Router, // Inject Router
+    private router: Router // Inject Router
   ) {}
 
   subscriptions: Subscription[] = [];
@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.router.navigate(['/login']); // Navigate to home page
         }
       }),
-      this.store.select('auth', 'errorMessage').subscribe((val) => {}),
+      this.store.select('auth', 'errorMessage').subscribe((val) => {})
     );
   }
 
