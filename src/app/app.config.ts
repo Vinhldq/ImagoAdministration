@@ -65,20 +65,29 @@ export const appConfig: ApplicationConfig = {
     //     }),
     //   ),
     // ),
-
-    importProvidersFrom(provideAuth(() => getAuth())),
-    importProvidersFrom(provideFirestore(() => getFirestore())),
-    importProvidersFrom(provideStorage(() => getStorage())),
+    // importProvidersFrom(
+    //   provideFirebaseApp(() =>
+    //     initializeApp({
+    //       projectId: 'imago-backup',
+    //       appId: '1:696714901988:web:bf1a18143a4e8e59d5aff1',
+    //       storageBucket: 'imago-backup.appspot.com',
+    //       // "locationId": "asia-east1",
+    //       apiKey: 'AIzaSyCD0zl34Cf5BLILWPaDu4CK-ilHIlEMww8',
+    //       authDomain: 'imago-backup.firebaseapp.com',
+    //       messagingSenderId: '696714901988',
+    //     })
+    //   )
+    // ),
     importProvidersFrom(
       provideFirebaseApp(() =>
         initializeApp({
-          projectId: 'imago-backup',
-          appId: '1:696714901988:web:bf1a18143a4e8e59d5aff1',
-          storageBucket: 'imago-backup.appspot.com',
-          // "locationId": "asia-east1",
-          apiKey: 'AIzaSyCD0zl34Cf5BLILWPaDu4CK-ilHIlEMww8',
-          authDomain: 'imago-backup.firebaseapp.com',
-          messagingSenderId: '696714901988',
+          projectId: 'imago-backup2',
+          appId: '1:307613940415:web:590dc59592b2b83788240a',
+          storageBucket: 'imago-backup2.appspot.com',
+          // locationId: 'asia-east1',
+          apiKey: 'AIzaSyDvKdVzEJmlsJtk4ugeFc_yY-hEQ1RK6-o',
+          authDomain: 'imago-backup2.firebaseapp.com',
+          messagingSenderId: '307613940415',
         })
       )
     ),
