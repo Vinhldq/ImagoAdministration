@@ -1,5 +1,5 @@
-import { createAction, props } from '@ngrx/store';
-import { AuthModel } from '../../models/auth.model';
+import {createAction, props} from '@ngrx/store';
+import {AuthModel} from '../../models/auth.model';
 
 export const login = createAction('[Auth] Login');
 
@@ -57,3 +57,44 @@ export const getAllAuthFailure = createAction(
 );
 
 export const clearAuth = createAction('[Auth] Clear Auth');
+
+export const changeRole = createAction(
+  '[Auth] Change Role',
+  props<{ idToken: string, id: string; role: string }>(),
+);
+
+export const changeRoleSuccess = createAction(
+  '[Auth] Change Role Success',
+  props<{ auth: AuthModel }>(),
+);
+
+export const changeRoleFailure = createAction(
+  '[Auth] Change Role Failure',
+  props<{ errorMessage: string }>(),
+);
+
+export const changeBlock = createAction(
+  '[Auth] Change Block',
+  props<{ idToken: string, id: string; isBanned: boolean }>(),
+);
+export const changeBlockSuccess = createAction(
+  '[Auth] Change Block Success',
+  props<{ auth: AuthModel }>(),
+);
+export const changeBlockFailure = createAction(
+  '[Auth] Change Block Failure',
+  props<{ errorMessage: string }>(),
+);
+
+export const changeUnblock = createAction(
+  '[Auth] Change Unblock',
+  props<{ idToken: string, id: string; isBanned: boolean }>(),
+);
+export const changeUnblockSuccess = createAction(
+  '[Auth] Change Unblock Success',
+  props<{ auth: AuthModel }>(),
+);
+export const changeUnblockFailure = createAction(
+  '[Auth] Change Unblock Failure',
+  props<{ errorMessage: string }>(),
+);

@@ -9,7 +9,7 @@ import { ProfileModel } from '../../models/profile.model';
 export class ProfileService {
   constructor(private httpClient: HttpClient) {}
 
-  
+
   getMineProfile(idToken: string) {
     return this.httpClient.get<ProfileModel>(
       environment.local_url + `profile/mine`,
@@ -29,6 +29,27 @@ export class ProfileService {
           Authorization: ` ${token}`,
         }),
       },
+    );
+  }
+  getAllAuthProfile(idToken: string, page: number, size: number) {
+    return this.httpClient.get<any>(
+      environment.local_url + `profile/adminuser?page=${page}&size=${size}`,
+      {
+        headers: new HttpHeaders({
+          Authorization: ` ${idToken}`,
+        })
+      }
+    );
+  }
+
+  getAllAuthNoProfile(idToken: string, page: number, size: number) {
+    return this.httpClient.get<any>(
+      environment.local_url + `profile/adminuser/noprofile?page=${page}&size=${size}`,
+      {
+        headers: new HttpHeaders({
+          Authorization: ` ${idToken}`,
+        })
+      }
     );
   }
 }

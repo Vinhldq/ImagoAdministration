@@ -1,11 +1,18 @@
-import { createReducer, on } from '@ngrx/store';
-import { ProfileModel } from '../../models/profile.model';
-import { ProfileState } from './profile.state';
+import {createReducer, on} from '@ngrx/store';
+import {ProfileModel} from '../../models/profile.model';
+import {ProfileState} from './profile.state';
 import * as ProfileAction from './profile.actions';
 
 export const initialState: ProfileState = {
   profile: <ProfileModel>{},
-
+  authProfile: {
+    data: [],
+    endPage: 0,
+  },
+  authNoProfile: {
+    data: [],
+    endPage: 0,
+  },
   isLoading: false,
   isSuccessful: false,
   errorMess: '',
@@ -29,7 +36,7 @@ export const profileReducer = createReducer(
       getErrorMess: '',
     };
   }),
-  on(ProfileAction.getMineProfileSuccess, (state, { profile, type }) => {
+  on(ProfileAction.getMineProfileSuccess, (state, {profile, type}) => {
     console.log(type);
     return {
       ...state,
@@ -39,7 +46,7 @@ export const profileReducer = createReducer(
       getErrorMess: '',
     };
   }),
-  on(ProfileAction.getMineProfileFailure, (state, { error, type }) => {
+  on(ProfileAction.getMineProfileFailure, (state, {error, type}) => {
     console.log(type);
     return {
       ...state,
@@ -49,13 +56,13 @@ export const profileReducer = createReducer(
     };
   }),
 
-  on(ProfileAction.getProfileById, (state, { type }) => {
+  on(ProfileAction.getProfileById, (state, {type}) => {
     return {
       ...state,
       isGetByIdLoading: true,
     };
   }),
-  on(ProfileAction.getProfileByIdSuccess, (state, { profile, type }) => {
+  on(ProfileAction.getProfileByIdSuccess, (state, {profile, type}) => {
     return {
       ...state,
       profileById: profile,
@@ -63,7 +70,7 @@ export const profileReducer = createReducer(
       isGetByIdSuccessful: true,
     };
   }),
-  on(ProfileAction.getProfileByIdFailure, (state, { errorMessage, type }) => {
+  on(ProfileAction.getProfileByIdFailure, (state, {errorMessage, type}) => {
     return {
       ...state,
       isGetByIdLoading: false,
@@ -71,6 +78,62 @@ export const profileReducer = createReducer(
       getByIdErrorMess: errorMessage,
     };
   }),
+  on(ProfileAction.getAllAuthProfile, (state, {type}) => {
+      return {
+        ...state,
+        isLoading: true,
+        isSuccessful: false,
+        errorMess: '',
+      };
+    }
+  ),
+  on(ProfileAction.getAllAuthProfileSuccess, (state, {authProfile, type}) => {
+      return {
+        ...state,
+        authProfile: authProfile,
+        isLoading: false,
+        isSuccessful: true,
+        errorMess: '',
+      };
+    }
+  ),
+  on(ProfileAction.getAllAuthProfileFailure, (state, {errorMessage, type}) => {
+      return {
+        ...state,
+        isLoading: false,
+        isSuccessful: false,
+        errorMess: errorMessage,
+      };
+    }
+  ),
+  on(ProfileAction.getAllAuthNoProfile, (state, {type}) => {
+      return {
+        ...state,
+        isLoading: true,
+        isSuccessful: false,
+        errorMess: '',
+      };
+    }
+  ),
+  on(ProfileAction.getAllAuthNoProfileSuccess, (state, {authNoProfile, type}) => {
+      return {
+        ...state,
+        authNoProfile: authNoProfile,
+        isLoading: false,
+        isSuccessful: true,
+        errorMess: '',
+      };
+    }
+  ),
+  on(ProfileAction.getAllAuthNoProfileFailure, (state, {errorMessage, type}) => {
+      return {
+        ...state,
+        isLoading: false,
+        isSuccessful: false,
+        errorMess: errorMessage,
+      };
+    }
+  ),
   on(ProfileAction.clearState, (state, action) => {
     return {
       ...state,

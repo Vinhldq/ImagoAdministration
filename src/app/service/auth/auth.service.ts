@@ -84,4 +84,40 @@ export class AuthService {
       },
     );
   }
+  changeRole(idToken: string, id: string, role: string) {
+    return this.httpClient.put<AuthModel>(
+      environment.local_url + `auth/role?id=${id}&role=${role}`, {},
+      {
+        headers: new HttpHeaders({
+          Authorization: ` ${idToken}`,
+        }),
+      },
+    );
+  }
+
+  changeBlock(idToken: string, id: string, isBanned: boolean) {
+    return this.httpClient.put<AuthModel>(
+      environment.local_url + `auth/block?id=${id}`, {
+        isBanned: isBanned,
+      },
+      {
+        headers: new HttpHeaders({
+          Authorization: ` ${idToken}`,
+        }),
+      },
+    );
+  }
+
+  changeUnBlock(idToken: string, id: string, isBanned: boolean) {
+    return this.httpClient.put<AuthModel>(
+      environment.local_url + `auth/unblock?id=${id}`, {
+        isBanned: isBanned,
+      },
+      {
+        headers: new HttpHeaders({
+          Authorization: ` ${idToken}`,
+        }),
+      },
+    );
+  }
 }
