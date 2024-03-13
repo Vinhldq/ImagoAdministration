@@ -1,5 +1,5 @@
 <cds-header name="Imago Administration" cdsTheme="g100">
-  <img src="../../../assets/newlogo.jpg" alt="Logo">
+  <img src="../../../assets/logo.png" alt="Logo">
   <cds-header-navigation ariaLabel="Carbon Tutorial Angular">
     <cds-header-item [routerLink]="['./']">Dashboard</cds-header-item>
   </cds-header-navigation>
@@ -20,13 +20,39 @@
   </cds-header-navigation>
   <cds-header-global>
     <cds-header-action title="action">
+      <!-- <svg cdsIcon="switcher" size="20"></svg> -->
+      <!--      -->
+      <!--      ></svg>-->
+      <cds-overflow-menu [open]="false" [customTrigger]="customTrigger" placement="bottom" [offset]="{ x: -8, y: 0 }">
+        <cds-overflow-menu-option [routerLink]="['user']">
+          User Management
+        </cds-overflow-menu-option>
+        <cds-overflow-menu-option [routerLink]="['role']">
+          Role Management
+        </cds-overflow-menu-option>
+        <cds-overflow-menu-option [routerLink]="['post']">
+          Post Management
+        </cds-overflow-menu-option>
+
+        <cds-overflow-menu-option [routerLink]="['report']">
+          Report Management
+        </cds-overflow-menu-option>
+
+        <cds-overflow-menu-option [routerLink]="['settings']">
+          Settings
+        </cds-overflow-menu-option>
+      </cds-overflow-menu>
+      <cds-placeholder></cds-placeholder>
+      <ng-template #customTrigger>
+        <svg cdsIcon="switcher" size="20"></svg>
+      </ng-template>
+    </cds-header-action>
+    <cds-header-action title="action">
       <svg cdsIcon="notification" size="20"></svg>
     </cds-header-action>
     <cds-header-action title="action">
       <svg cdsIcon="user--avatar" size="20"></svg>
     </cds-header-action>
-    <cds-header-action title="action">
-      <svg cdsIcon="switcher" size="20"></svg>
-    </cds-header-action>
+
   </cds-header-global>
 </cds-header>

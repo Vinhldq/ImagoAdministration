@@ -7,7 +7,7 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import {SharedModule} from '../../../../shared/shared.module';
+import { SharedModule } from '../../../../shared/shared.module';
 import {
   IconService,
   ListItem,
@@ -20,15 +20,15 @@ import Filter20 from '@carbon/icons/es/filter/20';
 import TrashCan20 from '@carbon/icons/es/trash-can/20';
 import Close20 from '@carbon/icons/es/close/20';
 import Edit20 from '@carbon/icons/es/edit/20';
-import {AsyncPipe, NgClass} from '@angular/common';
-import {RoleCategoryComponent} from './components/role-category/role-category.component';
-import {FormControl, FormGroup} from '@angular/forms';
-import {ReactiveFormsModule} from '@angular/forms';
-import {RoleState} from '../../../../ngrx/role/role.state';
-import {Store} from '@ngrx/store';
-import * as RoleActions from '../../../../ngrx/role/role.action';
-import {Subscription} from 'rxjs';
-import {AuthState} from '../../../../ngrx/auth/auth.state';
+import { AsyncPipe, NgClass } from '@angular/common';
+import { RoleCategoryComponent } from './components/role-category/role-category.component';
+import { FormControl, FormGroup } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RoleState } from '../../../../ngrx/role/role.state';
+import { Store } from '@ngrx/store';
+import * as RoleActions from '../../../../ngrx/role/role.actions';
+import { Subscription } from 'rxjs';
+import { AuthState } from '../../../../ngrx/auth/auth.state';
 
 @Component({
   selector: 'app-role-management',
@@ -44,10 +44,11 @@ import {AuthState} from '../../../../ngrx/auth/auth.state';
   styleUrl: './role-management.component.scss',
 })
 export class RoleManagementComponent
-  implements OnInit, OnChanges, AfterViewInit {
+  implements OnInit, OnChanges, AfterViewInit
+{
   constructor(
     protected iconService: IconService,
-    private store: Store<{ role: RoleState; auth: AuthState }>,
+    private store: Store<{ role: RoleState; auth: AuthState }>
   ) {
     this.iconService.registerAll([Filter20, TrashCan20, Close20, Edit20]);
   }
@@ -62,15 +63,15 @@ export class RoleManagementComponent
             RoleActions.getAllRole({
               token: token,
               page: 1,
-            }),
+            })
           );
         }
-      }),
+      })
     );
     this.roles$.subscribe((roleList) => {
       this.dataSet = roleList.data.map((role) => [
         new TableItem({
-          data: role.id
+          data: role.id,
         }),
         new TableItem({
           data: role.name,
@@ -84,9 +85,9 @@ export class RoleManagementComponent
     });
 
     this.model.header = [
-      new TableHeaderItem({data: 'Id'}),
-      new TableHeaderItem({data: 'Name'}),
-      new TableHeaderItem({data: 'Describe'}),
+      new TableHeaderItem({ data: 'Id' }),
+      new TableHeaderItem({ data: 'Name' }),
+      new TableHeaderItem({ data: 'Describe' }),
     ];
     //
     // this.modelPagination.currentPage = 1;
@@ -118,11 +119,9 @@ export class RoleManagementComponent
     // this.model.data = this.dataChoose;
   }
 
-  ngOnChanges(): void {
-  }
+  ngOnChanges(): void {}
 
-  ngAfterViewInit() {
-  }
+  ngAfterViewInit() {}
 
   roles$ = this.store.select((state) => state.role.roleList);
   loading$ = this.store.select((state) => state.role.isGetAllRole);
@@ -153,11 +152,11 @@ export class RoleManagementComponent
   @Input() disabledPagination = false;
   @Input() pageInputDisabled = false;
 
-  @ViewChild('overflowMenuItemTemplate', {static: false})
+  @ViewChild('overflowMenuItemTemplate', { static: false })
   protected overflowMenuItemTemplate: TemplateRef<any> | undefined;
-  @ViewChild('overflowMenuItemTemplateRemove', {static: false})
+  @ViewChild('overflowMenuItemTemplateRemove', { static: false })
   protected overflowMenuItemTemplateRemove: TemplateRef<any> | undefined;
-  @ViewChild('overflowMenuItemTemplateEdit', {static: false})
+  @ViewChild('overflowMenuItemTemplateEdit', { static: false })
   protected overflowMenuItemTemplateEdit: TemplateRef<any> | undefined;
 
   page: number;
@@ -203,8 +202,12 @@ export class RoleManagementComponent
     if (role == 3) {
       let dataUpdate = {
         id: this.selectedId,
-        name: this.dataSet.find((row: TableItem[]) => row[0].data === this.selectedId)[1].data,
-        description: this.dataSet.find((row: TableItem[]) => row[0].data === this.selectedId)[2].data.description,
+        name: this.dataSet.find(
+          (row: TableItem[]) => row[0].data === this.selectedId
+        )[1].data,
+        description: this.dataSet.find(
+          (row: TableItem[]) => row[0].data === this.selectedId
+        )[2].data.description,
       };
       console.log('Data Update:', dataUpdate.name);
       // this.editForm.patchValue(dataUpdate);
@@ -229,16 +232,16 @@ export class RoleManagementComponent
   }
 
   addForm = new FormGroup({
-    id: new FormControl({value: '', disabled: true}),
+    id: new FormControl({ value: '', disabled: true }),
     name: new FormControl(''),
     description: new FormControl(''),
   });
 
   onSubmitAdd() {
     let additem: TableItem[] = [
-      new TableItem({data: this.numberIdRole++}),
-      new TableItem({data: this.addForm.value.name}),
-      new TableItem({data: this.addForm.value.description}),
+      new TableItem({ data: this.numberIdRole++ }),
+      new TableItem({ data: this.addForm.value.name }),
+      new TableItem({ data: this.addForm.value.description }),
     ];
     // this.dataSet.push(additem);
     this.addForm.reset();
@@ -247,28 +250,32 @@ export class RoleManagementComponent
   }
 
   editForm = new FormGroup({
-    id: new FormControl({value: '', disabled: true}),
+    id: new FormControl({ value: '', disabled: true }),
     name: new FormControl(''),
     description: new FormControl(''),
   });
 
   editFormRole() {
     let form: TableItem[] = [
-      new TableItem({data: this.selectedId}),
-      new TableItem({data: this.editForm.value.name}),
-      new TableItem({data: this.editForm.value.description}),
+      new TableItem({ data: this.selectedId }),
+      new TableItem({ data: this.editForm.value.name }),
+      new TableItem({ data: this.editForm.value.description }),
     ];
-    let rowIndex = this.dataSet.findIndex((row: TableItem[]) => row[0].data === this.selectedId);
+    let rowIndex = this.dataSet.findIndex(
+      (row: TableItem[]) => row[0].data === this.selectedId
+    );
     if (rowIndex !== -1) {
       // this.dataSet[rowIndex] = form;
-      this.store.dispatch(RoleActions.updateRole({
-        id: this.selectedId,
-        role: {
+      this.store.dispatch(
+        RoleActions.updateRole({
           id: this.selectedId,
-          name: this.editForm.value.name,
-          description: this.editForm.value.description,
-        },
-      }));
+          role: {
+            id: this.selectedId,
+            name: this.editForm.value.name,
+            description: this.editForm.value.description,
+          },
+        })
+      );
     }
     this.model.data = this.dataSet;
     this.isActiveOpenCUD = false;

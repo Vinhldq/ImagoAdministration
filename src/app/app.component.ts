@@ -5,11 +5,11 @@ import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AuthState } from './ngrx/auth/auth.state';
-import * as AuthActions from './ngrx/auth/auth.action';
+import * as AuthActions from './ngrx/auth/auth.actions';
 import { LoadingComponent } from './pages/loading/loading.component';
 import { Subscription, combineLatest } from 'rxjs';
 import { NotificationService } from 'carbon-components-angular';
-import * as ProfileAction from './ngrx/profile/profile.action';
+import * as ProfileAction from './ngrx/profile/profile.actions';
 import { ProfileState } from './ngrx/profile/profile.state';
 import { ToastrService } from 'ngx-toastr';
 import { ProfileModel } from './models/profile.model';
@@ -35,7 +35,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private store: Store<{
       auth: AuthState;
       profile: ProfileState;
-    }>,
+    }>
   ) {
     onAuthStateChanged(this.auth, async (user) => {
       if (user) {
@@ -46,6 +46,8 @@ export class AppComponent implements OnInit, OnDestroy {
         // console.log(idToken);
         // this.router.navigateByUrl('/loading');
       } else {
+      
+        // console.log('User is signed out');
         this.router.navigateByUrl('/login');
       }
     });
@@ -65,24 +67,24 @@ export class AppComponent implements OnInit, OnDestroy {
             AuthActions.getAuthById({
               token: res.idToken,
               id: res.uid,
-            }),
+            })
           );
         }
       }),
 
       this.store.select('auth', 'idToken').subscribe((val) => {
         if (val != undefined) {
-          this.store.dispatch(ProfileAction.getMineProfile({ 
-            idToken: val
-           }));
+          this.store.dispatch(
+            ProfileAction.getMineProfile({
+              idToken: val,
+            })
+          );
         }
-      }
-      ),
+      }),
 
       this.store.select('profile', 'profile').subscribe((val) => {
         this.profile = val;
-      }
-      ),
+      }),
       this.store.select('auth', 'authDetail').subscribe((val) => {
           if (val.role == 'admin') {
             if (this.profile.id !== undefined && this.profile.id !== null) {
@@ -110,8 +112,7 @@ export class AppComponent implements OnInit, OnDestroy {
             }
         }
         if (val.role == 'user') {
-          // console.log(val.role);
-          this.store.dispatch(AuthActions.clearAuth());
+            console.log(val.role);
             this.toastr.error(
               'You are not authorized to access this page.'+' You have no profile. Go to the Imago app to create a profile '+' Plase contact the administrator to change Role.',
               'Unauthorized Access',
@@ -122,13 +123,13 @@ export class AppComponent implements OnInit, OnDestroy {
                 progressAnimation: 'increasing',
               },
             );
+            this.store.dispatch(AuthActions.clearAuth());
             this.store.dispatch(AuthActions.logout());
             this.router.navigate(['/login']);
         }
-      }),
+      })
     );
   }
-
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((val) => {

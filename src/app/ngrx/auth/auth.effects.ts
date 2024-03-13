@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import * as AuthActions from '../auth/auth.action';
+import * as AuthActions from './auth.actions';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, mergeMap, of, switchMap } from 'rxjs';
 
@@ -12,7 +12,7 @@ export class AuthEffects {
   constructor(
     private action$: Actions,
     private authService: AuthService,
-    private store: Store<{}>,
+    private store: Store<{}>
   ) {}
 
   login$ = createEffect(() => {
@@ -26,7 +26,7 @@ export class AuthEffects {
       }),
       catchError((error) => {
         return of(AuthActions.loginFailure({ errorMessage: error }));
-      }),
+      })
     );
   });
 
@@ -41,7 +41,7 @@ export class AuthEffects {
       }),
       catchError((error) => {
         return of(AuthActions.logoutFailure({ errorMessage: error }));
-      }),
+      })
     );
   });
   getAuthById$ = createEffect(() => {
@@ -55,7 +55,7 @@ export class AuthEffects {
       }),
       catchError((error) => {
         return of(AuthActions.getAuthByIdFailure({ errorMessage: error }));
-      }),
+      })
     );
   });
 
@@ -71,9 +71,9 @@ export class AuthEffects {
           }),
           catchError((error) => {
             return of(AuthActions.getAllAuthFailure({ errorMessage: error }));
-          }),
+          })
         );
-      }),
-    ),
+      })
+    )
   );
 }

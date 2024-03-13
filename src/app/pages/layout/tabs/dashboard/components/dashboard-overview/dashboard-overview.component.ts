@@ -7,7 +7,7 @@ import { UserChartComponent } from '../user-chart/user-chart.component';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { DashboardState } from '../../../../../../ngrx/dashboard/dashboard.state';
-import * as DashboardActions from '../../../../../../ngrx/dashboard/dashboard.action';
+import * as DashboardActions from '../../../../../../ngrx/dashboard/dashboard.actions';
 
 @Component({
   selector: 'app-dashboard-overview',
