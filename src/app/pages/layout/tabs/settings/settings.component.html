@@ -67,7 +67,7 @@
       </h3>
       @for(item of this.dataChoose;track item.id){
       <div class="myDiv">
-        <p>Finished processing {{item.id}} report on {{item.updatedAt}}</p>
+        <p>Finished processing {{item.id}} report {{item.updatedAt}}</p>
       </div>
       }
       <cds-pagination-nav class="pagi" [model]="modelPagigation" [disabled]="disabledPagigation"

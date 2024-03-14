@@ -73,6 +73,7 @@ export class AppComponent implements OnInit, OnDestroy {
       }),
 
       this.store.select('auth', 'idToken').subscribe((val) => {
+        console.log(val);
         if (val != undefined) {
           this.store.dispatch(
             ProfileAction.getMineProfile({
@@ -96,7 +97,8 @@ export class AppComponent implements OnInit, OnDestroy {
                   progressBar: true,
                   progressAnimation: 'increasing',
               });
-            } else {
+            }
+            if(this.profile.id == undefined || this.profile.id == null){
               this.toastr.error(
                ' You have no profile. Go to the Imago app to create a profile',
                 'Profile Not Found',
