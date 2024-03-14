@@ -12,9 +12,9 @@ export class RoleService {
   constructor(private httpClient: HttpClient) {
   }
 
-  getAllRole(idToken: string, page: number) {
+  getAllRole(idToken: string, page: number, size: number) {
     return this.httpClient.get<RoleModel>(
-      environment.local_url + `role/all?page=${page}`,
+      environment.local_url + `role/all?page=${page}&size=${size}`,
       {
         headers: new HttpHeaders({
           Authorization: ` ${idToken}`,
@@ -23,9 +23,9 @@ export class RoleService {
     );
   }
 
-  getAllSearchRole(idToken: string, page: number) {
+  getListAdminRole(idToken: string, page: number, size: number) {
     return this.httpClient.get<RoleModel>(
-      environment.local_url + `role?page=${page}`,
+      environment.local_url + `role/list?page=${page}&size=${size}`,
       {
         headers: new HttpHeaders({
           Authorization: ` ${idToken}`,
@@ -34,18 +34,15 @@ export class RoleService {
     );
   }
 
-  createRole(data: RoleModel) {
-    const header = {Authorization: `${localStorage.getItem('token')}`};
-    return this.httpClient.post(`${environment.local_url}role`, data, {headers: header});
+  createRole(idToken: string, data: RoleModel) {
+    return this.httpClient.post(`${environment.local_url}role`, data, {headers: new HttpHeaders({Authorization: `${idToken}`})});
   }
 
-  updateRole(id: string, updateRole: RoleModel) {
-    const header = {Authorization: `${localStorage.getItem('token')}`};
-    return this.httpClient.put(`${environment.local_url}role?id=${id}`, updateRole, {headers: header});
+  updateRole(idToken: string, id: string, updateRole: RoleModel) {
+    return this.httpClient.put(`${environment.local_url}role?id=${id}`, updateRole, {headers: new HttpHeaders({Authorization: `${idToken}`})});
   }
 
-  deleteRole(id: string) {
-    const header = {Authorization: `${localStorage.getItem('token')}`};
-    return this.httpClient.delete(`${environment.local_url}role?id=${id}`, {headers: header});
+  deleteRole(idToken: string, id: string) {
+    return this.httpClient.delete(`${environment.local_url}role?id=${id}`, {headers: new HttpHeaders({Authorization: `${idToken}`})});
   }
 }
