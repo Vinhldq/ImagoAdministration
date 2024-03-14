@@ -30,6 +30,6 @@
     }
   },
   "projects": {
-    "default": "imago-backup"
+    "default": "testtokenimago"
   }
 }
