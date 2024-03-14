@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { AllPostModel } from '../../models/post.model';
+import { AllPostModel, PostModel } from '../../models/post.model';
 import { ProfileModel } from '../../models/profile.model';
 
 export const getAllPosts = createAction(
@@ -29,5 +29,20 @@ export const getPostDetailSuccess = createAction(
 
 export const getPostDetailFailure = createAction(
   '[Post] Get Post Detail Failure',
+  props<{ errorMessage: string }>()
+);
+
+export const updatePost = createAction(
+  '[Post] Update Post',
+  props<{ token: string; post: PostModel; id: string }>()
+);
+
+export const updatePostSuccess = createAction(
+  '[Post] Update Post Success',
+  props<{ updatePost: PostModel }>()
+);
+
+export const updatePostFailure = createAction(
+  '[Post] Update Post Failure',
   props<{ errorMessage: string }>()
 );

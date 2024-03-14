@@ -35,4 +35,16 @@ export class PostService {
       }
     );
   }
+
+  updatePost(token: string, post: any, id: string) {
+    return this.httpClient.put(
+      environment.local_url + `post/updatebyadmin?id=${id}`,
+      post,
+      {
+        headers: new HttpHeaders({
+          Authorization: `${token}`,
+        }),
+      }
+    );
+  }
 }

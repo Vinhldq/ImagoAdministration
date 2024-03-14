@@ -13,6 +13,7 @@ import Filter16 from '@carbon/icons/es/filter/16';
 import { Store } from '@ngrx/store';
 import { AuthState } from '../../../../ngrx/auth/auth.state';
 import * as ReportActions from '../../../../ngrx/report/report.actions';
+import * as CategoryActions from '../../../../ngrx/category/category.actions';
 import { PostModel } from '../../../../models/post.model';
 import { PostState } from '../../../../ngrx/post/post.state';
 import { AsyncPipe } from '@angular/common';
@@ -38,6 +39,8 @@ export class PostManagementComponent implements OnInit {
   postList$ = this.store.select((state) => state.post.postList);
   page$ = this.store.select((state) => state.post.postList.endPage);
   getAllCategories$ = this.store.select((state) => state.category.categoryList);
+  catePage$ = this.store.select((state) => state.category.categoryList.endPage);
+  updatePost$ = this.store.select((state) => state.post.updatePost);
 
   constructor(
     protected iconService: IconService,
@@ -50,6 +53,9 @@ export class PostManagementComponent implements OnInit {
     this.iconService.registerAll([Add16, Filter16]);
   }
 
+  currentCatePage = 1;
+  itemsCount = 0;
+
   ngOnInit() {
     this.store.select('auth').subscribe((data) => {
       this.store.dispatch(
@@ -60,10 +66,9 @@ export class PostManagementComponent implements OnInit {
         })
       );
       this.store.dispatch(
-        PostActions.getAllPosts({
+        CategoryActions.getAllCategories({
           token: data.idToken,
           page: 1,
-          size: 10,
         })
       );
     });
@@ -74,10 +79,9 @@ export class PostManagementComponent implements OnInit {
     this.modelPagination.currentPage = 1;
 
     this.getAllCategories$.subscribe((data) => {
-      console.log('caterories: ', data.data);
-
       data.data.forEach((element) => {
         this.caterories = [...this.caterories, element.name];
+        this.itemsCount = data.endPage;
       });
     });
 
@@ -87,12 +91,11 @@ export class PostManagementComponent implements OnInit {
           element.createdAt._seconds * 1000 +
             element.createdAt._nanoseconds / 1000000
         );
-        const formattedDate = date.toLocaleString('vi-VN', {
+        const formattedDate = date.toLocaleString('en', {
           weekday: 'long',
           year: 'numeric',
           month: 'long',
           day: 'numeric',
-
           hour12: false,
         });
         this.dataset = [
@@ -101,7 +104,7 @@ export class PostManagementComponent implements OnInit {
             new TableItem({ data: element.id }),
             new TableItem({ data: element.content }),
             new TableItem({ data: formattedDate }),
-            new TableItem({ data: element.cateId }),
+            new TableItem({ data: element.cateId.length }),
             new TableItem({ data: 'pending' }),
           ],
         ];
@@ -206,69 +209,19 @@ export class PostManagementComponent implements OnInit {
     console.log(e);
   }
 
-  // caterories = [
-  //   'adventure',
-  //   'anime',
-  //   'architecture',
-  //   'art',
-  //   'artistic',
-  //   'astronomy',
-  //   'automobile',
-  //   'beauty',
-  //   'book',
-  //   'business',
-  //   'celebration',
-  //   'comic',
-  //   'cooking',
-  //   'craft',
-  //   'dance',
-  //   'design',
-  //   'diy',
-  //   'education',
-  //   'entertainment',
-  //   'environment',
-  //   'esports',
-  //   'exploration',
-  //   'fashion',
-  //   'film',
-  //   'finance',
-  //   'fitness',
-  //   'flower',
-  //   'food',
-  //   'fruit',
-  //   'gaming',
-  //   'gardening',
-  //   'health',
-  //   'hiking',
-  //   'history',
-  //   'hobby',
-  //   'inspiration',
-  //   'journalism',
-  //   'language',
-  //   'lifestyle',
-  //   'medicine',
-  //   'meme',
-  //   'music',
-  //   'mystery',
-  //   'nature',
-  //   'networking',
-  //   'pet',
-  //   'photography',
-  //   'plant',
-  //   'psychology',
-  //   'science',
-  //   'shopping',
-  //   'self-improvement',
-  //   'shopping',
-  //   'sports',
-  //   'street food',
-  //   'technology',
-  //   'travel',
-  //   'trending',
-  //   'volunteering',
-  //   'weather',
-  //   'wildlife',
-  // ];
+  errorImg(src: any) {
+    src.target.src =
+      'https://t4.ftcdn.net/jpg/01/17/00/39/360_F_117003938_TrPAYiOgFFLnIwKsjUjtqoe4W2RDzytI.jpg';
+  }
+
+  errorImgBackground(src: any) {
+    src.target.src =
+      'https://t4.ftcdn.net/jpg/01/17/00/39/360_F_117003938_TrPAYiOgFFLnIwKsjUjtqoe4W2RDzytI.jpg';
+  }
+
+  errorName(src: any) {
+    src.target.innerText = 'No name';
+  }
 
   caterories = [];
 
@@ -294,18 +247,33 @@ export class PostManagementComponent implements OnInit {
 
     console.log(temp);
 
-    this.postDetail.cateId = temp;
+    this.store.select('auth').subscribe((data) => {
+      this.store.dispatch(
+        PostActions.updatePost({
+          token: data.idToken,
+          id: this.postDetail.id,
+          post: {
+            ...this.postDetail,
+            cateId: temp,
+          },
+        })
+      );
+    });
+  }
 
-    // this.store.select('auth').subscribe((data) => {
-    //   this.store.dispatch(
-    //     PostActions.updatePost({
-    //       token: data.idToken,
-    //       post: post,
-    //     }),
-    //   );
-    // });
-    this.categoriesChosen = [];
-    this.checkCategory = false;
+  onScroll(ev: any) {
+    this.currentCatePage++;
+
+    if (this.currentCatePage <= this.itemsCount) {
+      this.store.select('auth').subscribe((data) => {
+        this.store.dispatch(
+          CategoryActions.getAllCategories({
+            token: data.idToken,
+            page: this.currentCatePage,
+          })
+        );
+      });
+    }
   }
 
   protected open = false;
