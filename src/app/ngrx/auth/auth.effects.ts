@@ -36,6 +36,7 @@ export class AuthEffects {
       ofType(AuthActions.logout),
       switchMap(() => {
         this.store.dispatch(ProfileActions.clearState());
+        this.store.dispatch(AuthActions.clearIdToken());
         this.store.dispatch(AuthActions.clearAuth());
         return this.authService.logout();
       }),

@@ -44,10 +44,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this.store.dispatch(AuthActions.storedIdToken({ idToken }));
         this.store.dispatch(AuthActions.storedUserUid({ uid: user.uid }));
         console.log(idToken);
-        console.log(user.uid);
-        // this.router.navigateByUrl('/loading');
       } else {
-        // console.log('User is signed out');
         this.router.navigateByUrl('/login');
       }
     });
@@ -79,7 +76,7 @@ export class AppComponent implements OnInit, OnDestroy {
               idToken: val,
             })
           );
-          
+
         }
       }),
 
@@ -87,9 +84,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this.profile = val;
       }),
       this.store.select('auth', 'authDetail').subscribe((val) => {
-        // console.log(this.profile);
         if (val.role == 'admin') {
-          // console.log(val.email + 'admin');
           if (this.profile.id !== undefined && this.profile.id !== null) {
             console.log(this.profile.id);
             this.router.navigate(['/dashboard']);
@@ -101,7 +96,6 @@ export class AppComponent implements OnInit, OnDestroy {
             });
           }
           else {
-            console.log('no profile');
             this.store.dispatch(AuthActions.logout());
             this.toastr.error(
               ' You have no profile. Go to the Imago app to create a profile',
@@ -116,11 +110,13 @@ export class AppComponent implements OnInit, OnDestroy {
           }
         }
         if (val.role == 'user') {
-          console.log(val.email + 'user');
+          this.store.dispatch(AuthActions.clearAuth());
+          this.store.dispatch(AuthActions.logout());
+          this.router.navigate(['/login']).then();
           this.toastr.error(
             'You are not authorized to access this page.' +
-              ' You have no profile. Go to the Imago app to create a profile ' +
-              ' Plase contact the administrator to change Role.',
+            ' You have no profile. Go to the Imago app to create a profile ' +
+            ' Plase contact the administrator to change Role.',
             'Unauthorized Access',
             {
               timeOut: 5000,
@@ -129,9 +125,6 @@ export class AppComponent implements OnInit, OnDestroy {
               progressAnimation: 'increasing',
             }
           );
-          this.store.dispatch(AuthActions.clearAuth());
-          this.store.dispatch(AuthActions.logout());
-          this.router.navigate(['/login']).then();
         }
       })
     );
