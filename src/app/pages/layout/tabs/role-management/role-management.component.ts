@@ -10,7 +10,6 @@ import {
 import {SharedModule} from '../../../../shared/shared.module';
 import {
   IconService,
-  ListItem,
   PaginationModel,
   TableHeaderItem,
   TableItem,
@@ -54,6 +53,7 @@ export class RoleManagementComponent
   }
 
   subscription: Subscription[] = [];
+  token = '';
   page = 1;
   numberSize = 10;
 
@@ -61,6 +61,7 @@ export class RoleManagementComponent
     this.subscription.push(
       this.store.select('auth', 'idToken').subscribe((token) => {
         if (token != '') {
+          this.token = token
           this.store.dispatch(
             RoleActions.getAllRole({
               token: token,
@@ -150,17 +151,13 @@ export class RoleManagementComponent
 
   selectPage(page: number) {
     this.modelPagination.currentPage = page;
-    this.store.select('auth', 'idToken').subscribe((token) => {
-      if (token != '') {
-        this.store.dispatch(
-          RoleActions.getAllRole({
-            token: token,
-            page: page,
-            size: this.numberSize,
-          }),
-        );
-      }
-    })
+    this.store.dispatch(
+      RoleActions.getAllRole({
+        token: this.token,
+        page: page,
+        size: this.numberSize,
+      }),
+    );
   }
 
   isActiveOpenCUD: boolean = false;
@@ -230,16 +227,12 @@ export class RoleManagementComponent
         new TableItem({data: addItem.description}),
       ],
     ];
-    this.store.select('auth', 'idToken').subscribe((token) => {
-      if (token != '') {
-        this.store.dispatch(
-          RoleActions.createRole({
-            token: token,
-            role: addItem,
-          }),
-        );
-      }
-    });
+    this.store.dispatch(
+      RoleActions.createRole({
+        token: this.token,
+        role: addItem,
+      }),
+    );
     this.addForm.reset();
     this.model.data = this.dataSet;
     this.isActiveOpenCUD = false;
@@ -262,21 +255,17 @@ export class RoleManagementComponent
     );
     if (rowIndex !== -1) {
       this.dataSet[rowIndex] = form;
-      this.store.select('auth', 'idToken').subscribe((token) => {
-        if (token != '') {
-          this.store.dispatch(
-            RoleActions.updateRole({
-              token: token,
-              id: this.selectedId,
-              role: {
-                id: this.selectedId,
-                name: this.editForm.value.name,
-                description: this.editForm.value.description,
-              }
-            }),
-          );
-        }
-      });
+      this.store.dispatch(
+        RoleActions.updateRole({
+          token: this.token,
+          id: this.selectedId,
+          role: {
+            id: this.selectedId,
+            name: this.editForm.value.name,
+            description: this.editForm.value.description,
+          }
+        }),
+      );
     }
     this.model.data = this.dataSet;
     this.selectedId = '';
@@ -289,16 +278,12 @@ export class RoleManagementComponent
       let rowIndex = this.dataSet.findIndex((row: TableItem[]) => row[0].data === this.selectedId);
       if (rowIndex !== -1) {
         this.dataSet = this.dataSet.filter((row: TableItem[]) => row[0].data !== this.selectedId);
-        this.store.select('auth', 'idToken').subscribe((token) => {
-          if (token != '') {
-            this.store.dispatch(
-              RoleActions.deleteRole({
-                token: token,
-                id: this.selectedId,
-              }),
-            );
-          }
-        });
+        this.store.dispatch(
+          RoleActions.deleteRole({
+            token: this.token,
+            id: this.selectedId,
+          }),
+        );
         this.model.data = this.dataSet;
         this.selectedId = '';
       } else {
