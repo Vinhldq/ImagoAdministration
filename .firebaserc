@@ -30,6 +30,6 @@
     }
   },
   "projects": {
-    "default": "itss-imago-0000"
+    "default": "imago-backup"
   }
 }

@@ -128,14 +128,13 @@ export const authReducer = createReducer(
     return {
       ...state,
       authDetail: null,
-      idToken: '',
+      idToken: null,
       isLoading: false,
       isSuccessful: false,
       errorMessage: '',
-      uid: '',
+      uid: null,
       isLogoutSuccess: false,
       logoutErrorMessage: '',
-
       isGetSuccess: false,
       getAllAuth: [],
       isGetAllSuccess: false,
@@ -196,4 +195,12 @@ export const authReducer = createReducer(
       };
     }
   ),
+  on(AuthAction.clearIdToken, (state, action) => {
+    return {
+      ...state,
+      idToken: null,
+    };
+  }
+  ),
+
 );

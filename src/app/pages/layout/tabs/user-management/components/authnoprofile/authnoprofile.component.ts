@@ -155,6 +155,7 @@ export class AuthnoprofileComponent implements OnInit, OnDestroy {
           }),
         );
       }
+
     });
   }
 
