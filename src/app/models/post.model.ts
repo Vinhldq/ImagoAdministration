@@ -7,7 +7,7 @@ export interface PostModel {
   photoUrl: string[];
   content: string;
   hashtag: string[];
-  cateId: string[];
+  cateId: any[];
   reaction: string[];
   comments: Comment[];
   mention: string[];

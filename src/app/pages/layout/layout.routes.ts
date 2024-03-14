@@ -16,7 +16,7 @@ export const LAYOUT_ROUTES: Route[] = [
         path: '',
         loadChildren: () =>
           import('./tabs/dashboard/dashboard.routes').then(
-            (mod) => mod.DASHBOARD_ROUTES,
+            (mod) => mod.DASHBOARD_ROUTES
           ),
       },
       {
@@ -34,15 +34,12 @@ export const LAYOUT_ROUTES: Route[] = [
         path: 'report',
         loadChildren: () =>
           import('./tabs/report-management/report-management.routes').then(
-            (mod) => mod.REPORT_MANAGEMENT,
+            (mod) => mod.REPORT_MANAGEMENT
           ),
       },
       {
         path: 'post',
-        loadChildren: () =>
-          import('./tabs/post-management/post-management.routes').then(
-            (mod) => mod.POST_MANAGEMENT,
-          ),
+        component: PostManagementComponent,
       },
       {
         path: 'settings',
