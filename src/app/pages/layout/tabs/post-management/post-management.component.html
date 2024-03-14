@@ -1,24 +1,185 @@
-<div class="container">
-  <h1>POST-MANAGEMENT</h1>
+<div class="content">
+  <div class="left">
+    <cds-table-container>
+      <cds-table-toolbar>
+        <cds-table-toolbar-content>
+          <cds-table-toolbar-search
+            [expandable]="true"
+            (valueChange)="filterUserNames($event)"
+            (clear)="searchValue = ''"
+          >
+          </cds-table-toolbar-search>
+        </cds-table-toolbar-content>
+      </cds-table-toolbar>
 
-  <cds-tab-header-group
-    type="line"
-    [followFocus]="followFocus"
-    [cacheActive]="cacheActive"
-    [isNavigation]="isNavigation"
-  >
-    @for (name of types; track name.name; let i = $index) {
-      <button
-        cdsTabHeader
-        (click)="navigateTo(name.route, i)"
-        [class.cds--tabs__nav-item--selected]="i === tabIndex"
-      >
-        {{ name.name }}
-      </button>
-    }
-  </cds-tab-header-group>
+      <div class="left-content">
+        <cds-table
+          [model]="model"
+          [sortable]="false"
+          (rowClick)="onRowClick($event)"
+          size="md"
+          [skeleton]="skeleton"
+          [showSelectionColumn]="showSelectionColumn"
+          [enableSingleSelect]="enableSingleSelect"
+          [stickyHeader]="stickyHeader"
+          [striped]="striped"
+          [isDataGrid]="isDataGrid"
+        >
+          <ng-content></ng-content>
+        </cds-table>
+        <cds-pagination-nav
+          [model]="modelPagination"
+          [disabled]="disabled"
+          (selectPage)="selectPage($event)"
+          [numOfItemsToShow]="dataLengthPerPage"
+        >
+        </cds-pagination-nav>
+      </div>
+    </cds-table-container>
+  </div>
+  <div class="right">
+    <div class="row">
+      <div class="user">
+        <div class="info">
+          <div class="avatar">
+            <img [src]="postDetail.creatorId | idToPicture | async" alt="" />
+          </div>
 
-  <div class="content">
-    <router-outlet></router-outlet>
+          <div class="text">
+            <p class="name">{{ postDetail.creatorId | idToName | async }}</p>
+          </div>
+        </div>
+
+        <div class="icon">
+          <cds-overflow-menu
+            placement="bottom"
+            [open]="false"
+            [flip]="true"
+            [offset]="{ x: 0, y: 50 }"
+            (click)="open = true"
+          >
+          </cds-overflow-menu>
+          <cds-placeholder></cds-placeholder>
+        </div>
+      </div>
+
+      <div class="post-detail">
+        <p class="content">{{ postDetail.content }}</p>
+        @if(postDetail.photoUrl.length !== 1) {
+        <ng-container>
+          <div class="img-block">
+            @for (item of postDetail.photoUrl; track $index) {
+            <div class="image">
+              <img [src]="item" alt="" />
+            </div>
+            }
+          </div>
+        </ng-container>
+
+        } @else {
+        <!-- get ng-template #base -->
+        <ng-container *ngTemplateOutlet="base"></ng-container>
+        } @if(postDetail.photoUrl.length === 1) {
+        <ng-container>
+          <div class="img-block1">
+            @for (item of postDetail.photoUrl; track $index) {
+            <div class="image">
+              <img [src]="item" alt="" />
+            </div>
+            }
+          </div>
+        </ng-container>
+
+        }@else {
+        <!-- get ng-template #base -->
+        <ng-container *ngTemplateOutlet="base"></ng-container>
+        }
+
+        <ng-template #base>
+          <div class="img-block1">
+            <div class="image">
+              <img
+                src="https://static.thenounproject.com/png/1077596-200.png"
+                alt=""
+              />
+            </div>
+          </div>
+        </ng-template>
+      </div>
+
+      <!-- div has 3 column: num of like with icon heart, num of comment and icon chat, num of share and icon share -->
+      <div class="actionPost">
+        <div class="like">
+          <p>Likes:</p>
+          <p>{{ postDetail.comments.length }}</p>
+        </div>
+        <div class="comment">
+          <p>Comments:</p>
+          <p>{{ postDetail.comments.length }}</p>
+        </div>
+        <div class="share">
+          <p>Shares:</p>
+          <p>{{ postDetail.share.length }}</p>
+        </div>
+      </div>
+      <div class="comment-block">
+        <div class="comment">
+          <div class="title">
+            <img [src]="postDetail.creatorId | idToPicture | async" alt="" />
+            <div
+              style="
+                justify-content: center;
+                display: flex;
+                align-items: center;
+                margin-left: 10px;
+              "
+            >
+              <p class="name">{{ postDetail.creatorId | idToName | async }}</p>
+              <p style="margin-left: 3px; margin-right: 3px">-</p>
+              <p>12:00 12/2/2024</p>
+            </div>
+          </div>
+          <div class="content">
+            <p>{{ postDetail.content }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="action">
+        <cds-modal [open]="open" (overlaySelected)="open = false">
+          <cds-modal-header
+            (closeSelect)="open = false"
+            [showCloseButton]="true"
+          >
+            <p class="cds--modal-header__heading cds--type-beta">CATEGORY</p>
+          </cds-modal-header>
+          <div class="cds--modal-content">
+            <fieldset class="cds--fieldset">
+              @for (item of caterories; track $index) {
+              <cds-checkbox
+                class="checkBox"
+                [disabled]="disabled"
+                [checked]="checkCategory"
+                (checkedChange)="onChange(item)"
+              >
+                {{ item }}
+              </cds-checkbox>
+              }
+            </fieldset>
+          </div>
+          <cds-modal-footer>
+            <ng-container>
+              <button
+                cdsButton="secondary"
+                (click)="open = false; save()"
+                [attr.modal-primary-focus]="true"
+              >
+                Save
+              </button>
+            </ng-container>
+          </cds-modal-footer>
+        </cds-modal>
+      </div>
+    </div>
   </div>
 </div>
