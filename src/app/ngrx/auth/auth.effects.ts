@@ -6,7 +6,7 @@ import {catchError, map, mergeMap, of, switchMap} from 'rxjs';
 import {Store} from '@ngrx/store';
 import {AuthService} from '../../service/auth/auth.service';
 import * as ReportActions from '../report/report.actions';
-
+import * as ProfileActions from '../profile/profile.actions';
 @Injectable()
 export class AuthEffects {
   constructor(
@@ -35,6 +35,9 @@ export class AuthEffects {
     return this.action$.pipe(
       ofType(AuthActions.logout),
       switchMap(() => {
+        this.store.dispatch(ProfileActions.clearState());
+        this.store.dispatch(AuthActions.clearIdToken());
+        this.store.dispatch(AuthActions.clearAuth());
         return this.authService.logout();
       }),
       map(() => {

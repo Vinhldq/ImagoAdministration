@@ -46,7 +46,7 @@ export interface History {
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.scss',
 })
-export class SettingsComponent implements OnInit {
+export class SettingsComponent implements OnInit, OnDestroy {
   translations: any;
   items = [
     <ListItem>{ content: 'Vienamese', selected: false },
@@ -103,35 +103,26 @@ export class SettingsComponent implements OnInit {
               element.updatedAt._seconds * 1000 +
                 element.updatedAt._nanoseconds / 1000000
             );
-            const formattedDate = date
+            const formattedDateParts = date
               .toLocaleString('en-GB', {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
                 hour: '2-digit',
                 minute: '2-digit',
-                hour12: true,
+                day: '2-digit',
+                month: 'long',
+                year: 'numeric',
+                hour12: false,
               })
-              .replace(',', ' at')
-              .replace(' ', ', ');
+              .split(',');
+            const formattedDate = `on ${formattedDateParts[0]} `;
             return {
               ...element,
               updatedAt: formattedDate,
-              // formattedUpdatedAt: formattedDate,
             };
-          })
-          .sort((a, b) => {
-            return (
-              new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
-            );
-          });
+          }),
         this.dataChoose = this.dataset;
-        // Update the totalDataLength
         this.modelPagigation.totalDataLength = val.endPage;
-        // Trigger change detection
         this.cdr.detectChanges();
-      })
+      }),
     );
   }
 
@@ -149,10 +140,10 @@ export class SettingsComponent implements OnInit {
   protected readonly logout = logout;
 
   signOut() {
-    this.store.dispatch(ProfileAction.clearState());
-    this.store.dispatch(AuthActions.clearAuth());
+    // this.store.dispatch(ProfileAction.clearState());
+    // this.store.dispatch(AuthActions.clearAuth());
     this.store.dispatch(AuthActions.logout());
-    this.router.navigate(['/login']);
+    this.router.navigate(['/login']).then();
   }
   ngOnDestroy(): void {
     this.subscriptions.forEach((val) => {

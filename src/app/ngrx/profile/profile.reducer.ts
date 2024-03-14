@@ -70,7 +70,7 @@ export const profileReducer = createReducer(
       isGetByIdSuccessful: true,
     };
   }),
-  on(ProfileAction.getProfileByIdFailure, (state, {errorMessage, type}) => {
+  on(ProfileAction.getProfileByIdFailure, (state, { errorMessage, type }) => {
     return {
       ...state,
       isGetByIdLoading: false,
