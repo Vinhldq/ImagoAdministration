@@ -56,4 +56,28 @@ export class PostEffects {
       })
     )
   );
+
+  updatePost$ = createEffect(() =>
+    this.action$.pipe(
+      ofType(PostActions.updatePost),
+      switchMap((action) => {
+        return this.postService
+          .updatePost(action.token, action.post, action.id)
+          .pipe(
+            map((updatePost: any) => {
+              return PostActions.updatePostSuccess({
+                updatePost: updatePost,
+              });
+            }),
+            catchError((error) => {
+              return of(
+                PostActions.updatePostFailure({
+                  errorMessage: error,
+                })
+              );
+            })
+          );
+      })
+    )
+  );
 }

@@ -6,18 +6,23 @@
 
 .content {
   width: 100%;
+  height: 100%;
   display: flex;
 }
 
 .left {
   width: 60%;
+  height: 100%;
 }
 
 .right {
   margin-left: 20px;
   width: 40%;
+  height: 36.25rem;
   border-left: #dadada 2px solid;
   padding-left: 15px;
+  overflow-y: scroll;
+  scrollbar-width: none;
 }
 
 .right .user {
@@ -44,7 +49,7 @@
 }
 
 .right .image {
-  margin: 15px;
+  margin: 10px;
   width: 100%;
   height: 100%;
 
@@ -187,6 +192,7 @@ cds-table {
 
 .cds--modal-content {
   height: 260px;
+  overflow: scroll;
 }
 
 .cds--modal-header__heading {
