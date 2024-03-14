@@ -98,3 +98,5 @@ export const changeUnblockFailure = createAction(
   '[Auth] Change Unblock Failure',
   props<{ errorMessage: string }>(),
 );
+
+export const clearIdToken = createAction('[Auth] Clear Id Token');

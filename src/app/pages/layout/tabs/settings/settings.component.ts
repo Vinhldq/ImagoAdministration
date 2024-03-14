@@ -143,7 +143,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     // this.store.dispatch(ProfileAction.clearState());
     // this.store.dispatch(AuthActions.clearAuth());
     this.store.dispatch(AuthActions.logout());
-    this.router.navigate(['/login']);
+    this.router.navigate(['/login']).then();
   }
   ngOnDestroy(): void {
     this.subscriptions.forEach((val) => {
