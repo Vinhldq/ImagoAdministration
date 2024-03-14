@@ -109,8 +109,9 @@ select {
 
 }
 
-#textarea {
+.textarea {
   width: 100%;
+  height: 55%;
   margin-bottom: 10px;
   padding-left: 15px;
   padding-top: 10px;
@@ -162,7 +163,14 @@ select {
 }
 
 ::ng-deep .cds--btn:first-of-type:not(:focus) {
-  margin-top: 2px;
+  margin-top: 0;
 }
 
+::ng-deep .cds--loading__stroke {
+  stroke: var(--cds-interactive, #161616);
+}
 
+::ng-deep .cds--radio-button:focus + .cds--radio-button__label .cds--radio-button__appearance {
+  outline: 2px solid var(--cds-focus, #161616);
+  outline-offset: 0;
+}

@@ -1,11 +1,11 @@
-import { Route } from '@angular/router';
-import { LayoutComponent } from './layout.component';
-import { UserManagementComponent } from './tabs/user-management/user-management.component';
-import { RoleManagementComponent } from './tabs/role-management/role-management.component';
-import { ReportManagementComponent } from './tabs/report-management/report-management.component';
-import { DashboardComponent } from './tabs/dashboard/dashboard.component';
-import { PostManagementComponent } from './tabs/post-management/post-management.component';
-import { SettingsComponent } from './tabs/settings/settings.component';
+import {Route} from '@angular/router';
+import {LayoutComponent} from './layout.component';
+import {UserManagementComponent} from './tabs/user-management/user-management.component';
+import {RoleManagementComponent} from './tabs/role-management/role-management.component';
+import {ReportManagementComponent} from './tabs/report-management/report-management.component';
+import {DashboardComponent} from './tabs/dashboard/dashboard.component';
+import {PostManagementComponent} from './tabs/post-management/post-management.component';
+import {SettingsComponent} from './tabs/settings/settings.component';
 
 export const LAYOUT_ROUTES: Route[] = [
   {
@@ -21,7 +21,10 @@ export const LAYOUT_ROUTES: Route[] = [
       },
       {
         path: 'user',
-        component: UserManagementComponent,
+        loadChildren: () =>
+          import('./tabs/user-management/user-management.routes').then(
+            (mod) => mod.USER_MANAGEMENT,
+          ),
       },
       {
         path: 'role',

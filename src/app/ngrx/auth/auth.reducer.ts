@@ -1,8 +1,8 @@
-import { createReducer, on } from '@ngrx/store';
+import {createReducer, on} from '@ngrx/store';
 import * as AuthAction from './auth.actions';
-import { AuthState } from './auth.state';
-import { AuthModel } from '../../models/auth.model';
-import { AuthModule } from '@angular/fire/auth';
+import {AuthState} from './auth.state';
+import {AuthModel} from '../../models/auth.model';
+import {AuthModule} from '@angular/fire/auth';
 
 export const initialState: AuthState = {
   idToken: '',
@@ -38,7 +38,7 @@ export const authReducer = createReducer(
       errorMessage: '',
     };
   }),
-  on(AuthAction.loginFailure, (state, { errorMessage, type }) => {
+  on(AuthAction.loginFailure, (state, {errorMessage, type}) => {
     return {
       ...state,
       isLoading: false,
@@ -64,7 +64,7 @@ export const authReducer = createReducer(
       uid: '',
     };
   }),
-  on(AuthAction.logoutFailure, (state, { errorMessage, type }) => {
+  on(AuthAction.logoutFailure, (state, {errorMessage, type}) => {
     console.log(type);
     return {
       ...state,
@@ -72,7 +72,7 @@ export const authReducer = createReducer(
       logoutErrorMessage: errorMessage,
     };
   }),
-  on(AuthAction.storedIdToken, (state, { idToken, type }) => {
+  on(AuthAction.storedIdToken, (state, {idToken, type}) => {
     return {
       ...state,
       idToken,
@@ -99,7 +99,7 @@ export const authReducer = createReducer(
       authDetail: action.auth,
     };
   }),
-  on(AuthAction.getAuthByIdFailure, (state, { errorMessage, type }) => {
+  on(AuthAction.getAuthByIdFailure, (state, {errorMessage, type}) => {
     return {
       ...state,
       errorMessage,
@@ -118,10 +118,82 @@ export const authReducer = createReducer(
       getAllAuth: action.auth,
     };
   }),
-  on(AuthAction.getAllAuthFailure, (state, { errorMessage, type }) => {
+  on(AuthAction.getAllAuthFailure, (state, {errorMessage, type}) => {
     return {
       ...state,
       getAllErrorMessage: errorMessage,
     };
-  })
+  }),
+  on(AuthAction.clearAuth, (state, action) => {
+    return {
+      ...state,
+      authDetail: null,
+      idToken: '',
+      isLoading: false,
+      isSuccessful: false,
+      errorMessage: '',
+      uid: '',
+      isLogoutSuccess: false,
+      logoutErrorMessage: '',
+
+      isGetSuccess: false,
+      getAllAuth: [],
+      isGetAllSuccess: false,
+      getAllErrorMessage: '',
+    };
+  }),
+  on(AuthAction.changeRole, (state, action) => {
+      return {
+        ...state,
+        isLoading: true,
+        isSuccessful: false,
+      };
+    }
+  ),
+  on(AuthAction.changeRoleSuccess, (state, action) => {
+      return {
+        ...state,
+        isLoading: false,
+        isSuccessful: true,
+        errorMessage: '',
+        authDetail: action.auth,
+      };
+    }
+  ),
+  on(AuthAction.changeRoleFailure, (state, {errorMessage, type}) => {
+      return {
+        ...state,
+        isLoading: false,
+        isSuccessful: false,
+        errorMessage,
+      };
+    }
+  ),
+  on(AuthAction.changeBlock, (state, action) => {
+      return {
+        ...state,
+        isLoading: true,
+        isSuccessful: false,
+      };
+    }
+  ),
+  on(AuthAction.changeBlockSuccess, (state, action) => {
+      return {
+        ...state,
+        isLoading: false,
+        isSuccessful: true,
+        errorMessage: '',
+        authDetail: action.auth,
+      };
+    }
+  ),
+  on(AuthAction.changeBlockFailure, (state, {errorMessage, type}) => {
+      return {
+        ...state,
+        isLoading: false,
+        isSuccessful: false,
+        errorMessage: errorMessage,
+      };
+    }
+  ),
 );

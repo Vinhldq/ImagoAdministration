@@ -1,12 +1,19 @@
 import * as RoleActions from './role.actions';
-import { RoleState } from './role.state';
-import { createReducer, on } from '@ngrx/store';
+import {RoleState} from './role.state';
+import {createReducer, on} from '@ngrx/store';
 
 export const initialState: RoleState = {
   roleList: {
     data: [],
     endPage: 0,
   },
+  adminRoleList: {
+    data: [],
+    endPage: 0,
+  },
+  isLoading: false,
+  isSuccessful: false,
+  errorMessage: '',
   isGetAllRole: false,
   isGetAllRoleSuccess: false,
   getAllRoleErrorMessage: '',
@@ -14,60 +21,73 @@ export const initialState: RoleState = {
 
 export const roleReducer = createReducer(
   initialState,
-  on(RoleActions.getAllRole, (state, { type }) => {
-    console.log('Get All Role', type);
-    return {
-      ...state,
-      isGetAllRole: true,
-      isGetAllRoleSuccess: false,
-    };
-  }),
-  on(RoleActions.getAllRoleSuccess, (state, { type, roleList }) => {
-    console.log(type);
+  on(RoleActions.getAllRole, (state, {type}) => {
+      return {
+        ...state,
+        isLoading: true,
+        isSuccessful: false,
+        isGetAllRole: true,
+        isGetAllRoleSuccess: false,
+      }
+    }
+  ),
+  on(RoleActions.getAllRoleSuccess, (state, {type, roleList}) => {
     return {
       ...state,
       isGetAllReport: false,
       isGetAllReportSuccess: true,
       roleList: roleList,
+      isSuccessful: true,
+      isLoading: false,
+      errorMessage: ''
     };
   }),
-  on(RoleActions.getAllRoleFailure, (state, { error, type }) => {
-    console.log(type);
-    return {
-      ...state,
-      isGetAllReport: false,
-      isGetAllReportSuccess: false,
-      getAllReportErrorMessage: error,
-    };
-  }),
-  on(RoleActions.getAllSearchRole, (state) => {
-    return {
-      ...state,
-      loading: true,
-    };
-  }),
-  on(RoleActions.getAllSearchRoleSuccess, (state, { roles }) => {
-    return {
-      ...state,
-      loading: false,
-      role: roles,
-      error: '',
-    };
-  }),
-  on(RoleActions.getAllSearchRoleFailure, (state, { error }) => {
-    return {
-      ...state,
-      loading: false,
-      error: error,
-    };
-  }),
+  on(RoleActions.getAllRoleFailure, (state, {error, type}) => {
+      return {
+        ...state,
+        isLoading: false,
+        isSuccessful: false,
+        errorMessage: error,
+        isGetAllReport: false,
+        isGetAllReportSuccess: false,
+        getAllReportErrorMessage: error,
+      };
+    }
+  ),
+  on(RoleActions.getListAdminRole, (state) => {
+      return {
+        ...state,
+        isLoading: true,
+        isSuccessful: false,
+      }
+    }
+  ),
+  on(RoleActions.getListAdminRoleSuccess, (state, {roleList}) => {
+      return {
+        ...state,
+        isLoading: false,
+        isSuccessful: true,
+        adminRoleList: roleList,
+        errorMessage: ''
+      }
+    }
+  ),
+  on(RoleActions.getListAdminRoleFailure, (state, {error}) => {
+      return {
+        ...state,
+        isLoading: false,
+        isSuccessful: false,
+        errorMessage: error
+      }
+    }
+  ),
   on(RoleActions.createRole, (state) => {
     return {
       ...state,
       loading: true,
     };
   }),
-  on(RoleActions.createRoleSuccess, (state, { roles }) => {
+  on(RoleActions.createRoleSuccess, (state, {roles}) => {
     return {
       ...state,
       loading: false,
@@ -75,7 +95,7 @@ export const roleReducer = createReducer(
       error: '',
     };
   }),
-  on(RoleActions.createRoleFailure, (state, { error }) => {
+  on(RoleActions.createRoleFailure, (state, {error}) => {
     return {
       ...state,
       loading: false,
@@ -88,7 +108,7 @@ export const roleReducer = createReducer(
       loading: true,
     };
   }),
-  on(RoleActions.updateRoleSuccess, (state, { roles }) => {
+  on(RoleActions.updateRoleSuccess, (state, {roles}) => {
     return {
       ...state,
       loading: false,
@@ -98,7 +118,7 @@ export const roleReducer = createReducer(
       error: '',
     };
   }),
-  on(RoleActions.updateRoleFailure, (state, { error }) => {
+  on(RoleActions.updateRoleFailure, (state, {error}) => {
     return {
       ...state,
       loading: false,
@@ -111,7 +131,7 @@ export const roleReducer = createReducer(
       loading: true,
     };
   }),
-  on(RoleActions.deleteRoleSuccess, (state, { id }) => {
+  on(RoleActions.deleteRoleSuccess, (state, {id}) => {
     return {
       ...state,
       loading: false,
@@ -119,7 +139,7 @@ export const roleReducer = createReducer(
       error: '',
     };
   }),
-  on(RoleActions.deleteRoleFailure, (state, { error }) => {
+  on(RoleActions.deleteRoleFailure, (state, {error}) => {
     return {
       ...state,
       loading: false,
