@@ -59,8 +59,8 @@ export const appConfig: ApplicationConfig = {
     //       authDomain: 'itss-imago-0000.firebaseapp.com',
     //       messagingSenderId: '1098187958856',
     //       measurementId: 'G-7TVCQGP8RS',
-    //     })
-    //   )
+    //     }),
+    //   ),
     // ),
     // importProvidersFrom(
     //   provideFirebaseApp(() =>
@@ -92,5 +92,14 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(provideAuth(() => getAuth())),
     importProvidersFrom(provideFirestore(() => getFirestore())),
     importProvidersFrom(provideStorage(() => getStorage())),
+    // importProvidersFrom(provideFirebaseApp(() => initializeApp({
+    //   "projectId": "testtokenimago",
+    //   "appId": "1:217255310789:web:c5157587514e685940c7ac",
+    //   "storageBucket": "testtokenimago.appspot.com",
+    //   // "locationId": "asia-southeast1",
+    //   "apiKey": "AIzaSyBKMm4Lby5gf0PtmmU4Bh7WBRY0X1ykOPE",
+    //   "authDomain": "testtokenimago.firebaseapp.com",
+    //   "messagingSenderId": "217255310789"
+    // }))),
   ],
 };

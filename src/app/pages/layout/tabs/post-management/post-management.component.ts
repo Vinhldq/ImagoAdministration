@@ -57,19 +57,17 @@ export class PostManagementComponent implements OnInit {
 
   currentCatePage = 1;
   itemsCount = 0;
-  categoryStates = [];
   ngOnInit() {
-    this.caterories.forEach((category) => {
-      this.categoryStates[category] = this.categoriesChosen.includes(category);
-    });
-    this.store.select('auth').subscribe((data) => {
-      this.store.dispatch(
-        CategoryActions.getAllCategories({
-          token: data.idToken,
-          page: 1,
-        })
-      );
-    });
+    this.subscription.push(
+      this.store.select('auth').subscribe((data) => {
+        this.store.dispatch(
+          CategoryActions.getAllCategories({
+            token: data.idToken,
+            page: 1,
+          })
+        );
+      })
+    );
     this.page$.subscribe((data) => {
       this.modelPagination.totalDataLength = data;
     });
@@ -127,9 +125,6 @@ export class PostManagementComponent implements OnInit {
 
       new TableHeaderItem({
         data: 'Comment',
-      }),
-      new TableHeaderItem({
-        data: 'Share',
       }),
     ];
 
@@ -242,14 +237,12 @@ export class PostManagementComponent implements OnInit {
       this.categoriesChosen = this.categoriesChosen.filter(
         (item) => item !== category
       );
-      this.categoryStates[category] = false;
     } else {
       this.categoriesChosen = [...this.categoriesChosen, category];
-      this.categoryStates[category] = true;
     }
   }
 
-  save() {
+  async save() {
     // console.log(this.categoriesChosen);
     let temp = [];
     this.categoriesChosen.forEach((element) => {
@@ -258,7 +251,7 @@ export class PostManagementComponent implements OnInit {
 
     console.log(temp);
 
-    this.store.select('auth').subscribe((data) => {
+    await this.store.select('auth').subscribe((data) => {
       this.store.dispatch(
         PostActions.updatePost({
           token: data.idToken,
@@ -272,11 +265,11 @@ export class PostManagementComponent implements OnInit {
     });
   }
 
-  onScroll(ev: any) {
+  async onScroll(ev: any) {
     this.currentCatePage++;
 
     if (this.currentCatePage <= this.itemsCount) {
-      this.store.select('auth').subscribe((data) => {
+      await this.store.select('auth').subscribe((data) => {
         this.store.dispatch(
           CategoryActions.getAllCategories({
             token: data.idToken,
