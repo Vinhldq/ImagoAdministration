@@ -27,6 +27,13 @@
           "testtokenimago"
         ]
       }
+    },
+    "testimago": {
+      "hosting": {
+        "imagoadministration": [
+          "testimago"
+        ]
+      }
     }
   },
   "projects": {

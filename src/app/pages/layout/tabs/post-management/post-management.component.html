@@ -1,4 +1,14 @@
 <div class="content">
+  @if (loading$|async) {
+  <cds-loading
+    [isActive]="isActive"
+    [size]="'normal'"
+    [overlay]="overlay"
+  ></cds-loading>
+  } @else { @if (error$|async) {
+  <h2>Error</h2>
+  <p>{{ error$ | async }}</p>
+  } @else {
   <div class="left">
     <cds-table-container>
       <cds-table-toolbar>
@@ -37,6 +47,7 @@
       </div>
     </cds-table-container>
   </div>
+  } }
   <div class="right">
     <div class="row">
       <div class="user">
@@ -99,8 +110,6 @@
         </div>
         }
       </div>
-
-      <!-- div has 3 column: num of like with icon heart, num of comment and icon chat, num of share and icon share -->
       <div class="actionPost">
         <div class="like">
           <p>Likes:</p>
@@ -116,6 +125,7 @@
         </div>
       </div>
       <!-- <div class="comment-block">
+        @for(item of postDetail.comments; track $index) {
         <div class="comment">
           <div class="title">
             <img
@@ -137,10 +147,10 @@
             </div>
           </div>
           <div class="content">
-            <p>{{ postDetail.content }}</p>
+            <p>{{ postDetail.id | idToComment | async }}</p>
           </div>
         </div>
-        
+        }
       </div> -->
     </div>
   </div>
@@ -148,7 +158,7 @@
 <div class="action">
   <cds-modal [open]="open" (overlaySelected)="open = false">
     <cds-modal-header (closeSelect)="open = false" [showCloseButton]="true">
-      <p class="cds--modal-header__heading">CATEGORY</p>
+      <p class="cds--modal-header__heading cds--type-beta">CATEGORY</p>
     </cds-modal-header>
     <div class="cds--modal-content">
       <fieldset
@@ -164,7 +174,6 @@
         <cds-checkbox
           class="checkBox"
           [disabled]="disabled"
-          [checked]="checkCategory"
           (checkedChange)="onChange(item)"
         >
           {{ item }}

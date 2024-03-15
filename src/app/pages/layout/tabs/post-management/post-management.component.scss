@@ -25,6 +25,21 @@
   scrollbar-width: none;
 }
 
+//if 4k screen then increase the height
+@media (min-width: 3840px) {
+  .right {
+    height: 40rem;
+  }
+}
+
+// .info .text{
+//   display: flex;
+// }
+
+.right::-webkit-scrollbar {
+  display: none;
+}
+
 .right .user {
   display: flex;
   justify-content: space-between;
