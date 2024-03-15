@@ -21,6 +21,7 @@ import * as PostActions from '../../../../ngrx/post/post.actions';
 import { IdToPicturePipe } from '../../../../shared/pipes/posts/IdToPicture/id-to-picture.pipe';
 import { IdToNamePipe } from '../../../../shared/pipes/posts/IdToName/id-to-name.pipe';
 import { CategoryState } from '../../../../ngrx/category/category.state';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-post-management',
@@ -41,7 +42,8 @@ export class PostManagementComponent implements OnInit {
   getAllCategories$ = this.store.select((state) => state.category.categoryList);
   catePage$ = this.store.select((state) => state.category.categoryList.endPage);
   updatePost$ = this.store.select((state) => state.post.updatePost);
-
+  postDetail$ = this.store.select((state) => state.post.detailProfile);
+  subscription: Subscription[] = [];
   constructor(
     protected iconService: IconService,
     private store: Store<{
@@ -55,16 +57,12 @@ export class PostManagementComponent implements OnInit {
 
   currentCatePage = 1;
   itemsCount = 0;
-
+  categoryStates = [];
   ngOnInit() {
+    this.caterories.forEach((category) => {
+      this.categoryStates[category] = this.categoriesChosen.includes(category);
+    });
     this.store.select('auth').subscribe((data) => {
-      this.store.dispatch(
-        ReportActions.getAllReports({
-          token: data.idToken,
-          page: 1,
-          types: 'post',
-        })
-      );
       this.store.dispatch(
         CategoryActions.getAllCategories({
           token: data.idToken,
@@ -72,11 +70,9 @@ export class PostManagementComponent implements OnInit {
         })
       );
     });
-    this.modelPagination.currentPage = 1;
     this.page$.subscribe((data) => {
       this.modelPagination.totalDataLength = data;
     });
-    this.modelPagination.currentPage = 1;
 
     this.getAllCategories$.subscribe((data) => {
       data.data.forEach((element) => {
@@ -84,33 +80,36 @@ export class PostManagementComponent implements OnInit {
         this.itemsCount = data.endPage;
       });
     });
+    var page = 1;
 
-    this.postList$.subscribe((data) => {
-      data.data.forEach((element) => {
-        const date = new Date(
-          element.createdAt._seconds * 1000 +
-            element.createdAt._nanoseconds / 1000000
-        );
-        const formattedDate = date.toLocaleString('en', {
-          weekday: 'long',
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-          hour12: false,
-        });
-        this.dataset = [
-          ...this.dataset,
-          [
-            new TableItem({ data: element.id }),
-            new TableItem({ data: element.content }),
+    this.modelPagination.currentPage = 1;
+    this.postList$.subscribe((creatorPost) => {
+      const date = new Date(
+        creatorPost.data[0].createdAt._seconds * 1000 +
+          creatorPost.data[0].createdAt._nanoseconds / 1000000
+      );
+      const formattedDate = date.toLocaleString('en', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour12: false,
+      });
+
+      this.postDetail$.subscribe((detail) => {
+        this.dataset = creatorPost.data.map((post) => {
+          return [
+            new TableItem({ data: post.id }),
+            new TableItem({ data: post.content }),
             new TableItem({ data: formattedDate }),
-            new TableItem({ data: element.cateId.length }),
-            new TableItem({ data: 'pending' }),
-          ],
-        ];
+            new TableItem({ data: post.cateId.length }),
+            new TableItem({ data: post.comments.length }),
+          ];
+        });
+
+        this.model.data = this.dataset;
       });
     });
-    this.model.data = this.dataset;
 
     this.model.header = [
       new TableHeaderItem({
@@ -125,8 +124,12 @@ export class PostManagementComponent implements OnInit {
       new TableHeaderItem({
         data: 'Category',
       }),
+
       new TableHeaderItem({
-        data: 'State',
+        data: 'Comment',
+      }),
+      new TableHeaderItem({
+        data: 'Share',
       }),
     ];
 
@@ -195,14 +198,20 @@ export class PostManagementComponent implements OnInit {
 
   selectPage(page) {
     console.log('Loading page', page, 'from pagination model');
-    // let beginGet = (page - 1) * this.dataLengthPerPage;
-    // let endGet = page * this.dataLengthPerPage - 1;
-    // this.modelPagination.currentPage = page;
-    // this.dataChoose = [];
-    // for (let i = beginGet; i <= endGet; i++) {
-    //   this.dataChoose = [...this.dataChoose, this.dataset[i]];
-    // }
-    // this.model.data = this.dataChoose;
+    this.subscription.push(
+      this.store.select('auth').subscribe((auth) => {
+        if (auth.idToken != '') {
+          this.store.dispatch(
+            PostActions.getAllPosts({
+              token: auth.idToken,
+              page: page,
+              size: 10,
+            })
+          );
+        }
+      })
+    );
+    this.modelPagination.currentPage = page;
   }
 
   selected(e) {
@@ -233,8 +242,10 @@ export class PostManagementComponent implements OnInit {
       this.categoriesChosen = this.categoriesChosen.filter(
         (item) => item !== category
       );
+      this.categoryStates[category] = false;
     } else {
       this.categoriesChosen = [...this.categoriesChosen, category];
+      this.categoryStates[category] = true;
     }
   }
 

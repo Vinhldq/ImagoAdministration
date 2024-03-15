@@ -30,6 +30,7 @@
     }
   },
   "projects": {
-    "default": "imago-backup"
+    "default": "imago-backup2"
   }
+
 }

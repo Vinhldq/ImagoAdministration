@@ -53,6 +53,7 @@
             <p class="name">
               {{ postDetail.creatorId | idToName | async }}
             </p>
+            <p class="time">{{ postDetail.createdAt }}</p>
           </div>
         </div>
 
@@ -148,7 +149,7 @@
 <div class="action">
   <cds-modal [open]="open" (overlaySelected)="open = false">
     <cds-modal-header (closeSelect)="open = false" [showCloseButton]="true">
-      <p class="cds--modal-header__heading">CATEGORY</p>
+      <p class="cds--modal-header__heading cds--type-beta">CATEGORY</p>
     </cds-modal-header>
     <div class="cds--modal-content">
       <fieldset
@@ -164,7 +165,7 @@
         <cds-checkbox
           class="checkBox"
           [disabled]="disabled"
-          [checked]="checkCategory"
+          [checked]="categoryStates[item]"
           (checkedChange)="onChange(item)"
         >
           {{ item }}
