@@ -80,4 +80,30 @@ export class PostEffects {
       })
     )
   );
+
+  //clear update post just reset cateId to empty array. using API updatePost
+  //getCommentByPostId
+  getCommentByPostId$ = createEffect(() =>
+    this.action$.pipe(
+      ofType(PostActions.getCommentByPostId),
+      switchMap((action) => {
+        return this.postService
+          .getCommentByPostId(action.token, action.postId, action.page)
+          .pipe(
+            map((getCommentByPostId: any) => {
+              return PostActions.getCommentByPostIdSuccess({
+                getCommentByPostId: getCommentByPostId,
+              });
+            }),
+            catchError((error) => {
+              return of(
+                PostActions.getCommentByPostIdFailure({
+                  errorMessage: error,
+                })
+              );
+            })
+          );
+      })
+    )
+  );
 }

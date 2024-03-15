@@ -22,6 +22,7 @@ export interface AllPostModel {
 }
 
 export interface PostDate {
+  toDate(): unknown;
   _seconds: number;
   _nanoseconds: number;
 }

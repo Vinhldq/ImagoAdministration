@@ -89,8 +89,22 @@ export const appConfig: ApplicationConfig = {
         })
       )
     ),
+
+    // importProvidersFrom(
+    //   provideFirebaseApp(() =>
+    //     initializeApp({
+    //       projectId: 'testimago',
+    //       appId: '1:22393128172:web:7fe01bd638c0018afdd1c9',
+    //       storageBucket: 'testimago.appspot.com',
+    //       apiKey: 'AIzaSyABAq8yi2ppYemJuATKUGKAF6foqS5q2eY',
+    //       authDomain: 'testimago.firebaseapp.com',
+    //       messagingSenderId: '22393128172',
+    //     })
+    //   )
+    // ),
     importProvidersFrom(provideAuth(() => getAuth())),
     importProvidersFrom(provideFirestore(() => getFirestore())),
+    importProvidersFrom(provideDatabase(() => getDatabase())),
     importProvidersFrom(provideStorage(() => getStorage())),
     // importProvidersFrom(provideFirebaseApp(() => initializeApp({
     //   "projectId": "testtokenimago",

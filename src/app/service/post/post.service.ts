@@ -47,4 +47,15 @@ export class PostService {
       }
     );
   }
+
+  getCommentByPostId(token: string, postId: string, page: number) {
+    return this.httpClient.get(
+      environment.local_url + `comment/post?postId=${postId}&page=${page}`,
+      {
+        headers: new HttpHeaders({
+          Authorization: `${token}`,
+        }),
+      }
+    );
+  }
 }

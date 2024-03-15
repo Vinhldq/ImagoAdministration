@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, HostBinding, Input, OnInit } from '@angular/core';
 import { SharedModule } from '../../../../shared/shared.module';
 import {
   IconService,
@@ -22,19 +22,22 @@ import { IdToPicturePipe } from '../../../../shared/pipes/posts/IdToPicture/id-t
 import { IdToNamePipe } from '../../../../shared/pipes/posts/IdToName/id-to-name.pipe';
 import { CategoryState } from '../../../../ngrx/category/category.state';
 import { Subscription } from 'rxjs';
+import { CommentModel } from '../../../../models/comment.model';
+import { CommentPipe } from '../../../../shared/pipes/posts/comments/id-to-comment.pipe';
 
 @Component({
   selector: 'app-post-management',
   standalone: true,
+  templateUrl: './post-management.component.html',
+  styleUrl: './post-management.component.scss',
   imports: [
     SharedModule,
     PlaceholderModule,
     AsyncPipe,
     IdToPicturePipe,
     IdToNamePipe,
+    CommentPipe,
   ],
-  templateUrl: './post-management.component.html',
-  styleUrl: './post-management.component.scss',
 })
 export class PostManagementComponent implements OnInit {
   postList$ = this.store.select((state) => state.post.postList);
@@ -43,7 +46,12 @@ export class PostManagementComponent implements OnInit {
   catePage$ = this.store.select((state) => state.category.categoryList.endPage);
   updatePost$ = this.store.select((state) => state.post.updatePost);
   postDetail$ = this.store.select((state) => state.post.detailProfile);
+  comment$ = this.store.select((state) => state.post.getCommentByPostId);
+  loading$ = this.store.select((state) => state.post.isLoading);
+  error$ = this.store.select((state) => state.post.errorMessage);
   subscription: Subscription[] = [];
+  @Input() isActive = true;
+  @Input() @HostBinding('class.cds--loading-overlay') overlay = false;
   constructor(
     protected iconService: IconService,
     private store: Store<{
@@ -58,6 +66,7 @@ export class PostManagementComponent implements OnInit {
   currentCatePage = 1;
   itemsCount = 0;
   ngOnInit() {
+    //get
     this.subscription.push(
       this.store.select('auth').subscribe((data) => {
         this.store.dispatch(
@@ -70,6 +79,19 @@ export class PostManagementComponent implements OnInit {
     );
     this.page$.subscribe((data) => {
       this.modelPagination.totalDataLength = data;
+    });
+
+    // //get comment$ by postId
+    this.postList$.subscribe((data) => {
+      this.store.select('auth').subscribe((auth) => {
+        this.store.dispatch(
+          PostActions.getCommentByPostId({
+            token: auth.idToken,
+            postId: this.idpost,
+            page: 1,
+          })
+        );
+      });
     });
 
     this.getAllCategories$.subscribe((data) => {
@@ -104,7 +126,6 @@ export class PostManagementComponent implements OnInit {
             new TableItem({ data: post.comments.length }),
           ];
         });
-
         this.model.data = this.dataset;
       });
     });
@@ -153,7 +174,7 @@ export class PostManagementComponent implements OnInit {
   disabled = false;
 
   dataset = [];
-  dataLengthPerPage = 8;
+  dataLengthPerPage = 10;
 
   filterUserNames(searchString: string) {
     this.searchValue = searchString;
@@ -161,6 +182,14 @@ export class PostManagementComponent implements OnInit {
 
   overflowOnClick = (event: any) => {
     event.stopPropagation();
+  };
+
+  commentPost: CommentModel = {
+    authorId: '',
+    content: '',
+    createdAt: null,
+    id: '',
+    postId: '',
   };
 
   postDetail: PostModel = {
@@ -189,8 +218,10 @@ export class PostManagementComponent implements OnInit {
     this.postList$.subscribe((data) => {
       this.postDetail = data.data[index];
     });
+    this.idpost = this.postDetail.id;
+    console.log(this.idpost);
   }
-
+  idpost = '';
   selectPage(page) {
     console.log('Loading page', page, 'from pagination model');
     this.subscription.push(
@@ -206,6 +237,7 @@ export class PostManagementComponent implements OnInit {
         }
       })
     );
+
     this.modelPagination.currentPage = page;
   }
 
@@ -242,7 +274,7 @@ export class PostManagementComponent implements OnInit {
     }
   }
 
-  async save() {
+  save() {
     // console.log(this.categoriesChosen);
     let temp = [];
     this.categoriesChosen.forEach((element) => {
@@ -251,7 +283,7 @@ export class PostManagementComponent implements OnInit {
 
     console.log(temp);
 
-    await this.store.select('auth').subscribe((data) => {
+    this.store.select('auth').subscribe((data) => {
       this.store.dispatch(
         PostActions.updatePost({
           token: data.idToken,
@@ -262,14 +294,15 @@ export class PostManagementComponent implements OnInit {
           },
         })
       );
+      this.model.data = this.dataset;
     });
   }
 
-  async onScroll(ev: any) {
+  onScroll(ev: any) {
     this.currentCatePage++;
 
     if (this.currentCatePage <= this.itemsCount) {
-      await this.store.select('auth').subscribe((data) => {
+      this.store.select('auth').subscribe((data) => {
         this.store.dispatch(
           CategoryActions.getAllCategories({
             token: data.idToken,
