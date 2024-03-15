@@ -80,20 +80,20 @@
       </cds-overflow-menu-option>
     }
     @if (block === true) {
-      <cds-overflow-menu-option (click)="changeStatusBlock('block')" [disabled]="true">
+      <cds-overflow-menu-option (click)="changeStatusBlock('block')" [disabled]="false">
         Block
       </cds-overflow-menu-option>
     } @else {
-      <cds-overflow-menu-option (click)="changeStatusBlock('block')" [disabled]="false">
+      <cds-overflow-menu-option (click)="changeStatusBlock('block')" [disabled]="true">
         Block
       </cds-overflow-menu-option>
     }
     @if (block === false) {
-      <cds-overflow-menu-option (click)="changeStatusBlock('unblock')" [disabled]="true">
+      <cds-overflow-menu-option (click)="changeStatusBlock('unblock')" [disabled]="false">
         Unblock
       </cds-overflow-menu-option>
     } @else {
-      <cds-overflow-menu-option (click)="changeStatusBlock('unblock')" [disabled]="false">
+      <cds-overflow-menu-option (click)="changeStatusBlock('unblock')" [disabled]="true">
         Unblock
       </cds-overflow-menu-option>
     }
