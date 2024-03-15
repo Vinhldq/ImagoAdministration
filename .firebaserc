@@ -34,9 +34,16 @@
           "testimago"
         ]
       }
+    },
+    "imago-core-offical": {
+      "hosting": {
+        "imagoadministration": [
+          "imago-core-offical"
+        ]
+      }
     }
   },
   "projects": {
-    "default": "imago-backup2"
+    "default": "imago-core-offical"
   }
 }

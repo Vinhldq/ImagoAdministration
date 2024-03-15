@@ -76,19 +76,19 @@ export const appConfig: ApplicationConfig = {
     //   )
     // ),
 
-    importProvidersFrom(
-      provideFirebaseApp(() =>
-        initializeApp({
-          projectId: 'imago-backup2',
-          appId: '1:307613940415:web:590dc59592b2b83788240a',
-          storageBucket: 'imago-backup2.appspot.com',
-          // locationId: 'asia-east1',
-          apiKey: 'AIzaSyDvKdVzEJmlsJtk4ugeFc_yY-hEQ1RK6-o',
-          authDomain: 'imago-backup2.firebaseapp.com',
-          messagingSenderId: '307613940415',
-        })
-      )
-    ),
+    // importProvidersFrom(
+    //   provideFirebaseApp(() =>
+    //     initializeApp({
+    //       projectId: 'imago-backup2',
+    //       appId: '1:307613940415:web:590dc59592b2b83788240a',
+    //       storageBucket: 'imago-backup2.appspot.com',
+    //       // locationId: 'asia-east1',
+    //       apiKey: 'AIzaSyDvKdVzEJmlsJtk4ugeFc_yY-hEQ1RK6-o',
+    //       authDomain: 'imago-backup2.firebaseapp.com',
+    //       messagingSenderId: '307613940415',
+    //     })
+    //   )
+    // ),
 
     // importProvidersFrom(
     //   provideFirebaseApp(() =>
@@ -102,10 +102,26 @@ export const appConfig: ApplicationConfig = {
     //     })
     //   )
     // ),
+    // importProvidersFrom(provideAuth(() => getAuth())),
+    // importProvidersFrom(provideFirestore(() => getFirestore())),
+    // importProvidersFrom(provideStorage(() => getStorage())),
+    importProvidersFrom(
+      provideFirebaseApp(() =>
+        initializeApp({
+          projectId: 'imago-core-offical',
+          appId: '1:785682675012:web:bd3bd0ece3c429daea5311',
+          storageBucket: 'imago-core-offical.appspot.com',
+          apiKey: 'AIzaSyB3-3u9tnZBrEoqMGKP0aTf2mJ1UwxfRXw',
+          authDomain: 'imago-core-offical.firebaseapp.com',
+          messagingSenderId: '785682675012',
+          measurementId: 'G-8MSRP5LMS0',
+        })
+      )
+    ),
     importProvidersFrom(provideAuth(() => getAuth())),
     importProvidersFrom(provideFirestore(() => getFirestore())),
-    importProvidersFrom(provideDatabase(() => getDatabase())),
     importProvidersFrom(provideStorage(() => getStorage())),
+    importProvidersFrom(provideDatabase(() => getDatabase())),
     // importProvidersFrom(provideFirebaseApp(() => initializeApp({
     //   "projectId": "testtokenimago",
     //   "appId": "1:217255310789:web:c5157587514e685940c7ac",
