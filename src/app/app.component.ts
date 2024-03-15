@@ -54,52 +54,71 @@ export class AppComponent implements OnInit, OnDestroy {
 
   profile: ProfileModel;
   ngOnInit(): void {
-    this.subscriptions.push(
-      combineLatest({
-        idToken: this.idToken$,
-        uid: this.uid$,
-      }).subscribe(async (res) => {
-        if (res.idToken && res.uid) {
-          this.store.dispatch(
-            AuthActions.getAuthById({
-              token: res.idToken,
-              id: res.uid,
-            })
-          );
-        }
-      }),
-
-      this.store.select('auth', 'idToken').subscribe((val) => {
-        if (val != undefined) {
-          this.store.dispatch(
-            ProfileAction.getMineProfile({
-              idToken: val,
-            })
-          );
-
-        }
-      }),
-
-      this.store.select('profile', 'profile').subscribe((val) => {
-        this.profile = val;
-      }),
-      this.store.select('auth', 'authDetail').subscribe((val) => {
-        if (val.role == 'admin') {
-          if (this.profile.id !== undefined && this.profile.id !== null) {
-            console.log(this.profile.id);
-            this.router.navigate(['/dashboard']);
-            this.toastr.success('Welcome to Imago Admin', '', {
-              timeOut: 5000,
-              positionClass: 'toast-top-right',
-              progressBar: true,
-              progressAnimation: 'increasing',
-            });
+    setTimeout(() => {
+      this.subscriptions.push(
+        combineLatest({
+          idToken: this.idToken$,
+          uid: this.uid$,
+        }).subscribe( (res) => {
+          if (res.idToken && res.uid) {
+            this.store.dispatch(
+              AuthActions.getAuthById({
+                token: res.idToken,
+                id: res.uid,
+              })
+            );
           }
-          else {
+        }),
+
+        this.store.select('auth', 'idToken').subscribe((val) => {
+          if (val != undefined) {
+            this.store.dispatch(
+              ProfileAction.getMineProfile({
+                idToken: val,
+              })
+            );
+
+          }
+        }),
+
+        this.store.select('profile', 'profile').subscribe((val) => {
+          this.profile = val;
+        }),
+        this.store.select('auth', 'authDetail').subscribe((val) => {
+          if (val.role == 'admin') {
+            if (this.profile.id !== undefined && this.profile.id !== null) {
+              console.log(this.profile.id);
+              this.router.navigate(['/dashboard']);
+              this.toastr.success('Welcome to Imago Admin', '', {
+                timeOut: 3000,
+                positionClass: 'toast-top-right',
+                progressBar: true,
+                progressAnimation: 'increasing',
+              });
+            }
+            else {
+              this.store.dispatch(AuthActions.logout());
+              this.toastr.error(
+                'You have no profile. Go to the Imago app to create a profile.',
+                'Profile Not Found',
+                {
+                  timeOut: 5000,
+                  positionClass: 'toast-top-right',
+                  progressBar: true,
+                  progressAnimation: 'increasing',
+                }
+              );
+            }
+          }
+          if (val.role == 'user') {
+            this.store.dispatch(AuthActions.clearAuth());
             this.store.dispatch(AuthActions.logout());
+            this.router.navigate(['/login']).then();
             this.toastr.error(
-              ' You have no profile. Go to the Imago app to create a profile',
-              'Profile Not Found',
+              'You are not authorized to access this page.' +
+              'You have no profile. Go to the Imago app to create a profile.' +
+              'Plase contact the administrator to change Role.',
+              'Unauthorized Access',
               {
                 timeOut: 5000,
                 positionClass: 'toast-top-right',
@@ -108,26 +127,9 @@ export class AppComponent implements OnInit, OnDestroy {
               }
             );
           }
-        }
-        if (val.role == 'user') {
-          this.store.dispatch(AuthActions.clearAuth());
-          this.store.dispatch(AuthActions.logout());
-          this.router.navigate(['/login']).then();
-          this.toastr.error(
-            'You are not authorized to access this page.' +
-            ' You have no profile. Go to the Imago app to create a profile ' +
-            ' Plase contact the administrator to change Role.',
-            'Unauthorized Access',
-            {
-              timeOut: 5000,
-              positionClass: 'toast-top-right',
-              progressBar: true,
-              progressAnimation: 'increasing',
-            }
-          );
-        }
-      })
-    );
+        })
+      );
+    }, 2000);
   }
 
   ngOnDestroy(): void {
