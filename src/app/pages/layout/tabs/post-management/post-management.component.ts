@@ -1,4 +1,10 @@
-import { Component, HostBinding, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  HostBinding,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { SharedModule } from '../../../../shared/shared.module';
 import {
   IconService,
@@ -39,7 +45,7 @@ import { CommentPipe } from '../../../../shared/pipes/posts/comments/id-to-comme
     CommentPipe,
   ],
 })
-export class PostManagementComponent implements OnInit {
+export class PostManagementComponent implements OnInit, OnDestroy {
   postList$ = this.store.select((state) => state.post.postList);
   page$ = this.store.select((state) => state.post.postList.endPage);
   getAllCategories$ = this.store.select((state) => state.category.categoryList);
@@ -62,7 +68,11 @@ export class PostManagementComponent implements OnInit {
   ) {
     this.iconService.registerAll([Add16, Filter16]);
   }
-
+  ngOnDestroy(): void {
+    this.subscription.forEach((val) => {
+      val.unsubscribe();
+    });
+  }
   currentCatePage = 1;
   itemsCount = 0;
   ngOnInit() {
@@ -282,34 +292,37 @@ export class PostManagementComponent implements OnInit {
     });
 
     console.log(temp);
-
-    this.store.select('auth').subscribe((data) => {
-      this.store.dispatch(
-        PostActions.updatePost({
-          token: data.idToken,
-          id: this.postDetail.id,
-          post: {
-            ...this.postDetail,
-            cateId: temp,
-          },
-        })
-      );
-      this.model.data = this.dataset;
-    });
+    this.subscription.push(
+      this.store.select('auth').subscribe((data) => {
+        this.store.dispatch(
+          PostActions.updatePost({
+            token: data.idToken,
+            id: this.postDetail.id,
+            post: {
+              ...this.postDetail,
+              cateId: temp,
+            },
+          })
+        );
+        this.model.data = this.dataset;
+      })
+    );
   }
 
   onScroll(ev: any) {
     this.currentCatePage++;
 
     if (this.currentCatePage <= this.itemsCount) {
-      this.store.select('auth').subscribe((data) => {
-        this.store.dispatch(
-          CategoryActions.getAllCategories({
-            token: data.idToken,
-            page: this.currentCatePage,
-          })
-        );
-      });
+      this.subscription.push(
+        this.store.select('auth').subscribe((data) => {
+          this.store.dispatch(
+            CategoryActions.getAllCategories({
+              token: data.idToken,
+              page: this.currentCatePage,
+            })
+          );
+        })
+      );
     }
   }
 
