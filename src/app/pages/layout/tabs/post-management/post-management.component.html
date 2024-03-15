@@ -1,14 +1,15 @@
+@if (loading$|async) {
+
+<cds-loading
+  [isActive]="isActive"
+  [size]="'normal'"
+  [overlay]="overlay"
+></cds-loading>
+} @else { @if (error$|async) {
+<h2>Error</h2>
+<p>{{ error$ | async }}</p>
+} @else {
 <div class="content">
-  @if (loading$|async) {
-  <cds-loading
-    [isActive]="isActive"
-    [size]="'normal'"
-    [overlay]="overlay"
-  ></cds-loading>
-  } @else { @if (error$|async) {
-  <h2>Error</h2>
-  <p>{{ error$ | async }}</p>
-  } @else {
   <div class="left">
     <cds-table-container>
       <cds-table-toolbar>
@@ -47,7 +48,6 @@
       </div>
     </cds-table-container>
   </div>
-  } }
   <div class="right">
     <div class="row">
       <div class="user">
@@ -155,6 +155,8 @@
     </div>
   </div>
 </div>
+} }
+
 <div class="action">
   <cds-modal [open]="open" (overlaySelected)="open = false">
     <cds-modal-header (closeSelect)="open = false" [showCloseButton]="true">

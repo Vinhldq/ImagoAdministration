@@ -44,17 +44,19 @@ export class AppComponent implements OnInit, OnDestroy {
         this.store.dispatch(AuthActions.storedIdToken({ idToken }));
         this.store.dispatch(AuthActions.storedUserUid({ uid: user.uid }));
         console.log(idToken);
-
+        this.store.dispatch(
+          ProfileAction.getMineProfile({
+            idToken: idToken,
+          })
+        );
       } else {
         this.router.navigateByUrl('/login');
       }
     });
   }
 
-
-
   ngOnDestroy(): void {
-    this.store.dispatch(AuthActions.clearAuth());
+    // this.store.dispatch(AuthActions.clearAuth());
     this.subscriptions.forEach((val) => {
       val.unsubscribe();
     });
@@ -68,7 +70,7 @@ export class AppComponent implements OnInit, OnDestroy {
         combineLatest({
           idToken: this.idToken$,
           uid: this.uid$,
-        }).subscribe( (res) => {
+        }).subscribe((res) => {
           if (res.idToken && res.uid) {
             this.store.dispatch(
               AuthActions.getAuthById({
@@ -86,7 +88,6 @@ export class AppComponent implements OnInit, OnDestroy {
                 idToken: val,
               })
             );
-
           }
         }),
 
@@ -104,8 +105,7 @@ export class AppComponent implements OnInit, OnDestroy {
                 progressBar: true,
                 progressAnimation: 'increasing',
               });
-            }
-            else {
+            } else {
               this.store.dispatch(AuthActions.logout());
               this.toastr.error(
                 'You have no profile. Go to the Imago app to create a profile.',
@@ -125,8 +125,8 @@ export class AppComponent implements OnInit, OnDestroy {
             this.router.navigate(['/login']).then();
             this.toastr.error(
               'You are not authorized to access this page.' +
-              'You have no profile. Go to the Imago app to create a profile.' +
-              'Plase contact the administrator to change Role.',
+                'You have no profile. Go to the Imago app to create a profile.' +
+                'Plase contact the administrator to change Role.',
               'Unauthorized Access',
               {
                 timeOut: 5000,
