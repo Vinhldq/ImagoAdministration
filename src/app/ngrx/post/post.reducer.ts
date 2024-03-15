@@ -2,6 +2,7 @@ import { PostState } from './post.state';
 import { createReducer, on } from '@ngrx/store';
 import * as PostAction from './post.actions';
 import { ProfileModel } from '../../models/profile.model';
+import { PostModel } from '../../models/post.model';
 
 export const initialPostState: PostState = {
   postList: {
@@ -9,6 +10,7 @@ export const initialPostState: PostState = {
     endPage: 0,
   },
   detailProfile: [] as ProfileModel[],
+  updatePost: {} as PostModel,
   isGetAllPost: false,
   isGetAllPostSuccess: false,
   getAllPostErrorMessage: '',
@@ -51,6 +53,24 @@ export const postReducer = createReducer(
     isGetAllPostSuccess: true,
   })),
   on(PostAction.getPostDetailFailure, (state, { errorMessage }) => ({
+    ...state,
+    isGetAllPost: false,
+    isGetAllPostSuccess: false,
+    getAllPostErrorMessage: errorMessage,
+  })),
+  on(PostAction.updatePost, (state) => ({
+    ...state,
+    isGetAllPost: true,
+    isGetAllPostSuccess: false,
+  })),
+  on(PostAction.updatePostSuccess, (state, { updatePost }) => ({
+    ...state,
+    updatePost: updatePost,
+    isGetAllPost: false,
+    isGetAllPostSuccess: true,
+  })),
+
+  on(PostAction.updatePostFailure, (state, { errorMessage }) => ({
     ...state,
     isGetAllPost: false,
     isGetAllPostSuccess: false,

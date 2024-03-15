@@ -11,7 +11,7 @@ export class ProfileService {
 
 
   getMineProfile(idToken: string) {
-    return this.httpClient.get<ProfileModel>(
+    return  this.httpClient.get<ProfileModel>(
       environment.local_url + `profile/mine`,
       {
         headers: new HttpHeaders({

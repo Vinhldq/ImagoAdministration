@@ -44,12 +44,21 @@ export class AppComponent implements OnInit, OnDestroy {
         this.store.dispatch(AuthActions.storedIdToken({ idToken }));
         this.store.dispatch(AuthActions.storedUserUid({ uid: user.uid }));
         console.log(idToken);
+
       } else {
         this.router.navigateByUrl('/login');
       }
     });
   }
 
+
+
+  ngOnDestroy(): void {
+    this.store.dispatch(AuthActions.clearAuth());
+    this.subscriptions.forEach((val) => {
+      val.unsubscribe();
+    });
+  }
   protected open = false;
 
   profile: ProfileModel;
@@ -129,13 +138,6 @@ export class AppComponent implements OnInit, OnDestroy {
           }
         })
       );
-    }, 2000);
-  }
-
-  ngOnDestroy(): void {
-    this.store.dispatch(AuthActions.clearAuth());
-    this.subscriptions.forEach((val) => {
-      val.unsubscribe();
-    });
+    }, 3000);
   }
 }

@@ -86,12 +86,15 @@ export class SettingsComponent implements OnInit, OnDestroy {
     // Initialize currentPage to 1
     this.modelPagigation.currentPage = 1;
 
+  Promise.resolve().then(() => {
     this.subscriptions.push(
       this.store.select('auth', 'idToken').subscribe((val) => {
         this.store.dispatch(
           ReportAction.getReportStatus({ token: val, page: 1 })
         );
+        this.store.dispatch(ProfileAction.getMineProfile({ idToken: val }));
       }),
+
       this.store.select('profile', 'profile').subscribe((val) => {
         this.profileDetail = val;
       }),
@@ -101,7 +104,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
           .map((element) => {
             const date = new Date(
               element.updatedAt._seconds * 1000 +
-                element.updatedAt._nanoseconds / 1000000
+              element.updatedAt._nanoseconds / 1000000
             );
             const formattedDateParts = date
               .toLocaleString('en-GB', {
@@ -119,11 +122,13 @@ export class SettingsComponent implements OnInit, OnDestroy {
               updatedAt: formattedDate,
             };
           }),
-        this.dataChoose = this.dataset;
+          this.dataChoose = this.dataset;
         this.modelPagigation.totalDataLength = val.endPage;
         this.cdr.detectChanges();
       }),
     );
+  });
+
   }
 
   selectPage(page: any) {
@@ -140,8 +145,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
   protected readonly logout = logout;
 
   signOut() {
-    // this.store.dispatch(ProfileAction.clearState());
-    // this.store.dispatch(AuthActions.clearAuth());
     this.store.dispatch(AuthActions.logout());
     this.router.navigate(['/login']).then();
   }

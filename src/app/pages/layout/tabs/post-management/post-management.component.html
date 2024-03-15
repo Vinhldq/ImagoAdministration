@@ -42,11 +42,17 @@
       <div class="user">
         <div class="info">
           <div class="avatar">
-            <img [src]="postDetail.creatorId | idToPicture | async" alt="" />
+            <img
+              [src]="postDetail.creatorId | idToPicture | async"
+              alt=""
+              (error)="errorImg($event)"
+            />
           </div>
 
           <div class="text">
-            <p class="name">{{ postDetail.creatorId | idToName | async }}</p>
+            <p class="name">
+              {{ postDetail.creatorId | idToName | async }}
+            </p>
           </div>
         </div>
 
@@ -65,46 +71,33 @@
 
       <div class="post-detail">
         <p class="content">{{ postDetail.content }}</p>
-        @if(postDetail.photoUrl.length !== 1) {
-        <ng-container>
-          <div class="img-block">
-            @for (item of postDetail.photoUrl; track $index) {
-            <div class="image">
-              <img [src]="item" alt="" />
-            </div>
-            }
+        @if(postDetail.photoUrl.length > 1) {
+        <div class="img-block">
+          @for (item of postDetail.photoUrl; track $index) {
+          <div class="image">
+            <img [src]="item" alt="" />
           </div>
-        </ng-container>
+          }
+        </div>
 
+        } @else if(postDetail.photoUrl.length === 1) {
+        <div class="img-block1">
+          @for (item of postDetail.photoUrl; track $index) {
+          <div class="image">
+            <img [src]="item" alt="" />
+          </div>
+          }
+        </div>
         } @else {
-        <!-- get ng-template #base -->
-        <ng-container *ngTemplateOutlet="base"></ng-container>
-        } @if(postDetail.photoUrl.length === 1) {
-        <ng-container>
-          <div class="img-block1">
-            @for (item of postDetail.photoUrl; track $index) {
-            <div class="image">
-              <img [src]="item" alt="" />
-            </div>
-            }
+        <div class="img-block1">
+          <div class="image">
+            <img
+              src="https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg"
+              alt=""
+            />
           </div>
-        </ng-container>
-
-        }@else {
-        <!-- get ng-template #base -->
-        <ng-container *ngTemplateOutlet="base"></ng-container>
+        </div>
         }
-
-        <ng-template #base>
-          <div class="img-block1">
-            <div class="image">
-              <img
-                src="https://static.thenounproject.com/png/1077596-200.png"
-                alt=""
-              />
-            </div>
-          </div>
-        </ng-template>
       </div>
 
       <!-- div has 3 column: num of like with icon heart, num of comment and icon chat, num of share and icon share -->
@@ -122,10 +115,14 @@
           <p>{{ postDetail.share.length }}</p>
         </div>
       </div>
-      <div class="comment-block">
+      <!-- <div class="comment-block">
         <div class="comment">
           <div class="title">
-            <img [src]="postDetail.creatorId | idToPicture | async" alt="" />
+            <img
+              [src]="postDetail.creatorId | idToPicture | async"
+              alt=""
+              (error)="errorImg($event)"
+            />
             <div
               style="
                 justify-content: center;
@@ -143,43 +140,48 @@
             <p>{{ postDetail.content }}</p>
           </div>
         </div>
-      </div>
-
-      <div class="action">
-        <cds-modal [open]="open" (overlaySelected)="open = false">
-          <cds-modal-header
-            (closeSelect)="open = false"
-            [showCloseButton]="true"
-          >
-            <p class="cds--modal-header__heading cds--type-beta">CATEGORY</p>
-          </cds-modal-header>
-          <div class="cds--modal-content">
-            <fieldset class="cds--fieldset">
-              @for (item of caterories; track $index) {
-              <cds-checkbox
-                class="checkBox"
-                [disabled]="disabled"
-                [checked]="checkCategory"
-                (checkedChange)="onChange(item)"
-              >
-                {{ item }}
-              </cds-checkbox>
-              }
-            </fieldset>
-          </div>
-          <cds-modal-footer>
-            <ng-container>
-              <button
-                cdsButton="secondary"
-                (click)="open = false; save()"
-                [attr.modal-primary-focus]="true"
-              >
-                Save
-              </button>
-            </ng-container>
-          </cds-modal-footer>
-        </cds-modal>
-      </div>
+        
+      </div> -->
     </div>
   </div>
+</div>
+<div class="action">
+  <cds-modal [open]="open" (overlaySelected)="open = false">
+    <cds-modal-header (closeSelect)="open = false" [showCloseButton]="true">
+      <p class="cds--modal-header__heading">CATEGORY</p>
+    </cds-modal-header>
+    <div class="cds--modal-content">
+      <fieldset
+        infiniteScroll
+        [infiniteScrollDistance]="2"
+        [infiniteScrollThrottle]="50"
+        [infiniteScrollContainer]="'.cds--modal-content'"
+        [fromRoot]="true"
+        (scrolled)="onScroll($event)"
+        class="cds--fieldset"
+      >
+        @for (item of caterories; track $index) {
+        <cds-checkbox
+          class="checkBox"
+          [disabled]="disabled"
+          [checked]="checkCategory"
+          (checkedChange)="onChange(item)"
+        >
+          {{ item }}
+        </cds-checkbox>
+        }
+      </fieldset>
+    </div>
+    <cds-modal-footer>
+      <ng-container>
+        <button
+          cdsButton="secondary"
+          (click)="open = false; save()"
+          [attr.modal-primary-focus]="true"
+        >
+          Save
+        </button>
+      </ng-container>
+    </cds-modal-footer>
+  </cds-modal>
 </div>

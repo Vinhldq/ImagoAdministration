@@ -218,3 +218,6 @@ input:focus, input:active {
   }
 
 }
+::ng-deep .cds--loading__stroke {
+  stroke: var(--cds-interactive, #161616);
+}

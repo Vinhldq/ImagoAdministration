@@ -155,7 +155,7 @@ export const authReducer = createReducer(
         isLoading: false,
         isSuccessful: true,
         errorMessage: '',
-        authDetail: action.auth,
+        authDetail: state.getAllAuth.find(auth => auth.id === state.authDetail.id),
       };
     }
   ),
@@ -182,7 +182,7 @@ export const authReducer = createReducer(
         isLoading: false,
         isSuccessful: true,
         errorMessage: '',
-        authDetail: action.auth,
+        authDetail: state.getAllAuth.find(auth => auth.id === state.authDetail.id),
       };
     }
   ),
@@ -195,12 +195,38 @@ export const authReducer = createReducer(
       };
     }
   ),
-  on(AuthAction.clearIdToken, (state, action) => {
-    return {
-      ...state,
-      idToken: null,
-    };
-  }
+  on(AuthAction.changeUnblock, (state, action) => {
+      return {
+        ...state,
+        isLoading: true,
+        isSuccessful: false,
+      };
+    }
   ),
-
+  on(AuthAction.changeUnblockSuccess, (state, action) => {
+      return {
+        ...state,
+        isLoading: false,
+        isSuccessful: true,
+        errorMessage: '',
+        authDetail: state.getAllAuth.find(auth => auth.id === state.authDetail.id),
+      };
+    }
+  ),
+  on(AuthAction.changeUnblockFailure, (state, {errorMessage, type}) => {
+      return {
+        ...state,
+        isLoading: false,
+        isSuccessful: false,
+        errorMessage: errorMessage,
+      };
+    }
+  ),
+  on(AuthAction.clearIdToken, (state, action) => {
+      return {
+        ...state,
+        idToken: null,
+      };
+    }
+  ),
 );

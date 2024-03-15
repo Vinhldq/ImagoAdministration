@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { AuthState } from '../../../../ngrx/auth/auth.state';
 import { ProfileService } from '../../../../service/profile/profile.service';
 import { AuthService } from '../../../../service/auth/auth.service';
-import { Observable, map } from 'rxjs';
+import { Observable, catchError, map, of } from 'rxjs';
 import { ProfileModel } from '../../../../models/profile.model';
 import { Store } from '@ngrx/store';
 
@@ -31,7 +31,8 @@ export class IdToNamePipe implements PipeTransform {
     return this.profileService.getProfileById(this.token, id).pipe(
       map((profile: ProfileModel) => {
         return profile.userName;
-      })
+      }),
+      catchError((error) => of('User Name')) // Return 'No name' when an error occurs
     );
   }
 }
