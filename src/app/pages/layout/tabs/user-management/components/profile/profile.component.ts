@@ -52,7 +52,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
             new TableItem({data: item.role}),
             new TableItem({data: item.profile.followers.length}),
             new TableItem({data: item.profile.following.length}),
-            new TableItem({data: item.isBanned ? "Unblock" : "Block"}),
+            new TableItem({data: item.isBanned ? "Block" : "Unblock"}),
             new TableItem({data: "Choose", template: this.overflowMenuItemTemplateChoose}),
           ]
         }
@@ -74,6 +74,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       new TableHeaderItem({data: "Status"}),
       new TableHeaderItem({data: "Choose"}),
     ];
+    this.modelProfilePagination.currentPage = 1;
   }
 
   ngOnDestroy(): void {
@@ -139,7 +140,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   filterNodeNames(searchString: string) {
     this.modelProfile.data = this.dataset
-      .filter((row: TableItem[]) => row[1].data.toLowerCase().includes(searchString.toLowerCase()));
+      .filter((row: TableItem[]) => row[2].data.toLowerCase().includes(searchString.toLowerCase()));
   }
 
   selectPage(page: number) {

@@ -61,7 +61,7 @@ export class AuthnoprofileComponent implements OnInit, OnDestroy {
             new TableItem({data: item.email}),
             new TableItem({data: item.role}),
             new TableItem({data: formattedDate}),
-            new TableItem({data: item.isBanned ? "Unblock" : "Block"}),
+            new TableItem({data: item.isBanned ? "Block" : "Unblock"}),
             new TableItem({data: "Choose", template: this.overflowMenuItemTemplateChoose}),
           ]
         }
