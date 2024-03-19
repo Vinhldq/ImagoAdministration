@@ -7,9 +7,10 @@ import { AuthState } from '../../ngrx/auth/auth.state';
   providedIn: 'root',
 })
 export class CategoryService {
+  categoriesChosen: any;
   constructor(
     private httpClient: HttpClient,
-    private store: Store<{ auth: AuthState }>,
+    private store: Store<{ auth: AuthState }>
   ) {}
 
   getAllCategory(token: string, page: number) {
@@ -18,7 +19,7 @@ export class CategoryService {
       `http://localhost:3000/v1/category/all?page=${page}`,
       {
         headers: headers,
-      },
+      }
     );
   }
 }

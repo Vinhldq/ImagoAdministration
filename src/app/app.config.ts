@@ -76,21 +76,60 @@ export const appConfig: ApplicationConfig = {
     //   )
     // ),
 
+    // importProvidersFrom(
+    //   provideFirebaseApp(() =>
+    //     initializeApp({
+    //       projectId: 'imago-backup2',
+    //       appId: '1:307613940415:web:590dc59592b2b83788240a',
+    //       storageBucket: 'imago-backup2.appspot.com',
+    //       // locationId: 'asia-east1',
+    //       apiKey: 'AIzaSyDvKdVzEJmlsJtk4ugeFc_yY-hEQ1RK6-o',
+    //       authDomain: 'imago-backup2.firebaseapp.com',
+    //       messagingSenderId: '307613940415',
+    //     })
+    //   )
+    // ),
+
+    // importProvidersFrom(
+    //   provideFirebaseApp(() =>
+    //     initializeApp({
+    //       projectId: 'testimago',
+    //       appId: '1:22393128172:web:7fe01bd638c0018afdd1c9',
+    //       storageBucket: 'testimago.appspot.com',
+    //       apiKey: 'AIzaSyABAq8yi2ppYemJuATKUGKAF6foqS5q2eY',
+    //       authDomain: 'testimago.firebaseapp.com',
+    //       messagingSenderId: '22393128172',
+    //     })
+    //   )
+    // ),
+    // importProvidersFrom(provideAuth(() => getAuth())),
+    // importProvidersFrom(provideFirestore(() => getFirestore())),
+    // importProvidersFrom(provideStorage(() => getStorage())),
     importProvidersFrom(
       provideFirebaseApp(() =>
         initializeApp({
-          projectId: 'imago-backup2',
-          appId: '1:307613940415:web:590dc59592b2b83788240a',
-          storageBucket: 'imago-backup2.appspot.com',
-          // locationId: 'asia-east1',
-          apiKey: 'AIzaSyDvKdVzEJmlsJtk4ugeFc_yY-hEQ1RK6-o',
-          authDomain: 'imago-backup2.firebaseapp.com',
-          messagingSenderId: '307613940415',
+          projectId: 'imago-core-offical',
+          appId: '1:785682675012:web:bd3bd0ece3c429daea5311',
+          storageBucket: 'imago-core-offical.appspot.com',
+          apiKey: 'AIzaSyB3-3u9tnZBrEoqMGKP0aTf2mJ1UwxfRXw',
+          authDomain: 'imago-core-offical.firebaseapp.com',
+          messagingSenderId: '785682675012',
+          measurementId: 'G-8MSRP5LMS0',
         })
       )
     ),
     importProvidersFrom(provideAuth(() => getAuth())),
     importProvidersFrom(provideFirestore(() => getFirestore())),
     importProvidersFrom(provideStorage(() => getStorage())),
+    importProvidersFrom(provideDatabase(() => getDatabase())),
+    // importProvidersFrom(provideFirebaseApp(() => initializeApp({
+    //   "projectId": "testtokenimago",
+    //   "appId": "1:217255310789:web:c5157587514e685940c7ac",
+    //   "storageBucket": "testtokenimago.appspot.com",
+    //   // "locationId": "asia-southeast1",
+    //   "apiKey": "AIzaSyBKMm4Lby5gf0PtmmU4Bh7WBRY0X1ykOPE",
+    //   "authDomain": "testtokenimago.firebaseapp.com",
+    //   "messagingSenderId": "217255310789"
+    // }))),
   ],
 };

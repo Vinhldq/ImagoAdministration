@@ -35,4 +35,27 @@ export class PostService {
       }
     );
   }
+
+  updatePost(token: string, post: any, id: string) {
+    return this.httpClient.put(
+      environment.local_url + `post/updatebyadmin?id=${id}`,
+      post,
+      {
+        headers: new HttpHeaders({
+          Authorization: `${token}`,
+        }),
+      }
+    );
+  }
+
+  getCommentByPostId(token: string, postId: string, page: number) {
+    return this.httpClient.get(
+      environment.local_url + `comment/post?postId=${postId}&page=${page}`,
+      {
+        headers: new HttpHeaders({
+          Authorization: `${token}`,
+        }),
+      }
+    );
+  }
 }

@@ -21,8 +21,10 @@ import {
   DropdownModule,
   NotificationModule,
   NotificationService,
+  LoadingModule,
 } from 'carbon-components-angular';
 import { NgChartsModule } from 'ng2-charts';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 export const CarbonModules = [
   UIShellModule,
@@ -45,6 +47,7 @@ export const CarbonModules = [
   DropdownModule,
   NgChartsModule,
   NotificationModule,
+  LoadingModule,
 ];
 
 @NgModule({
@@ -54,8 +57,15 @@ export const CarbonModules = [
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
+    InfiniteScrollModule,
     ...CarbonModules,
   ],
-  exports: [FormsModule, ReactiveFormsModule, RouterModule, ...CarbonModules],
+  exports: [
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule,
+    InfiniteScrollModule,
+    ...CarbonModules,
+  ],
 })
 export class SharedModule {}

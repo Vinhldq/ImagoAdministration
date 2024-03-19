@@ -1,4 +1,5 @@
-import { PostModel } from './post.model';
+import {PostModel} from './post.model';
+
 export interface ProfileModel {
   id: string | PostModel['creatorId'];
   userName: string;
@@ -12,4 +13,14 @@ export interface ProfileModel {
   category: string[];
   followers: string[];
   following: string[];
+}
+
+export interface AuthProfilePagination {
+  data: any[];
+  endPage: number;
+}
+
+export interface AuthNoProfilePagination {
+  data: any[];
+  endPage: number;
 }

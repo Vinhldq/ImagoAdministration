@@ -1,19 +1,20 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import * as AuthActions from './auth.actions';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, mergeMap, of, switchMap } from 'rxjs';
+import {Actions, createEffect, ofType} from '@ngrx/effects';
+import {catchError, map, mergeMap, of, switchMap} from 'rxjs';
 
-import { Store } from '@ngrx/store';
-import { AuthService } from '../../service/auth/auth.service';
+import {Store} from '@ngrx/store';
+import {AuthService} from '../../service/auth/auth.service';
 import * as ReportActions from '../report/report.actions';
-
+import * as ProfileActions from '../profile/profile.actions';
 @Injectable()
 export class AuthEffects {
   constructor(
     private action$: Actions,
     private authService: AuthService,
     private store: Store<{}>
-  ) {}
+  ) {
+  }
 
   login$ = createEffect(() => {
     return this.action$.pipe(
@@ -25,7 +26,7 @@ export class AuthEffects {
         return AuthActions.loginSuccess();
       }),
       catchError((error) => {
-        return of(AuthActions.loginFailure({ errorMessage: error }));
+        return of(AuthActions.loginFailure({errorMessage: error}));
       })
     );
   });
@@ -34,13 +35,16 @@ export class AuthEffects {
     return this.action$.pipe(
       ofType(AuthActions.logout),
       switchMap(() => {
+        this.store.dispatch(ProfileActions.clearState());
+        this.store.dispatch(AuthActions.clearIdToken());
+        this.store.dispatch(AuthActions.clearAuth());
         return this.authService.logout();
       }),
       map(() => {
         return AuthActions.logoutSuccess();
       }),
       catchError((error) => {
-        return of(AuthActions.logoutFailure({ errorMessage: error }));
+        return of(AuthActions.logoutFailure({errorMessage: error}));
       })
     );
   });
@@ -51,10 +55,10 @@ export class AuthEffects {
         return this.authService.getAuthById(action.token, action.id);
       }),
       map((res) => {
-        return AuthActions.getAuthByIdSuccess({ auth: res });
+        return AuthActions.getAuthByIdSuccess({auth: res});
       }),
       catchError((error) => {
-        return of(AuthActions.getAuthByIdFailure({ errorMessage: error }));
+        return of(AuthActions.getAuthByIdFailure({errorMessage: error}));
       })
     );
   });
@@ -70,8 +74,59 @@ export class AuthEffects {
             });
           }),
           catchError((error) => {
-            return of(AuthActions.getAllAuthFailure({ errorMessage: error }));
+            return of(AuthActions.getAllAuthFailure({errorMessage: error}));
           })
+        );
+      })
+    )
+  );
+  changeRole$ = createEffect(() =>
+    this.action$.pipe(
+      ofType(AuthActions.changeRole),
+      switchMap((action) => {
+        return this.authService.changeRole(action.idToken, action.id, action.role).pipe(
+          map((auth: any) => {
+            return AuthActions.changeRoleSuccess({
+              auth: auth,
+            });
+          }),
+          catchError((error) => {
+            return of(AuthActions.changeRoleFailure({errorMessage: error}));
+          }),
+        );
+      }),
+    ),
+  );
+  changeBlock$ = createEffect(() =>
+    this.action$.pipe(
+      ofType(AuthActions.changeBlock),
+      switchMap((action) => {
+        return this.authService.changeBlock(action.idToken, action.id, action.isBanned).pipe(
+          map((auth: any) => {
+            return AuthActions.changeBlockSuccess({
+              auth: auth,
+            });
+          }),
+          catchError((error) => {
+            return of(AuthActions.changeBlockFailure({errorMessage: error}));
+          }),
+        );
+      }),
+    ),
+  );
+  changeUnblock$ = createEffect(() =>
+    this.action$.pipe(
+      ofType(AuthActions.changeUnblock),
+      switchMap((action) => {
+        return this.authService.changeUnBlock(action.idToken, action.id, action.isBanned).pipe(
+          map((auth: any) => {
+            return AuthActions.changeUnblockSuccess({
+              auth: auth,
+            });
+          }),
+          catchError((error) => {
+            return of(AuthActions.changeUnblockFailure({errorMessage: error}));
+          }),
         );
       })
     )

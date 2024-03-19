@@ -20,9 +20,30 @@
           "imago-backup2"
         ]
       }
+    },
+    "testtokenimago": {
+      "hosting": {
+        "imagoadministration": [
+          "testtokenimago"
+        ]
+      }
+    },
+    "testimago": {
+      "hosting": {
+        "imagoadministration": [
+          "testimago"
+        ]
+      }
+    },
+    "imago-core-offical": {
+      "hosting": {
+        "imagoadministration": [
+          "imago-core-offical"
+        ]
+      }
     }
   },
   "projects": {
-    "default": "imago-backup2"
+    "default": "imago-core-offical"
   }
 }

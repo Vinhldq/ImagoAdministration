@@ -1,14 +1,31 @@
 <div class="container">
-  <div class="overlay-panel">
-  </div>
+  <div class="overlay-panel"></div>
   <div class="form-container">
-    <img src="../../../assets/newlogo.jpg" class="img-logo">
+    <img src="../../../assets/logo.jpg" class="img-logo" />
     <h1>Imago Admin</h1>
+    @if (isLoadingAuth$ | async){
+    <cds-loading
+      [isActive]="isActive"
+      [size]="'normal'"
+      [overlay]="overlay"
+    ></cds-loading>
+    } @else { @if (errorMessageAuth$ | async){
+    <div class="alert alert-danger" role="alert">
+      {{ errorMessageAuth$ | async }}
+    </div>
+    } @else {
     <div class="sigin">
       <cds-button-set>
-        <button cdsButton="secondary" [size]="'lg'" [isExpressive]="true" (click)="signWithGoogle()">Sign In With
-          Google</button>
+        <button
+          cdsButton="secondary"
+          [size]="'lg'"
+          [isExpressive]="true"
+          (click)="signWithGoogle()"
+        >
+          Sign In With Google
+        </button>
       </cds-button-set>
     </div>
+    } }
   </div>
 </div>

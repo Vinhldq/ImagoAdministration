@@ -112,7 +112,11 @@ input:focus, input:active {
 
 
 @media (max-width: 740px) {
+.container{
+  display: flex;
+  flex-direction:column-reverse;
 
+}
   .overlay-panel {
     width: 100%;
     height: 50vh;
@@ -213,4 +217,7 @@ input:focus, input:active {
     margin-top: 150px;
   }
 
+}
+::ng-deep .cds--loading__stroke {
+  stroke: var(--cds-interactive, #161616);
 }
