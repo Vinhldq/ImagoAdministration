@@ -5,13 +5,13 @@
   [isNavigation]="isNavigation"
 >
   @for (chart of chartItems; track chart.name; let i = $index) {
-    <button
-      cdsTabHeader
-      (click)="setActiveChart(chart.url, i)"
-      [class.cds--tabs__nav-item--selected]="i === selectedIndex"
-    >
-      {{ chart.name }}
-    </button>
+  <button
+    cdsTabHeader
+    (click)="setActiveChart(chart.url, i)"
+    [class.cds--tabs__nav-item--selected]="i === selectedIndex"
+  >
+    {{ chart.name }}
+  </button>
   }
 </cds-tab-header-group>
 

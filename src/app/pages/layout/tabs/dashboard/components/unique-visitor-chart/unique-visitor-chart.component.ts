@@ -6,7 +6,7 @@ import { valueOrDefault } from 'chart.js/helpers';
 import { Store } from '@ngrx/store';
 import { DashboardState } from '../../../../../../ngrx/dashboard/dashboard.state';
 import { AuthState } from '../../../../../../ngrx/auth/auth.state';
-import * as AuthActions from '../../../../../../ngrx/auth/auth.action';
+import * as AuthActions from '../../../../../../ngrx/auth/auth.actions';
 
 @Component({
   selector: 'app-unique-visitor-chart',
@@ -19,7 +19,7 @@ export class UniqueVisitorChartComponent implements OnInit {
   authList$ = this.store.select((state) => state.auth.getAllAuth);
 
   constructor(
-    private store: Store<{ dashboard: DashboardState; auth: AuthState }>,
+    private store: Store<{ dashboard: DashboardState; auth: AuthState }>
   ) {}
 
   dashboardDetail$ = this.store.select((state) => state.dashboard);
@@ -39,7 +39,7 @@ export class UniqueVisitorChartComponent implements OnInit {
       data.forEach((element) => {
         let date = new Date(
           element.createdAt._seconds * 1000 +
-            element.createdAt._nanoseconds / 1000000,
+            element.createdAt._nanoseconds / 1000000
         );
         let day = date.getDay();
         this.userNumber[day] = this.userNumber[day] + 1 || 1;

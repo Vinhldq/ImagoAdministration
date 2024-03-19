@@ -4,7 +4,7 @@ import { LoadingComponent } from './loading.component';
 
 export const LOADING_ROUTES: Route[] = [
   {
-    // path: '',
-    // component: LoadingComponent,
+    path: '',
+    component: LoadingComponent,
   },
 ];

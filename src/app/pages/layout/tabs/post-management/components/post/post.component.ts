@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Directive, Input, OnInit } from '@angular/core';
 import {
   CheckboxModule,
   DialogModule,
@@ -21,6 +21,12 @@ import { Store } from '@ngrx/store';
 import { AuthState } from '../../../../../../ngrx/auth/auth.state';
 import * as PostActions from '../../../../../../ngrx/post/post.actions';
 import { PostState } from '../../../../../../ngrx/post/post.state';
+import { Pipe, PipeTransform } from '@angular/core';
+import { AuthModel } from '../../../../../../models/auth.model';
+import { ProfileModel } from '../../../../../../models/profile.model';
+import { PostModel } from '../../../../../../models/post.model';
+import { Subscription } from 'rxjs';
+import { ProfileState } from '../../../../../../ngrx/profile/profile.state';
 
 @Component({
   selector: 'app-post',
@@ -38,7 +44,9 @@ import { PostState } from '../../../../../../ngrx/post/post.state';
 })
 export class PostComponent implements OnInit {
   postList$ = this.store.select((state) => state.post.postList);
-
+  page$ = this.store.select((state) => state.post.postList.endPage);
+  postDetail$ = this.store.select((state) => state.post.detailProfile);
+  subscription: Subscription[] = [];
   @Input() size = 'md';
   @Input() showSelectionColumn = true;
   @Input() enableSingleSelect = true;
@@ -56,13 +64,13 @@ export class PostComponent implements OnInit {
   searchValue = '';
   disabled = false;
   dataset = [];
-  dataLengthPerPage = 10;
 
   constructor(
     protected iconService: IconService,
     private store: Store<{
       auth: AuthState;
       post: PostState;
+      profile: ProfileState;
     }>,
   ) {
     this.iconService.registerAll([
@@ -90,37 +98,43 @@ export class PostComponent implements OnInit {
   // }
 
   onRowClick(index: number) {
-    console.log('Row item selected:', index);
+    // console.log('Row item selected:', index);
   }
 
+  dataLength = this.dataset.length;
+  dataLengthPerPage = 10;
+  dataResidual = this.dataLength % this.dataLengthPerPage;
+
   ngOnInit() {
-    this.store.select('auth').subscribe((auth) => {
-      this.store.dispatch(
-        PostActions.getAllPosts({ page: 1, token: auth.idToken }),
-      );
+    var page = 1;
+
+    this.modelPagination.currentPage = 1;
+
+    this.page$.subscribe((data) => {
+      this.modelPagination.totalDataLength = data;
     });
-    this.postList$.subscribe((postList) => {
-      this.dataset = postList.data.map((post) => [
-        new TableItem({
-          data: post.id,
-        }),
-        new TableItem({
-          data: post.content,
-        }),
-        new TableItem({
-          data: post.reaction,
-        }),
-        new TableItem({
-          data: post.comments,
-        }),
-        new TableItem({
-          data: post.share,
-        }),
-        new TableItem({
-          data: post.createdAt,
-        }),
-      ]);
-      this.model.data = this.dataset;
+
+    this.postList$.subscribe((creatorPost) => {
+      // th.postDetail$.subscribe((detail) => {
+      console.log('creator::: :', creatorPost);
+      this.postDetail$.subscribe((detail) => {
+        this.dataset = creatorPost.data.map((post) => {
+          return [
+            new TableItem({ data: post.id }),
+            new TableItem({ data: post.creatorId }),
+            new TableItem({ data: post.content }),
+            new TableItem({ data: post.photoUrl.length }),
+            new TableItem({ data: post.reaction.length }),
+            new TableItem({ data: post.comments.length }),
+            new TableItem({ data: post.share.length }),
+            new TableItem({
+              data: new Date(post.createdAt._seconds * 1000).toLocaleString(),
+            }),
+          ];
+        });
+
+        this.model.data = this.dataset;
+      });
     });
 
     this.model.header = [
@@ -128,7 +142,14 @@ export class PostComponent implements OnInit {
         data: 'Id Post',
       }),
       new TableHeaderItem({
+        data: 'Creator Id',
+      }),
+
+      new TableHeaderItem({
         data: 'Content',
+      }),
+      new TableHeaderItem({
+        data: 'Photo Url',
       }),
       new TableHeaderItem({
         data: 'reaction',
@@ -147,14 +168,22 @@ export class PostComponent implements OnInit {
 
   selectPage(page) {
     console.log('Loading page', page, 'from pagination model');
-    // let beginGet = (page - 1) * this.dataLengthPerPage;
-    // let endGet = page * this.dataLengthPerPage - 1;
-    // this.modelPagination.currentPage = page;
-    // this.dataChoose = [];
-    // for (let i = beginGet; i <= endGet; i++) {
-    //   this.dataChoose = [...this.dataChoose, this.dataset[i]];
-    // }
-    // this.model.data = this.dataChoose;
+    this.subscription.push(
+      this.store.select('auth').subscribe((auth) => {
+        if (auth.idToken != '') {
+          this.store.dispatch(
+            PostActions.getAllPosts({
+              token: auth.idToken,
+              page: page,
+              size: 10,
+            }),
+          );
+        }
+      }),
+    );
+    let beginGet = (page - 1) * this.dataLengthPerPage;
+    let endGet = page * this.dataLengthPerPage - 1;
+    this.modelPagination.currentPage = page;
   }
 
   protected open = false;

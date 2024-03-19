@@ -1,6 +1,5 @@
 <div class="content">
-  <div class="post">
-
+  <div class="all">
     <cds-table-container>
       <cds-table-toolbar>
         <cds-table-toolbar-content>
@@ -10,13 +9,10 @@
             (clear)="searchValue = ''"
           >
           </cds-table-toolbar-search>
-          <div class="btn-show">
-            <button cdsButton="secondary">Show</button>
-          </div>
         </cds-table-toolbar-content>
       </cds-table-toolbar>
 
-      <div class="left-content">
+      <div class="table">
         <cds-table
           [model]="model"
           [sortable]="false"
@@ -41,6 +37,3 @@
     </cds-table-container>
   </div>
 </div>
-
-
-

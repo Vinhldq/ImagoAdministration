@@ -63,7 +63,7 @@ export class CategoryComponent implements OnInit {
     private store: Store<{
       auth: AuthState;
       cate: CategoryState;
-    }>,
+    }>
   ) {
     this.iconService.registerAll([Add16, Filter16]);
   }
@@ -71,7 +71,7 @@ export class CategoryComponent implements OnInit {
   ngOnInit() {
     this.store.select('auth').subscribe((auth) => {
       this.store.dispatch(
-        CategoryAction.getAllCategories({ page: 1, token: auth.idToken }),
+        CategoryAction.getAllCategories({ page: 1, token: auth.idToken })
       );
     });
     this.$categoryList.subscribe((cateList) => {
@@ -111,7 +111,15 @@ export class CategoryComponent implements OnInit {
   }
 
   selectPage(page) {
-    console.log('Loading page', page, 'from pagination model');
+    // console.log('Loading page', page, 'from pagination model');
+    // let beginGet = (page - 1) * this.dataLengthPerPage;
+    // let endGet = page * this.dataLengthPerPage - 1;
+    // this.modelPagination.currentPage = page;
+    // this.dataChoose = [];
+    // for (let i = beginGet; i <= endGet; i++) {
+    //   this.dataChoose = [...this.dataChoose, this.dataset[i]];
+    // }
+    // this.model.data = this.dataChoose;
   }
 
   protected open = false;

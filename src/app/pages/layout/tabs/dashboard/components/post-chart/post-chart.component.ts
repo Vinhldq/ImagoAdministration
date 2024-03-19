@@ -6,7 +6,7 @@ import { valueOrDefault } from 'chart.js/helpers';
 import { Store } from '@ngrx/store';
 import { DashboardState } from '../../../../../../ngrx/dashboard/dashboard.state';
 import { AuthState } from '../../../../../../ngrx/auth/auth.state';
-import * as AuthActions from '../../../../../../ngrx/auth/auth.action';
+import * as AuthActions from '../../../../../../ngrx/auth/auth.actions';
 import { PostState } from '../../../../../../ngrx/post/post.state';
 import * as PostActions from '../../../../../../ngrx/post/post.actions';
 import { PostModel } from '../../../../../../models/post.model';
@@ -29,7 +29,7 @@ export class PostChartComponent implements OnInit {
       dashboard: DashboardState;
       auth: AuthState;
       post: PostState;
-    }>,
+    }>
   ) {}
 
   postList: PostModel[] = [];
@@ -43,7 +43,7 @@ export class PostChartComponent implements OnInit {
         if (data !== '') {
           for (let i = 1; i <= 1; i++) {
             this.store.dispatch(
-              PostActions.getAllPosts({ token: data, page: 1 }),
+              PostActions.getAllPosts({ token: data, page: 1, size: 10 })
             );
             this.postList$.subscribe((data) => {
               this.postList = [];
@@ -54,7 +54,7 @@ export class PostChartComponent implements OnInit {
               this.postList.forEach((element) => {
                 let date = new Date(
                   element.createdAt._seconds * 1000 +
-                    element.createdAt._nanoseconds / 1000000,
+                    element.createdAt._nanoseconds / 1000000
                 );
                 let day = date.getDay();
                 this.postNumber[day] = this.postNumber[day] + 1 || 1;

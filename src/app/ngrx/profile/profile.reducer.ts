@@ -1,7 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import { ProfileModel } from '../../models/profile.model';
 import { ProfileState } from './profile.state';
-import * as ProfileAction from './profile.action';
+import * as ProfileAction from './profile.actions';
 
 export const initialState: ProfileState = {
   profile: <ProfileModel>{},
@@ -20,8 +20,8 @@ export const initialState: ProfileState = {
 };
 export const profileReducer = createReducer(
   initialState,
-  on(ProfileAction.getMineProfile, (state, type) => {
-    console.log(type);
+  on(ProfileAction.getMineProfile, (state, action) => {
+    console.log(action.type);
     return {
       ...state,
       isGetLoading: true,
@@ -71,4 +71,19 @@ export const profileReducer = createReducer(
       getByIdErrorMess: errorMessage,
     };
   }),
+  on(ProfileAction.clearState, (state, action) => {
+    return {
+      ...state,
+      isLoading: false,
+      isSuccess: false,
+      errorMessage: '',
+      isGetLoading: false,
+      isGetSuccess: false,
+      getErrorMessage: '',
+      isUpdating: false,
+      isUpdateSuccess: false,
+      updateErrorMessage: '',
+      profile: null,
+    };
+  })
 );

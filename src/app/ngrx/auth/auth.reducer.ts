@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import * as AuthAction from './auth.action';
+import * as AuthAction from './auth.actions';
 import { AuthState } from './auth.state';
 import { AuthModel } from '../../models/auth.model';
 import { AuthModule } from '@angular/fire/auth';
@@ -47,6 +47,7 @@ export const authReducer = createReducer(
     };
   }),
   on(AuthAction.logout, (state, action) => {
+    console.log(action.type);
     return {
       ...state,
       isLogoutSuccess: false,
@@ -54,7 +55,7 @@ export const authReducer = createReducer(
     };
   }),
   on(AuthAction.logoutSuccess, (state, action) => {
-    console.log(action);
+    console.log(action.type);
     return {
       ...state,
       isLogoutSuccess: true,
@@ -64,6 +65,7 @@ export const authReducer = createReducer(
     };
   }),
   on(AuthAction.logoutFailure, (state, { errorMessage, type }) => {
+    console.log(type);
     return {
       ...state,
       isLogoutSuccess: false,
@@ -121,5 +123,5 @@ export const authReducer = createReducer(
       ...state,
       getAllErrorMessage: errorMessage,
     };
-  }),
+  })
 );

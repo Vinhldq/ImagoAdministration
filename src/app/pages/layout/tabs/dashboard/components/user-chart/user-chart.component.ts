@@ -7,7 +7,7 @@ import colorLib from '@kurkle/color';
 import { Store } from '@ngrx/store';
 import { DashboardState } from '../../../../../../ngrx/dashboard/dashboard.state';
 import { AuthState } from '../../../../../../ngrx/auth/auth.state';
-import * as AuthActions from '../../../../../../ngrx/auth/auth.action';
+import * as AuthActions from '../../../../../../ngrx/auth/auth.actions';
 import _default from 'chart.js/dist/plugins/plugin.tooltip';
 
 @Component({
@@ -21,7 +21,7 @@ export class UserChartComponent implements OnInit {
   authList$ = this.store.select((state) => state.auth.getAllAuth);
 
   constructor(
-    private store: Store<{ dashboard: DashboardState; auth: AuthState }>,
+    private store: Store<{ dashboard: DashboardState; auth: AuthState }>
   ) {}
 
   dashboardDetail$ = this.store.select((state) => state.dashboard);
@@ -33,7 +33,6 @@ export class UserChartComponent implements OnInit {
       .subscribe((data) => {
         if (data !== '') {
           this.store.dispatch(AuthActions.getAllAuth({ token: data }));
-          
         }
       });
 
@@ -42,7 +41,7 @@ export class UserChartComponent implements OnInit {
       data.forEach((element) => {
         let date = new Date(
           element.createdAt._seconds * 1000 +
-            element.createdAt._nanoseconds / 1000000,
+            element.createdAt._nanoseconds / 1000000
         );
         let day = date.getDay();
         this.userNumber[day] = this.userNumber[day] + 1 || 1;

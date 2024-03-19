@@ -49,4 +49,24 @@ export class ReportEffects {
       }),
     ),
   );
+
+  getReportStatus$ = createEffect(() =>
+    this.action$.pipe(
+      ofType(ReportActions.getReportStatus),
+      switchMap((action) => {
+        return this.reportService.getReportStatusCompleted(action.token, action.page).pipe(
+          map((reportStatus: any) => {
+            return ReportActions.getReportStatusSuccess({
+              reportListStatus: reportStatus,
+            });
+          }),
+          catchError((error) => {
+            return of(
+              ReportActions.getReportStatusFailure({ errorMessage: error }),
+            );
+          }),
+        );
+      }),
+    ),
+  );
 }

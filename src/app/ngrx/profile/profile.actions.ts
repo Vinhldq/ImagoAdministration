@@ -26,3 +26,4 @@ export const getProfileByIdFailure = createAction(
   '[Profile] Get By Id Failure',
   props<{ errorMessage: string }>(),
 );
+export const clearState = createAction('[Profile] Clear State');

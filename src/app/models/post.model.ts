@@ -1,3 +1,5 @@
+import { ProfileModel } from './profile.model';
+
 export interface PostModel {
   id: string;
   creatorId: string;

@@ -7,6 +7,24 @@
 .post {
   width: 100%;
 }
+.all {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+
+  cds-table-container {
+    width: 100%;
+  }
+
+  .table {
+    display: flex;
+    flex-direction: column;
+
+    cds-pagination-nav {
+      align-self: center;
+    }
+  }
+}
 
 .content {
   width: 100%;
@@ -56,7 +74,6 @@ cds-pagination-nav {
   align-items: center;
   justify-content: center;
   margin: 10px auto;
-
 }
 
 .right {
@@ -65,7 +82,6 @@ cds-pagination-nav {
 }
 
 .post {
-
   .likes {
     margin-top: 20px;
     display: flex;
@@ -80,7 +96,6 @@ cds-pagination-nav {
       text-decoration: underline;
     }
 
-
     .comment {
       cursor: pointer;
     }
@@ -88,7 +103,6 @@ cds-pagination-nav {
     .share {
       cursor: pointer;
     }
-
 
     p {
       margin-left: 10px;
@@ -99,7 +113,6 @@ cds-pagination-nav {
 
 .all-comments .avatar {
   display: flex;
-
 
   img {
     width: 50px;
@@ -120,7 +133,6 @@ cds-pagination-nav {
   }
 
   .quyComments {
-
     img {
       width: 50px;
       height: 50px;
@@ -148,7 +160,6 @@ cds-pagination-nav {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-
 }
 
 .list-like {
@@ -160,7 +171,6 @@ cds-pagination-nav {
     margin-right: 5px;
   }
 }
-
 
 .all-like {
   .like {
@@ -220,5 +230,3 @@ cds-pagination-nav {
   -webkit-line-clamp: 1; // because we need text to wrap
   -webkit-box-orient: vertical; // can't use white-space: nowrap
 }
-
-
